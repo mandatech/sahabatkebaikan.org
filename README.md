@@ -1,25 +1,17 @@
-# Next.js example
+# Sahabatkebaikan New
 
-## How to use
+## Setup
 
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
+[Clone the repo](https://gitlab.com/mandatech/sahabatkebaikan-new):
 
 ```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/nextjs
-cd nextjs
+git clone https://gitlab.com/mandatech/sahabatkebaikan-new.git
+cd sahabatkebaikan-new
 ```
 
 Install it and run:
 
 ```sh
-npm install
-npm run dev
+yarn
+yarn dev
 ```
-
-or:
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui-org/material-ui/tree/master/examples/nextjs)
-
-## The idea behind the example
-
-[Next.js](https://github.com/zeit/next.js) is a framework for server-rendered React apps.
