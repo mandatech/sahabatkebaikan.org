@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "latest",
+    "babel-plugin-inline-react-svg": "^1.1.1",
     "clsx": "latest",
     "next": "latest",
     "prop-types": "latest",
