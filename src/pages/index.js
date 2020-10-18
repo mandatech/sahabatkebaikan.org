@@ -11,7 +11,7 @@ import React from 'react';
 export default function Index() {
   return (
     <>
-      <Layout container="paper">
+      <Layout container="paper" menu={1}>
         <Header
           icon={<SahabatkebaikanIcon />}
           title="Cari yang ingin kamu bantu"

@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Layout = ({ container = 'div', ...props }) => {
+const Layout = ({ container = 'div', menu = 1, ...props }) => {
   const classes = useStyles();
 
   return (
@@ -34,7 +34,7 @@ const Layout = ({ container = 'div', ...props }) => {
       ) : (
         <Box className={classes.container}>{props.children}</Box>
       )}
-      <BottomNavigation />
+      <BottomNavigation value={menu} />
     </Box>
   );
 };
@@ -42,6 +42,7 @@ const Layout = ({ container = 'div', ...props }) => {
 Layout.propTypes = {
   container: PropTypes.oneOf(['div', 'paper']),
   children: PropTypes.any,
+  menu: PropTypes.number,
 };
 
 export default Layout;

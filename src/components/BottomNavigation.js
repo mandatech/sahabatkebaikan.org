@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import RestoreIcon from '@material-ui/icons/Restore';
 import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan_icon_white.svg';
+import Router from 'next/router';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import FabNavigationAction from './FabNavigationAction';
@@ -26,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
     borderBottomColor: 'transparent',
     borderLeftColor: 'transparent',
     transform: 'rotate(135deg)',
-    top: -53,
-    left: 0,
+    top: -2.7,
+    left: -7.4,
     right: 0,
     margin: '0 auto',
     position: 'absolute',
@@ -59,16 +61,29 @@ const Circle = () => {
   return <div className={classes.circle} />;
 };
 
-const SimpleBottomNavigation = () => {
+const SimpleBottomNavigation = ({ value }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    switch (newValue) {
+      case 0:
+        Router.push('/kebaikanku');
+        break;
+      case 1:
+        Router.push('/');
+        break;
+      case 2:
+        Router.push('/profil');
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <BottomNavigation
       value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
+      onChange={handleTabChange}
       showLabels
       className={classes.root}
     >
@@ -81,12 +96,12 @@ const SimpleBottomNavigation = () => {
         icon={<RestoreIcon />}
       />
 
-      <Circle />
       <FabNavigationAction
         label="Donasi"
         className={classes.fabButton}
         aria-label="donasi"
       >
+        <Circle />
         <SahabatkebaikanIcon />
       </FabNavigationAction>
 
@@ -100,6 +115,10 @@ const SimpleBottomNavigation = () => {
       />
     </BottomNavigation>
   );
+};
+
+SimpleBottomNavigation.propTypes = {
+  value: PropTypes.number,
 };
 
 export default SimpleBottomNavigation;
