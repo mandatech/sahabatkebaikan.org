@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box';
+import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan.svg';
 
-import SahabatkebaikanIcon from '../assets/icons/sahabatkebaikan.svg';
 import Loading from './Loading';
 
 const SplashScreen = () => {
@@ -10,7 +10,8 @@ const SplashScreen = () => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      minHeight="100vh">
+      minHeight="100vh"
+    >
       <SahabatkebaikanIcon />
       <Loading />
     </Box>
