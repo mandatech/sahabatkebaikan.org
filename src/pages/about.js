@@ -1,12 +1,11 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Copyright from 'components/Copyright';
+import Layout from 'components/Layout';
+import Link from 'components/Link';
+import ProTip from 'components/ProTip';
 import React from 'react';
-
-import Copyright from '../components/Copyright';
-import Layout from '../components/Layout';
-import Link from '../components/Link';
-import ProTip from '../components/ProTip';
 
 export default function About() {
   return (
@@ -20,7 +19,8 @@ export default function About() {
           color="primary"
           component={Link}
           naked
-          href="/">
+          href="/"
+        >
           Go to the main page
         </Button>
         <ProTip />

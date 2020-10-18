@@ -3,6 +3,8 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
+import BottomNavigation from './BottomNavigation';
+
 const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
@@ -16,6 +18,7 @@ const useStyles = makeStyles(() => ({
     minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
+    background: '#FFFFFF',
   },
 }));
 
@@ -25,10 +28,13 @@ const Layout = ({ container = 'div', ...props }) => {
   return (
     <Box className={classes.root}>
       {container === 'paper' ? (
-        <Paper className={classes.container}>{props.children}</Paper>
+        <Paper className={classes.container} elevation={0}>
+          {props.children}
+        </Paper>
       ) : (
         <Box className={classes.container}>{props.children}</Box>
       )}
+      <BottomNavigation />
     </Box>
   );
 };
