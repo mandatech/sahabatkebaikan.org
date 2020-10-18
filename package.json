@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "latest",
-    "babel-plugin-inline-react-svg": "^1.1.1",
+    "@material-ui/icons": "latest",
     "clsx": "latest",
     "next": "latest",
     "prop-types": "latest",
@@ -20,6 +20,7 @@
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "devDependencies": {
+    "@svgr/webpack": "^5.4.0",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
