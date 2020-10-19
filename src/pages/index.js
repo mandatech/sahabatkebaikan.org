@@ -1,92 +1,39 @@
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan_icon_white.svg';
-import Copyright from 'components/Copyright';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
-import Link from 'components/Link';
-import ProTip from 'components/ProTip';
+import CategoryList from 'modules/home/category/screen';
+import Dompet from 'modules/home/dompet/screen';
+import DonationList from 'modules/home/donation-list/screen';
+import Slideshow from 'modules/home/slideshow/screen';
 import React from 'react';
+
+const DompetContainer = () => (
+  <Box px={2} style={{ position: 'absolute', bottom: -28, width: '100%' }}>
+    <Dompet />
+  </Box>
+);
 
 export default function Index() {
   return (
     <>
-      <Layout container="paper" menu={1}>
+      <Layout menu={1}>
         <Header
           icon={<SahabatkebaikanIcon />}
           title="Cari yang ingin kamu bantu"
-          size="large"
+          dompet={<DompetContainer />}
           searchbox
         />
-        <Box m={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Next.js example
-          </Typography>
-          <Link href="/about" color="secondary">
-            Go to the about page
-          </Link>
-          <ProTip />
-          <Copyright />
+        <Box mx={2} mt={5}>
+          <Slideshow />
         </Box>
-        <Box m={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Next.js example
-          </Typography>
-          <Link href="/about" color="secondary">
-            Go to the about page
-          </Link>
-          <ProTip />
-          <Copyright />
+        <Box mx={2} mt={1} mb={2}>
+          <CategoryList />
         </Box>
-        <Box m={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Next.js example
-          </Typography>
-          <Link href="/about" color="secondary">
-            Go to the about page
-          </Link>
-          <ProTip />
-          <Copyright />
-        </Box>
-        <Box m={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Next.js example
-          </Typography>
-          <Link href="/about" color="secondary">
-            Go to the about page
-          </Link>
-          <ProTip />
-          <Copyright />
-        </Box>
-        <Box m={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Next.js example
-          </Typography>
-          <Link href="/about" color="secondary">
-            Go to the about page
-          </Link>
-          <ProTip />
-          <Copyright />
-        </Box>
-        <Box m={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Next.js example
-          </Typography>
-          <Link href="/about" color="secondary">
-            Go to the about page
-          </Link>
-          <ProTip />
-          <Copyright />
-        </Box>
-        <Box m={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Next.js example
-          </Typography>
-          <Link href="/about" color="secondary">
-            Go to the about page
-          </Link>
-          <ProTip />
-          <Copyright />
+        <Divider style={{ height: 10, background: '#F7F7F7' }} />
+        <Box m={2} style={{ marginBottom: 100 }}>
+          <DonationList />
         </Box>
       </Layout>
     </>
