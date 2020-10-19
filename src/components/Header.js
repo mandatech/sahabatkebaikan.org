@@ -49,6 +49,13 @@ const useStyles = makeStyles((theme) => ({
     // paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(3),
   },
+  dompet: {
+    // flexGrow: 1,
+    position: 'absolute',
+    bottom: -28,
+    width: '100%',
+    // border: 'solid pink 2px',
+  },
 }));
 
 const Header = ({
@@ -56,6 +63,7 @@ const Header = ({
   title = '',
   searchbox = false,
   size = 'normal',
+  dompet = false,
 }) => {
   const classes = useStyles();
 
@@ -63,7 +71,7 @@ const Header = ({
     <AppBar position="sticky">
       <Toolbar
         className={clsx({
-          [classes.toolbarLarge]: size === 'large',
+          [classes.toolbarLarge]: size === 'large' || dompet,
         })}
       >
         {icon && (
@@ -99,8 +107,9 @@ const Header = ({
           </Typography>
         )}
 
-        <div className={classes.grow} />
+        {/* <div className={classes.grow} /> */}
       </Toolbar>
+      {dompet}
     </AppBar>
   );
 };
@@ -110,6 +119,7 @@ Header.propTypes = {
   title: PropTypes.string,
   searchbox: PropTypes.bool,
   size: PropTypes.oneOf(['normal', 'large']),
+  dompet: PropTypes.node,
 };
 
 export default Header;

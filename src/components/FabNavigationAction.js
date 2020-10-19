@@ -75,6 +75,7 @@ export const styles = (theme) => ({
     width: '100%',
     flexDirection: 'column',
   },
+  iconOnly: {},
 });
 
 const Fab = React.forwardRef(function Fab(props, ref) {
