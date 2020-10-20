@@ -5,7 +5,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-const donations = [
+const campaigns = [
   {
     id: 1,
     title: 'Bahagiakan Ribuan Mustahiq di Karawang Melalui Zakat Anda',
@@ -57,14 +57,14 @@ const donations = [
 
 const useStyles = makeStyles(() => ({
   root: {},
-  donationImage: {
+  campaignImage: {
     objectFit: 'fill',
     width: 140,
     height: 90,
     borderRadius: 6,
     cursor: 'pointer',
   },
-  donationTitle: {
+  campaignTitle: {
     fontSize: 12,
     fontWeight: 600,
     overflow: 'hidden',
@@ -102,7 +102,7 @@ function getValue(funded, target) {
   return (funded * 100) / target;
 }
 
-const DonationList = () => {
+const campaignList = () => {
   const classes = useStyles();
 
   return (
@@ -110,17 +110,17 @@ const DonationList = () => {
       <Typography variant="subtitle2" style={{ marginBottom: 16 }}>
         Ayo lakukan kebaikan sekarang juga!
       </Typography>
-      {donations.map((donation) => (
-        <div key={donation.id}>
+      {campaigns.map((campaign) => (
+        <div key={campaign.id}>
           <Box display="flex" my={1} alignItems="center">
             <img
-              src={donation.images[0]}
-              className={classes.donationImage}
+              src={campaign.images[0]}
+              className={classes.campaignImage}
               alt=""
             />
             <Box ml={1}>
               <Box display="flex" alignItems="flex-start">
-                <span className={classes.donationTitle}>{donation.title}</span>
+                <span className={classes.campaignTitle}>{campaign.title}</span>
                 <Button
                   color="secondary"
                   variant="contained"
@@ -129,10 +129,10 @@ const DonationList = () => {
                   Donasi
                 </Button>
               </Box>
-              <span className={classes.author}>{donation.author}</span>
+              <span className={classes.author}>{campaign.author}</span>
 
               <LinearProgress
-                value={getValue(donation.funded, donation.target)}
+                value={getValue(campaign.funded, campaign.target)}
                 variant="determinate"
                 style={{ margin: '4px 0' }}
               />
@@ -144,7 +144,7 @@ const DonationList = () => {
                     {new Intl.NumberFormat('id-ID', {
                       style: 'currency',
                       currency: 'IDR',
-                    }).format(donation.funded)}
+                    }).format(campaign.funded)}
                   </span>
                 </Box>
                 <Box
@@ -154,7 +154,7 @@ const DonationList = () => {
                 >
                   <span className={classes.fundedTitle}>Sisa Hari</span>
                   <span className={classes.fundedValue}>
-                    {donation.daysLeft}
+                    {campaign.daysLeft}
                   </span>
                 </Box>
               </Box>
@@ -167,4 +167,4 @@ const DonationList = () => {
   );
 };
 
-export default DonationList;
+export default campaignList;
