@@ -7,7 +7,7 @@ import React from 'react';
 export default function Index() {
   return (
     <>
-      <Layout container="paper" menu={2} withBottomNav>
+      <Layout menu={2} withBottomNav>
         <Header title="Profil Saya" />
         <ProfileInfo />
         <MenuItem />

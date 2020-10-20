@@ -11,6 +11,7 @@ import CampaignStatus from '../components/CampaignStatus';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    background: theme.palette.background.paper,
     marginBottom: 100,
   },
   paper: {
