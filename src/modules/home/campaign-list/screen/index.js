@@ -55,8 +55,13 @@ const campaigns = [
   },
 ];
 
-const useStyles = makeStyles(() => ({
-  root: {},
+const useStyles = makeStyles((theme) => ({
+  root: {
+    background: theme.palette.background.paper,
+    marginBottom: 100,
+    padding: '16px 16px',
+    marginTop: 8,
+  },
   campaignImage: {
     objectFit: 'fill',
     width: 140,
@@ -102,11 +107,11 @@ function getValue(funded, target) {
   return (funded * 100) / target;
 }
 
-const campaignList = () => {
+const CampaignList = () => {
   const classes = useStyles();
 
   return (
-    <Box>
+    <Box className={classes.root}>
       <Typography variant="subtitle2" style={{ marginBottom: 16 }}>
         Ayo lakukan kebaikan sekarang juga!
       </Typography>
@@ -167,4 +172,4 @@ const campaignList = () => {
   );
 };
 
-export default campaignList;
+export default CampaignList;

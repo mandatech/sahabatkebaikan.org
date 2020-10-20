@@ -8,6 +8,9 @@ import ZakatIcon from 'assets/icons/kategori_zakat.svg';
 import Link from 'components/Link';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    background: theme.palette.background.paper,
+  },
   categoryIcon: {
     margin: theme.spacing(1),
   },
@@ -48,7 +51,13 @@ const Category = () => {
   const classes = useStyles();
 
   return (
-    <Box display="flex" justifyContent="space-around" flexWrap="wrap">
+    <Box
+      display="flex"
+      justifyContent="space-around"
+      flexWrap="wrap"
+      className={classes.root}
+      p={2}
+    >
       {categories.map((category, i) => (
         <Link key={i} href={category.url} color="inherit">
           <Box display="flex" flexDirection="column" alignItems="center">

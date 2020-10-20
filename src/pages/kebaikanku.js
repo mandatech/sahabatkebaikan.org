@@ -6,7 +6,7 @@ import React from 'react';
 export default function Index() {
   return (
     <>
-      <Layout menu={0}>
+      <Layout menu={0} withBottomNav>
         <Header title="Kebaikanku" />
         <DonationList />
       </Layout>

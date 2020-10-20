@@ -1,5 +1,4 @@
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan_icon_white.svg';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
@@ -18,23 +17,18 @@ const DompetContainer = () => (
 export default function Index() {
   return (
     <>
-      <Layout menu={1}>
+      <Layout menu={1} withBottomNav>
         <Header
           icon={<SahabatkebaikanIcon />}
           title="Cari yang ingin kamu bantu"
           dompet={<DompetContainer />}
           searchbox
         />
-        <Box mx={2} mt={5}>
-          <Slideshow />
-        </Box>
-        <Box mx={2} mt={1} mb={2}>
-          <CategoryList />
-        </Box>
-        <Divider style={{ height: 10, background: '#F7F7F7' }} />
-        <Box m={2} style={{ marginBottom: 100 }}>
-          <CampaignList />
-        </Box>
+        {/* <Box mx={2} mt={5}> */}
+        <Slideshow />
+        <CategoryList />
+        {/* <Divider style={{ height: 10, background: '#F7F7F7' }} /> */}
+        <CampaignList />
       </Layout>
     </>
   );
