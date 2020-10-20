@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import BottomNavigation from './BottomNavigation';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -18,11 +18,16 @@ const useStyles = makeStyles(() => ({
     minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    background: '#FFFFFF',
+    background: theme.palette.background.default,
   },
 }));
 
-const Layout = ({ container = 'div', menu = 1, ...props }) => {
+const Layout = ({
+  container = 'div',
+  menu = 1,
+  withBottomNav = false,
+  ...props
+}) => {
   const classes = useStyles();
 
   return (
@@ -34,7 +39,7 @@ const Layout = ({ container = 'div', menu = 1, ...props }) => {
       ) : (
         <Box className={classes.container}>{props.children}</Box>
       )}
-      <BottomNavigation value={menu} />
+      {withBottomNav && <BottomNavigation value={menu} />}
     </Box>
   );
 };
@@ -43,6 +48,7 @@ Layout.propTypes = {
   container: PropTypes.oneOf(['div', 'paper']),
   children: PropTypes.any,
   menu: PropTypes.number,
+  withBottomNav: PropTypes.bool,
 };
 
 export default Layout;
