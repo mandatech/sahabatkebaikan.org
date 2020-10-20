@@ -3,9 +3,9 @@ import Divider from '@material-ui/core/Divider';
 import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan_icon_white.svg';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
+import CampaignList from 'modules/home/campaign-list/screen';
 import CategoryList from 'modules/home/category/screen';
 import Dompet from 'modules/home/dompet/screen';
-import DonationList from 'modules/home/donation-list/screen';
 import Slideshow from 'modules/home/slideshow/screen';
 import React from 'react';
 
@@ -33,7 +33,7 @@ export default function Index() {
         </Box>
         <Divider style={{ height: 10, background: '#F7F7F7' }} />
         <Box m={2} style={{ marginBottom: 100 }}>
-          <DonationList />
+          <CampaignList />
         </Box>
       </Layout>
     </>
