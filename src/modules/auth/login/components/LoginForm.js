@@ -1,5 +1,6 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import FacebookIcon from 'assets/icons/facebook_icon.svg';
 import GoogleIcon from 'assets/icons/google_icon.svg';
 import Link from 'components/Link';
+import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 
 const useStyles = makeStyles(() => ({
@@ -33,6 +35,20 @@ const useStyles = makeStyles(() => ({
     },
   },
 }));
+
+const validate = (values) => {
+  const errors = {};
+  if (!values.email) {
+    errors.email = 'Harus diisi';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Alamat email salah';
+  }
+  if (!values.password) {
+    errors.password = 'Harus diisi';
+  }
+
+  return errors;
+};
 
 const LoginForm = () => {
   const classes = useStyles();
@@ -86,27 +102,75 @@ const LoginForm = () => {
         Atau
       </Typography>
 
-      <form className={classes.form} noValidate autoComplete="off">
-        <TextField
-          id="username"
-          label="Username / Email"
-          variant="filled"
-          fullWidth
-        />
-        <TextField id="password" label="Password" variant="filled" fullWidth />
-      </form>
-      <Link href="/lupa-password" style={{ alignSelf: 'flex-end' }}>
-        Lupa Password?
-      </Link>
-
-      <Button
-        variant="contained"
-        color="secondary"
-        fullWidth
-        style={{ margin: '8px 0' }}
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        validate={validate}
+        onSubmit={(values) => {
+          // alert(JSON.stringify(values, null, 2));
+          console.log(values);
+          setTimeout(() => {
+            router.push('/');
+          }, 1300);
+        }}
       >
-        Masuk
-      </Button>
+        {(formik) => (
+          <form
+            className={classes.form}
+            noValidate
+            autoComplete="off"
+            onSubmit={formik.handleSubmit}
+          >
+            <TextField
+              id="username"
+              label="Username / Email"
+              variant="filled"
+              fullWidth
+              name="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              error={formik.touched.email && formik.errors.email ? true : false}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+            <TextField
+              id="password"
+              label="Password"
+              type="password"
+              variant="filled"
+              fullWidth
+              name="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              error={
+                formik.touched.password && formik.errors.password ? true : false
+              }
+              helperText={formik.touched.password && formik.errors.password}
+            />
+            <Link href="/lupa-password" style={{ float: 'right' }}>
+              Lupa Password?
+            </Link>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              fullWidth
+              style={{ margin: '8px 0' }}
+              disabled={formik.isSubmitting}
+              type="submit"
+            >
+              {formik.isSubmitting && (
+                <CircularProgress size={20} style={{ marginRight: 8 }} />
+              )}
+              Masuk
+            </Button>
+          </form>
+        )}
+      </Formik>
+
       <Button
         variant="outlined"
         fullWidth

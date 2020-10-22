@@ -6,11 +6,14 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "clsx": "latest",
+    "formik": "^2.2.0",
+    "formik-material-ui": "^3.0.0",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-slideshow-image": "^3.3.0"
+    "react-slideshow-image": "^3.3.0",
+    "yup": "^0.29.3"
   },
   "scripts": {
     "dev": "next",
