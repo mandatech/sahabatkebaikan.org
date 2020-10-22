@@ -15,13 +15,16 @@ import React from 'react';
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.background.paper,
+    // border: 'solid pink 2px',
   },
   avatarBackground: {
+    // border: 'solid black 2px',
+
     background: 'linear-gradient(270deg, #1BBCC2 0%, #4156A5 100%)',
     opacity: 0.3,
     width: '100%',
     height: 130,
-    position: 'relative',
+    position: 'absolute',
     overflow: 'hidden',
     '&:after': {
       content: '""',
@@ -36,18 +39,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatarContainer: {
-    position: 'absolute',
-    width: 446,
-    top: 24,
-    // border: 'solid pink 2px',
+    position: 'relative',
+    top: 20,
   },
   avatar: {
     width: 115,
     height: 115,
-  },
-  info: {
-    // position: 'relative',
-    // top: -110,
   },
 }));
 
@@ -78,29 +75,29 @@ const ProfileInfo = () => {
           />
         </Box>
       </Box>
-      <Box m={2} className={classes.info}>
-        <Typography variant="body2" color="textSecondary">
+      <Box m={2} mt={4}>
+        <Typography variant="body1" color="textSecondary">
           Nama Lengkap
         </Typography>
-        <Typography variant="body2" gutterBottom>
+        <Typography variant="body1" gutterBottom>
           Sahabat Kebaikan
         </Typography>
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body1" color="textSecondary">
           Username
         </Typography>
-        <Typography variant="body2" gutterBottom>
+        <Typography variant="body1" gutterBottom>
           SahabatKebaikan04
         </Typography>
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body1" color="textSecondary">
           No Telepon
         </Typography>
-        <Typography variant="body2" gutterBottom>
+        <Typography variant="body1" gutterBottom>
           08123456789
         </Typography>
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body1" color="textSecondary">
           Email
         </Typography>
-        <Typography variant="body2" gutterBottom>
+        <Typography variant="body1" gutterBottom>
           me@sahabatkebaikan.org
         </Typography>
       </Box>
@@ -112,7 +109,7 @@ const ProfileInfo = () => {
             <DompetIcon />
           </ListItemIcon>
           <ListItemText primary="Dompet Kebaikan" />
-          <ListItemText style={{ textAlign: 'right' }}>
+          <ListItemText style={{ textAlign: 'right', overflow: 'auto' }}>
             <span style={{ fontWeight: 600 }}>
               {new Intl.NumberFormat('id-ID', {
                 style: 'currency',
