@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import BackIcon from '@material-ui/icons/ChevronLeft';
 import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan.svg';
+import { useRouter } from 'next/router';
 
 import LoginForm from '../components/LoginForm';
 
@@ -44,12 +45,13 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginScreen = () => {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <Box className={classes.root}>
       <Box>
         <Box display="flex">
-          <ButtonBase>
+          <ButtonBase onClick={() => router.back()}>
             <BackIcon color="primary" />
           </ButtonBase>
           <Typography className={classes.title}>Masuk</Typography>

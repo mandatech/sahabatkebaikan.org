@@ -67,6 +67,9 @@ const RegistrationForm = () => {
         <Button variant="contained" color="secondary" fullWidth>
           Daftar
         </Button>
+        <span>
+          Sudah terdaftar? <Link href="/login">Login</Link>
+        </span>
         <DividerWithText style={{ padding: '0 32px', margin: '12px 0' }}>
           Atau Daftar dengan
         </DividerWithText>

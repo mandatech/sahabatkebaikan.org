@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import FacebookIcon from 'assets/icons/facebook_icon.svg';
 import GoogleIcon from 'assets/icons/google_icon.svg';
 import Link from 'components/Link';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -35,6 +36,7 @@ const useStyles = makeStyles(() => ({
 
 const LoginForm = () => {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <Paper className={classes.root} elevation={2}>
@@ -105,7 +107,11 @@ const LoginForm = () => {
       >
         Masuk
       </Button>
-      <Button variant="outlined" fullWidth>
+      <Button
+        variant="outlined"
+        fullWidth
+        onClick={() => router.push('/register')}
+      >
         Daftar
       </Button>
     </Paper>
