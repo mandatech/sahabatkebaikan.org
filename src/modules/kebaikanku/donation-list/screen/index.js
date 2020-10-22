@@ -23,14 +23,12 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.default,
   },
   image: {
-    width: 140,
-    height: 90,
-    marginRight: 12,
+    maxWidth: 190,
+    marginRight: 8,
   },
   img: {
-    objectFit: 'fill',
-    width: 140,
-    height: 90,
+    objectFit: 'cover',
+    width: '100%',
     borderRadius: 8,
   },
   campaignTitle: {
@@ -86,7 +84,7 @@ const CampaignList = () => {
           {group.donations.map((donation, i) => (
             <Box key={i} m={2}>
               <Grid container style={{ margin: '16px 0' }}>
-                <Grid item>
+                <Grid item xs={4}>
                   <ButtonBase className={classes.image}>
                     <img
                       className={classes.img}
@@ -95,7 +93,7 @@ const CampaignList = () => {
                     />
                   </ButtonBase>
                 </Grid>
-                <Grid item xs={12} sm container>
+                <Grid item container xs>
                   <Grid item xs container direction="column">
                     <Grid item xs>
                       <Typography
