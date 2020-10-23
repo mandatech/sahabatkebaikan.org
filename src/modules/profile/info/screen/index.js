@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import DompetIcon from 'assets/icons/dompet_without_circle.svg';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileInfo = () => {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <Box className={classes.root}>
@@ -60,6 +62,7 @@ const ProfileInfo = () => {
           size="small"
           startIcon={<EditIcon />}
           style={{ position: 'absolute', top: 16, right: 8, zIndex: 2 }}
+          onClick={() => router.push('/profil/edit')}
         >
           Ubah
         </Button>

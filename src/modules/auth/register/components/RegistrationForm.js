@@ -118,6 +118,7 @@ const RegistrationForm = () => {
               color="secondary"
               fullWidth
               disabled={isSubmitting}
+              type="submit"
               onClick={submitForm}
             >
               {isSubmitting && (
