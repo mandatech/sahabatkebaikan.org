@@ -8,6 +8,7 @@
     "clsx": "latest",
     "formik": "^2.2.0",
     "formik-material-ui": "^3.0.0",
+    "material-ui-image": "^3.3.0",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
