@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
     bottom: 0,
-    width: 446,
+    width: '100%',
+    maxWidth: 446,
     padding: 8,
     background: theme.palette.background.default,
     // border: 'solid pink 1px',

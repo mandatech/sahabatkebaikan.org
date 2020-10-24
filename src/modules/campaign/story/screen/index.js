@@ -23,10 +23,11 @@ const useStyles = makeStyles(() => ({
     overflow: 'hidden',
     position: 'relative',
     maxHeight: 120,
-    '&$readAll': {
+    '&$storyCropped': {
       maxHeight: 'none',
     },
   },
+  storyCropped: {},
   readAll: {},
   buttonReadAllContainer: {
     marginTop: 8,
@@ -66,9 +67,8 @@ const CampaignStory = () => {
         </Typography>
       </Box>
 
-      <Box className={clsx(classes.story, { [classes.readAll]: readAll })}>
-        <Typography
-          variant="body2"
+      <Box className={clsx(classes.story, { [classes.storyCropped]: readAll })}>
+        <Box
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -105,7 +105,7 @@ const CampaignStory = () => {
             At-Taubah ayat 103, zakat merupakan instrumen keuangan Islam yang
             dapat meningkatkan kesejahteraan masyarakat di lingkungan sekitar.
           </div>
-        </Typography>
+        </Box>
         <Box
           className={clsx(classes.buttonReadAllContainer, {
             [classes.readAll]: readAll,

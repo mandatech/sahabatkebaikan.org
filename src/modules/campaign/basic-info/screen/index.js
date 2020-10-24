@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -50,18 +51,26 @@ const CampaignBasicInfo = () => {
       <Typography variant="h6" style={{ lineHeight: 1.4 }}>
         Bahagiakan Ribuan Mustahiq di Karawang Melalui Zakat Anda
       </Typography>
-      <Box display="flex" alignItems="center">
-        <Typography variant="body1" color="primary" style={{ fontWeight: 500 }}>
-          Rp 54.000.000
-        </Typography>
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          style={{ marginLeft: 8 }}
-        >
-          terkumpul dari Rp 190.000.000
-        </Typography>
-      </Box>
+      <Grid container>
+        <Grid item>
+          <Typography
+            variant="body1"
+            color="primary"
+            style={{ fontWeight: 500 }}
+          >
+            Rp 54.000.000
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            style={{ marginLeft: 8 }}
+          >
+            terkumpul dari Rp 190.000.000
+          </Typography>
+        </Grid>
+      </Grid>
       <LinearProgress
         value={40}
         variant="determinate"

@@ -54,7 +54,7 @@ const DonorList = () => {
               src="https://material-ui.com/static/images/avatar/1.jpg"
             />
           </Grid>
-          <Grid item style={{ marginLeft: 16 }}>
+          <Grid item xs style={{ marginLeft: 16 }}>
             <Typography variant="body1" style={{ fontWeight: 500 }}>
               Nayeon
             </Typography>
