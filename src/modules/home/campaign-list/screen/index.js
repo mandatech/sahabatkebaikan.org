@@ -4,6 +4,7 @@ import Divider from '@material-ui/core/Divider';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { useRouter } from 'next/router';
 
 const campaigns = [
   {
@@ -109,6 +110,7 @@ function getValue(funded, target) {
 
 const CampaignList = () => {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <Box className={classes.root}>
@@ -122,10 +124,18 @@ const CampaignList = () => {
               src={campaign.images[0]}
               className={classes.campaignImage}
               alt=""
+              onClick={() => router.push('/campaign/zakatku')}
+              aria-hidden="true"
             />
             <Box ml={1}>
               <Box display="flex" alignItems="flex-start">
-                <span className={classes.campaignTitle}>{campaign.title}</span>
+                <span
+                  className={classes.campaignTitle}
+                  onClick={() => router.push('/campaign/zakatku')}
+                  aria-hidden="true"
+                >
+                  {campaign.title}
+                </span>
                 <Button
                   color="secondary"
                   variant="contained"

@@ -1,17 +1,19 @@
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const styles = (theme) => ({
   title: {
     flexGrow: 1,
-    textAlign: 'center',
+    // textAlign: 'center',
   },
   search: {
     display: 'flex',
@@ -56,19 +58,37 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     // border: 'solid pink 2px',
   },
-}));
+});
 
-const Header = ({
-  icon = false,
-  title = '',
-  searchbox = false,
-  size = 'normal',
-  dompet = false,
-}) => {
-  const classes = useStyles();
+const CustomHeader = (props) => {
+  const {
+    classes,
+    className,
+    icon = false,
+    title = '',
+    searchbox = false,
+    size = 'normal',
+    dompet = false,
+    color = 'primary',
+    elevation = 4,
+    backButton = false,
+    TitleProps = {
+      variant: 'h6',
+      align: 'center',
+    },
+    ...other
+  } = props;
+
+  const router = useRouter();
 
   return (
-    <AppBar position="sticky">
+    <AppBar
+      position="sticky"
+      color={color}
+      elevation={elevation}
+      className={clsx(classes.root, className)}
+      {...other}
+    >
       <Toolbar
         className={clsx({
           [classes.toolbarLarge]: size === 'large' || dompet,
@@ -80,6 +100,7 @@ const Header = ({
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            onClick={() => backButton && router.back()}
           >
             {icon}
           </IconButton>
@@ -102,7 +123,7 @@ const Header = ({
         )}
 
         {!searchbox && title && (
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} noWrap {...TitleProps}>
             {title}
           </Typography>
         )}
@@ -114,12 +135,18 @@ const Header = ({
   );
 };
 
-Header.propTypes = {
+CustomHeader.propTypes = {
+  classes: PropTypes.object,
+  className: PropTypes.object,
   icon: PropTypes.node,
   title: PropTypes.string,
   searchbox: PropTypes.bool,
   size: PropTypes.oneOf(['normal', 'large']),
   dompet: PropTypes.node,
+  color: PropTypes.string,
+  elevation: PropTypes.number,
+  backButton: PropTypes.bool,
+  TitleProps: PropTypes.object,
 };
 
-export default Header;
+export default withStyles(styles)(CustomHeader);
