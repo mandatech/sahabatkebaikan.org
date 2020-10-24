@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const styles = (theme) => ({
+  root: {},
   title: {
     flexGrow: 1,
     // textAlign: 'center',
