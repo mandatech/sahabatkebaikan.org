@@ -1,6 +1,7 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,10 @@ const useStyles = makeStyles((theme) => ({
 
 const DonateNowButton = () => {
   const classes = useStyles();
+  const router = useRouter();
+  const { slug } = router.query;
 
+  // console.log(router.query);
   return (
     <Box className={classes.root}>
       <Button
@@ -27,6 +31,7 @@ const DonateNowButton = () => {
         variant="contained"
         color="secondary"
         fullWidth
+        onClick={() => router.push(`/campaign/${slug}/donation-amount`)}
       >
         Donasi
       </Button>
