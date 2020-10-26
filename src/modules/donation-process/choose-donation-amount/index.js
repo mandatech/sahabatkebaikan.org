@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import formatCurrency from 'utils/formatCurrency';
 
@@ -34,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 const DonationAmountScreen = () => {
   const classes = useStyles();
+  const router = useRouter();
+  const { slug } = router.query;
   const [values, setValues] = useState({
     amount: 0,
     anonim: false,
@@ -267,6 +270,7 @@ const DonationAmountScreen = () => {
         disabled={!values.amount}
         fullWidth
         style={{ height: 50 }}
+        onClick={() => router.push(`/campaign/${slug}/donation-payment`)}
       >
         Lanjut
       </Button>
