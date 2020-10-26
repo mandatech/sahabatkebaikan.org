@@ -63,7 +63,10 @@ const PaymentMethod = () => {
             </Typography>
           </Box>
         </ListItem>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => router.push(`/campaign/${slug}/summary`)}
+        >
           <ListItemIcon>
             <BNIIcon />
           </ListItemIcon>
@@ -74,7 +77,10 @@ const PaymentMethod = () => {
             </Typography>
           </Box>
         </ListItem>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => router.push(`/campaign/${slug}/summary`)}
+        >
           <ListItemIcon>
             <PermataIcon />
           </ListItemIcon>
