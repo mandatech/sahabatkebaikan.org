@@ -28,6 +28,9 @@ const Search = () => {
           root: classes.headerRoot,
         }}
         searchbox
+        SearchBoxProps={{
+          autoFocus: true,
+        }}
       />
       <Box p={2} style={{ background: '#DEDEDE' }}>
         <Typography>Hasil Pencarian</Typography>
