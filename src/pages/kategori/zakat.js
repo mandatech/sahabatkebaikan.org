@@ -1,27 +1,45 @@
-import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import CampaignBox from 'components/CampaignBox';
+import BackIcon from '@material-ui/icons/ChevronLeft';
+import Header from 'components/Header';
+import Layout from 'components/Layout';
+import ZakatCampaignList from 'modules/category/zakat/zakat-campaign-list';
+import ZakatMenu from 'modules/category/zakat/zakat-menu';
+import React, { useState } from 'react';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: 16,
-    background: theme.palette.background.paper,
+const useStyles = makeStyles(() => ({
+  headerRoot: {
+    borderBottom: 'solid 1px lightgrey',
   },
 }));
 
-const SearchResult = () => {
+const ZakatPage = () => {
   const classes = useStyles();
+  const [filter, setFilter] = useState('all');
 
   return (
-    <Box className={classes.root}>
-      {campaigns.map((campaign) => (
-        <CampaignBox key={campaign.id} campaign={campaign} />
-      ))}
-    </Box>
+    <Layout>
+      <Header
+        title="Zakat"
+        icon={<BackIcon />}
+        backButton={true}
+        TitleProps={{ align: 'left' }}
+        color="inherit"
+        elevation={0}
+        classes={{
+          root: classes.headerRoot,
+        }}
+      />
+      <ZakatMenu />
+      <ZakatCampaignList
+        filter={filter}
+        setFilter={setFilter}
+        campaigns={campaigns}
+      />
+    </Layout>
   );
 };
 
-export default SearchResult;
+export default ZakatPage;
 
 const campaigns = [
   {
