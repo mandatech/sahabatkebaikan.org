@@ -6,6 +6,7 @@ import CampaignList from 'modules/home/campaign-list/screen';
 import CategoryList from 'modules/home/category/screen';
 import Dompet from 'modules/home/dompet/screen';
 import Slideshow from 'modules/home/slideshow/screen';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const DompetContainer = () => (
@@ -15,6 +16,8 @@ const DompetContainer = () => (
 );
 
 export default function Index() {
+  const router = useRouter();
+
   return (
     <>
       <Layout menu={1} withBottomNav>
@@ -23,11 +26,12 @@ export default function Index() {
           title="Cari yang ingin kamu bantu"
           dompet={<DompetContainer />}
           searchbox
+          SearchBoxProps={{
+            onClick: () => router.push('/cari'),
+          }}
         />
-        {/* <Box mx={2} mt={5}> */}
         <Slideshow />
         <CategoryList />
-        {/* <Divider style={{ height: 10, background: '#F7F7F7' }} /> */}
         <CampaignList />
       </Layout>
     </>

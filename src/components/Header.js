@@ -8,7 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const styles = (theme) => ({
   root: {},
@@ -77,10 +77,22 @@ const CustomHeader = (props) => {
       variant: 'h6',
       align: 'center',
     },
+    SearchBoxProps = {
+      value: '',
+      onChange: () => {},
+      onClick: () => {},
+    },
     ...other
   } = props;
 
   const router = useRouter();
+  const inputElement = useRef(null);
+
+  useEffect(() => {
+    if (inputElement.current) {
+      inputElement.current.focus();
+    }
+  }, []);
 
   return (
     <AppBar
@@ -116,6 +128,8 @@ const CustomHeader = (props) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              ref={inputElement}
+              {...SearchBoxProps}
             />
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -148,6 +162,7 @@ CustomHeader.propTypes = {
   elevation: PropTypes.number,
   backButton: PropTypes.bool,
   TitleProps: PropTypes.object,
+  SearchBoxProps: PropTypes.object,
 };
 
 export default withStyles(styles)(CustomHeader);
