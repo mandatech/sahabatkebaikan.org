@@ -52,6 +52,7 @@ const campaigns = [
     funded: 500000,
     daysLeft: 28,
     author: 'Baitul MaalKu',
+    slug: 'bahagiakan-ribuan-mustahiq-di-karawang-melalui-zakat-anda',
   },
   {
     id: 2,
@@ -64,6 +65,7 @@ const campaigns = [
     funded: 11200000,
     daysLeft: 77,
     author: 'Baitul MaalKu',
+    slug: 'yuk-ikut-distribusi-10000-wakaf-alquran',
   },
   {
     id: 3,
@@ -76,6 +78,7 @@ const campaigns = [
     funded: 3400000,
     daysLeft: 120,
     author: 'Baitul MaalKu',
+    slug: 'bantu-pendidikan-anak-anak-dhuafa-di-karawang',
   },
   {
     id: 4,
@@ -88,5 +91,6 @@ const campaigns = [
     funded: 5390000,
     daysLeft: 23,
     author: 'Baitul MaalKu',
+    slug: 'inbox-infaq-nasi-box',
   },
 ];

@@ -1,10 +1,7 @@
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { useRouter } from 'next/router';
+import CampaignBox from 'components/CampaignBox';
 
 const campaigns = [
   {
@@ -17,6 +14,7 @@ const campaigns = [
     funded: 500000,
     daysLeft: 28,
     author: 'Baitul MaalKu',
+    slug: 'bahagiakan-ribuan-mustahiq-di-karawang-melalui-zakat-anda',
   },
   {
     id: 2,
@@ -29,6 +27,7 @@ const campaigns = [
     funded: 11200000,
     daysLeft: 77,
     author: 'Baitul MaalKu',
+    slug: 'yuk-ikut-distribusi-10000-wakaf-alquran',
   },
   {
     id: 3,
@@ -41,6 +40,7 @@ const campaigns = [
     funded: 3400000,
     daysLeft: 120,
     author: 'Baitul MaalKu',
+    slug: 'bantu-pendidikan-anak-anak-dhuafa-di-karawang',
   },
   {
     id: 4,
@@ -53,6 +53,7 @@ const campaigns = [
     funded: 5390000,
     daysLeft: 23,
     author: 'Baitul MaalKu',
+    slug: 'inbox-infaq-nasi-box',
   },
 ];
 
@@ -102,15 +103,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// get value of linear progress
-// max value is 100
-function getValue(funded, target) {
-  return (funded * 100) / target;
-}
-
 const CampaignList = () => {
   const classes = useStyles();
-  const router = useRouter();
 
   return (
     <Box className={classes.root}>
@@ -118,65 +112,7 @@ const CampaignList = () => {
         Ayo lakukan kebaikan sekarang juga!
       </Typography>
       {campaigns.map((campaign) => (
-        <div key={campaign.id}>
-          <Box display="flex" my={1} alignItems="center">
-            <img
-              src={campaign.images[0]}
-              className={classes.campaignImage}
-              alt=""
-              onClick={() => router.push('/campaign/zakatku')}
-              aria-hidden="true"
-            />
-            <Box ml={1}>
-              <Box display="flex" alignItems="flex-start">
-                <span
-                  className={classes.campaignTitle}
-                  onClick={() => router.push('/campaign/zakatku')}
-                  aria-hidden="true"
-                >
-                  {campaign.title}
-                </span>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  className={classes.buttonDonasi}
-                >
-                  Donasi
-                </Button>
-              </Box>
-              <span className={classes.author}>{campaign.author}</span>
-
-              <LinearProgress
-                value={getValue(campaign.funded, campaign.target)}
-                variant="determinate"
-                style={{ margin: '4px 0' }}
-              />
-
-              <Box display="flex" justifyContent="space-between">
-                <Box display="flex" flexDirection="column">
-                  <span className={classes.fundedTitle}>Terkumpul</span>
-                  <span className={classes.fundedValue}>
-                    {new Intl.NumberFormat('id-ID', {
-                      style: 'currency',
-                      currency: 'IDR',
-                    }).format(campaign.funded)}
-                  </span>
-                </Box>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="flex-end"
-                >
-                  <span className={classes.fundedTitle}>Sisa Hari</span>
-                  <span className={classes.fundedValue}>
-                    {campaign.daysLeft}
-                  </span>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-          <Divider />
-        </div>
+        <CampaignBox key={campaign.id} campaign={campaign} />
       ))}
     </Box>
   );
