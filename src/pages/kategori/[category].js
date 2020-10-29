@@ -44,7 +44,7 @@ const CategoryPage = () => {
   return (
     <Layout>
       <Header
-        title={selectedCategory.name}
+        title={selectedCategory?.name}
         icon={<BackIcon />}
         backButton={true}
         TitleProps={{ align: 'left', textTransform: 'capitalize !important' }}
