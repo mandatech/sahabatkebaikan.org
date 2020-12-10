@@ -57,7 +57,7 @@ const CampaignList = () => {
   const classes = useStyles();
   const params = {
     _page: 1,
-    _pageSize: 3,
+    _pageSize: 5,
     _sort: 'created_at',
     _order: 'DESC',
     _q: '',
@@ -105,17 +105,19 @@ const CampaignList = () => {
         </Box>
       )}
 
-      <Box
-        width="100%"
-        mt={2}
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Button onClick={loadMore} disabled={isReachingEnd} color="secondary">
-          Muat lagi
-        </Button>
-      </Box>
+      {!isReachingEnd && (
+        <Box
+          width="100%"
+          mt={2}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Button onClick={loadMore} disabled={isFetching} color="secondary">
+            Muat lagi
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };
