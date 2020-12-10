@@ -1,4 +1,4 @@
-import { useGetList } from './useGetList';
+import { useGetList } from 'libs/hooks/useGetList';
 
 export function getCampaignList({
   _page = 1,
