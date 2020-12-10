@@ -1,61 +1,11 @@
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Loading from '@material-ui/core/CircularProgress';
 import CampaignBox from 'components/CampaignBox';
-
-const campaigns = [
-  {
-    id: 1,
-    title: 'Bahagiakan Ribuan Mustahiq di Karawang Melalui Zakat Anda',
-    images: [
-      'https://sahabatkebaikan.org/wp-content/uploads/2020/07/zakatKu-1.jpg',
-    ],
-    target: 1000000,
-    funded: 500000,
-    daysLeft: 28,
-    author: 'Baitul MaalKu',
-    slug: 'bahagiakan-ribuan-mustahiq-di-karawang-melalui-zakat-anda',
-  },
-  {
-    id: 2,
-    title:
-      'Yuk Ikut Distribusi 10.000 Wakaf Al-Qur’an untuk Santri dan Masyarakat Muslim di Pelosok Karawang dan Jawa Barat',
-    images: [
-      'https://sahabatkebaikan.org/wp-content/uploads/2020/07/wakaf-Al-Quran.png',
-    ],
-    target: 90000000,
-    funded: 11200000,
-    daysLeft: 77,
-    author: 'Baitul MaalKu',
-    slug: 'yuk-ikut-distribusi-10000-wakaf-alquran',
-  },
-  {
-    id: 3,
-    title:
-      'Bantu Anak-anak Dhuafa di Karawang untuk Memenuhi Kebutuhan Biaya Pendidikan Mereka',
-    images: [
-      'https://sahabatkebaikan.org/wp-content/uploads/2020/07/Beasiswa-AmanahKu.jpg',
-    ],
-    target: 32100000,
-    funded: 3400000,
-    daysLeft: 120,
-    author: 'Baitul MaalKu',
-    slug: 'bantu-pendidikan-anak-anak-dhuafa-di-karawang',
-  },
-  {
-    id: 4,
-    title:
-      'INBox – Infaq Nasi Box untuk Jama’ah Shalat Jum’at di Masjid Pelosok dan Pesisir Karawang',
-    images: [
-      'https://sahabatkebaikan.org/wp-content/uploads/2020/10/20201008_152909.jpg',
-    ],
-    target: 5400000,
-    funded: 5390000,
-    daysLeft: 23,
-    author: 'Baitul MaalKu',
-    slug: 'inbox-infaq-nasi-box',
-  },
-];
+import { Button } from '@material-ui/core';
+import { useInfiniteLoad } from 'libs/hooks/useInfiniteLoad';
+import CampaignBoxSkeleton from '../components/CampaignBoxSkeleton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,15 +55,69 @@ const useStyles = makeStyles((theme) => ({
 
 const CampaignList = () => {
   const classes = useStyles();
+  const params = {
+    _page: 1,
+    _pageSize: 5,
+    _sort: 'created_at',
+    _order: 'DESC',
+    _q: '',
+    _category_id: '',
+    _published: true,
+    _is_active: true,
+  };
+
+  const {
+    data,
+    isFetching,
+    error,
+    isLoadingInitialData,
+    isReachingEnd,
+    loadMore,
+  } = useInfiniteLoad('/campaigns', params);
 
   return (
     <Box className={classes.root}>
       <Typography variant="subtitle2" style={{ marginBottom: 16 }}>
         Ayo lakukan kebaikan sekarang juga!
       </Typography>
-      {campaigns.map((campaign) => (
-        <CampaignBox key={campaign.id} campaign={campaign} />
-      ))}
+
+      {isLoadingInitialData ? (
+        [1, 2, 3, 4].map((i) => <CampaignBoxSkeleton key={i} />)
+      ) : data?.length ? (
+        data.map((campaign) => (
+          <CampaignBox key={campaign.id} campaign={campaign} />
+        ))
+      ) : error ? (
+        <p style={{ color: 'red' }}>{error.message}</p>
+      ) : (
+        <p>Maaf, belum ada campaign tersedia.</p>
+      )}
+
+      {isFetching && !isLoadingInitialData && (
+        <Box
+          width="100%"
+          mt={2}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Loading color="secondary" size={20} />
+        </Box>
+      )}
+
+      {!isReachingEnd && (
+        <Box
+          width="100%"
+          mt={2}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Button onClick={loadMore} disabled={isFetching} color="secondary">
+            Muat lagi
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };
