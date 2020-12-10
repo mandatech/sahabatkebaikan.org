@@ -27,13 +27,11 @@ export const useGetList = (url, params = defaultParams) => {
           params,
         });
 
-        setTimeout(() => {
-          setDataState({
-            ...dataState,
-            data: data.items,
-            isFetching: false,
-          });
-        }, 1500);
+        setDataState({
+          ...dataState,
+          data: data.items,
+          isFetching: false,
+        });
       } catch (error) {
         if (error.response) {
           console.log(error.response.data);
@@ -69,3 +67,5 @@ export const useGetList = (url, params = defaultParams) => {
     error: dataState.error,
   };
 };
+
+export default useGetList;

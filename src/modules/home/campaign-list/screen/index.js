@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Loading from '@material-ui/core/CircularProgress';
 import CampaignBox from 'components/CampaignBox';
 import { Button } from '@material-ui/core';
-import { useInfiniteLoad } from 'services/useInfiniteLoad';
+import { useInfiniteLoad } from 'libs/hooks/useInfiniteLoad';
 import CampaignBoxSkeleton from '../components/CampaignBoxSkeleton';
 
 const useStyles = makeStyles((theme) => ({

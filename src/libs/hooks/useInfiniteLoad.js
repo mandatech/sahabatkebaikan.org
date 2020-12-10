@@ -31,21 +31,19 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
 
       const previousData = dataState.data ? [...dataState.data] : [];
 
-      setTimeout(() => {
-        let meta = { ...data };
-        delete meta.items;
+      let meta = { ...data };
+      delete meta.items;
 
-        setDataState({
-          ...dataState,
-          data: [...previousData, ...data.items],
-          meta,
-          isFetching: false,
-        });
-        setQueryParams({
-          ...queryParams,
-          _page: queryParams._page + 1,
-        });
-      }, 1500);
+      setDataState({
+        ...dataState,
+        data: [...previousData, ...data.items],
+        meta,
+        isFetching: false,
+      });
+      setQueryParams({
+        ...queryParams,
+        _page: queryParams._page + 1,
+      });
     } catch (error) {
       if (error.response) {
         console.log(error.response.data);
