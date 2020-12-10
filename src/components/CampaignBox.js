@@ -71,7 +71,7 @@ const CampaignBox = ({ campaign }) => {
             }
           >
             <img
-              src={campaign.images[0]}
+              src={campaign.images[0].url}
               className={classes.campaignImage}
               alt=""
               aria-hidden="true"
@@ -106,10 +106,10 @@ const CampaignBox = ({ campaign }) => {
             </Grid>
           </Grid>
           <Typography className={classes.author} gutterBottom>
-            {campaign.author}
+            {campaign.campaigner.full_name}
           </Typography>
           <LinearProgress
-            value={getValue(campaign.funded, campaign.target)}
+            value={getValue(campaign.donation_funded, campaign.donation_target)}
             variant="determinate"
             style={{ margin: '4px 0' }}
           />
@@ -120,7 +120,7 @@ const CampaignBox = ({ campaign }) => {
                 Terkumpul
               </Typography>
               <Typography className={classes.fundedDaysLeftValue}>
-                Rp {formatCurrency.format(campaign.funded)}
+                Rp {formatCurrency.format(campaign.donation_funded)}
               </Typography>
             </Grid>
             <Grid item xs container direction="column">
@@ -132,7 +132,7 @@ const CampaignBox = ({ campaign }) => {
                 Sisa hari
               </Typography>
               <Typography className={classes.fundedDaysLeftValue} align="right">
-                {campaign.daysLeft}
+                {campaign.days_left}
               </Typography>
             </Grid>
           </Grid>
