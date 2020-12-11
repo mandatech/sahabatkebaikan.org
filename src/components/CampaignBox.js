@@ -132,7 +132,11 @@ const CampaignBox = ({ campaign }) => {
                 Sisa hari
               </Typography>
               <Typography className={classes.fundedDaysLeftValue} align="right">
-                {campaign.days_left}
+                {campaign.is_never_end ? (
+                  <span style={{ fontSize: 18 }}>∞</span>
+                ) : (
+                  campaign.days_left
+                )}
               </Typography>
             </Grid>
           </Grid>
