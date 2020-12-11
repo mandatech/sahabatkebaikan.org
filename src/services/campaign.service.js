@@ -1,4 +1,5 @@
 import { useGetList } from 'libs/hooks/useGetList';
+import { useGetOne } from 'libs/hooks/useGetOne';
 
 export function getCampaignList({
   _page = 1,
@@ -20,6 +21,12 @@ export function getCampaignList({
     _published,
     _is_active,
   });
+
+  return { data, isFetching, error };
+}
+
+export function getCampaignDetail(slug) {
+  const { data, isFetching, error } = useGetOne(`/campaigns/${slug}`);
 
   return { data, isFetching, error };
 }

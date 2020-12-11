@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -52,7 +53,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CampaignStory = () => {
+const CampaignStory = ({ campaign }) => {
   const classes = useStyles();
   const [readAll, setReadAll] = useState(false);
 
@@ -63,7 +64,7 @@ const CampaignStory = () => {
           Cerita
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          12 Juli 2020
+          {new Date(campaign.start_date).toLocaleDateString()}
         </Typography>
       </Box>
 
@@ -75,7 +76,8 @@ const CampaignStory = () => {
             alignItems: 'center',
           }}
         >
-          <div>
+          {campaign.description}
+          {/* <div>
             Sepanjang tahun 2020, BMKu telah menyalurkan dana zakat kepada 2.293
             penerima manfaat di Kabupaten Karawang dan sekitarnya. Sesuai dengan
             perintah dalam Al-Qur’an surat At-Taubah ayat 60, dana zakat oleh
@@ -104,7 +106,7 @@ const CampaignStory = () => {
             BaitulMaalKu. Selain karena merupakan kewajiban yang tertera di QS.
             At-Taubah ayat 103, zakat merupakan instrumen keuangan Islam yang
             dapat meningkatkan kesejahteraan masyarakat di lingkungan sekitar.
-          </div>
+          </div> */}
         </Box>
         <Box
           className={clsx(classes.buttonReadAllContainer, {
@@ -124,6 +126,10 @@ const CampaignStory = () => {
       </Box>
     </Paper>
   );
+};
+
+CampaignStory.propTypes = {
+  campaign: PropTypes.object,
 };
 
 export default CampaignStory;

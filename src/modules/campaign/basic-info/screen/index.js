@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
@@ -6,6 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Image from 'material-ui-image';
+import formatCurrency from 'utils/formatCurrency';
+import getValueOfLinearProgress from 'utils/getValueOfLinearProgress';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,13 +35,17 @@ const useStyles = makeStyles(() => ({
 //   return (funded * 100) / target;
 // }
 
-const CampaignBasicInfo = () => {
+const CampaignBasicInfo = ({ campaign }) => {
   const classes = useStyles();
 
   return (
     <Paper className={classes.root} elevation={0}>
       <Image
-        src={`https://sahabatkebaikan.org/wp-content/uploads/2020/07/zakatKu-1.jpg`}
+        src={
+          campaign.images.length
+            ? campaign.images[0].url
+            : 'https://via.placeholder.com/600x400'
+        }
         onClick={() => console.log('onClick')}
         aspectRatio={16 / 9}
         imageStyle={{
@@ -49,7 +56,7 @@ const CampaignBasicInfo = () => {
         disableSpinner
       />
       <Typography variant="h6" style={{ lineHeight: 1.4 }}>
-        Bahagiakan Ribuan Mustahiq di Karawang Melalui Zakat Anda
+        {campaign.title}
       </Typography>
       <Grid container>
         <Grid item>
@@ -58,7 +65,7 @@ const CampaignBasicInfo = () => {
             color="primary"
             style={{ fontWeight: 500 }}
           >
-            Rp 54.000.000
+            Rp {formatCurrency.format(campaign.donation_funded)}
           </Typography>
         </Grid>
         <Grid item>
@@ -67,38 +74,53 @@ const CampaignBasicInfo = () => {
             color="textSecondary"
             style={{ marginLeft: 8 }}
           >
-            terkumpul dari Rp 190.000.000
+            terkumpul dari Rp {formatCurrency.format(campaign.donation_target)}
           </Typography>
         </Grid>
       </Grid>
       <LinearProgress
-        value={40}
+        value={getValueOfLinearProgress(
+          campaign.donation_funded,
+          campaign.donation_target
+        )}
         variant="determinate"
         style={{ margin: '4px 0' }}
       />
       <Box display="flex" justifyContent="space-between">
         <Typography variant="body2">
-          <span style={{ fontWeight: 600 }}>1298</span> Donatur
+          <span style={{ fontWeight: 600 }}>{campaign.donors_count}</span>{' '}
+          Donatur
         </Typography>
         <Typography variant="body2">
-          <span style={{ fontWeight: 600 }}>128</span> Hari lagi
+          <span style={{ fontWeight: 600 }}>
+            {campaign.is_never_end ? (
+              <span style={{ fontSize: 18 }}>∞</span>
+            ) : (
+              campaign.days_left
+            )}
+          </span>{' '}
+          Hari lagi
         </Typography>
       </Box>
 
       <Paper className={classes.author} elevation={0}>
         <Avatar
           className={classes.authorAvatar}
-          src="https://sahabatkebaikan.org/wp-content/uploads/2020/07/FB_IMG_1595683988942.jpg"
+          src={'https://via.placeholder.com/200?text=No%20Image'}
         />
         <Box ml={2}>
-          <Typography>Baitul Maalku</Typography>
+          <Typography>{campaign.campaigner.full_name}</Typography>
           <Typography variant="body2" color="textSecondary">
-            Akun sudah terverifikasi
+            {campaign.campaigner.description}
           </Typography>
         </Box>
       </Paper>
     </Paper>
   );
+};
+
+CampaignBasicInfo.propTypes = {
+  campaign: PropTypes.object,
 };
 
 export default CampaignBasicInfo;
