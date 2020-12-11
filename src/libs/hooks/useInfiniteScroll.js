@@ -2,21 +2,24 @@ import { useState, useEffect } from 'react';
 import { axiosInstance } from 'config/axios';
 
 const defaultParams = {
-  page: 1,
-  _pageSize: 3,
+  _page: 1,
+  _pageSize: 10,
   _sort: 'created_at',
   _order: 'DESC',
   _q: '',
 };
 
-export const useInfiniteScroll = (url, params = defaultParams) => {
-  const [queryParams, setQueryParams] = useState(params);
-  const [listItems, setListItems] = useState([]);
+export const useInfiniteScroll = (url, params) => {
+  const [queryParams, setQueryParams] = useState({
+    ...defaultParams,
+    ...params,
+  });
+  const [listItems, setListItems] = useState(null);
   const [meta, setMeta] = useState(null);
   const [error, setError] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
 
-  const isLoadingInitialData = !listItems.length && !error;
+  const isLoadingInitialData = !listItems && !error;
   // const isEmpty = dataState.data?.[0]?.length === 0;
   const isReachingEnd = meta?.page === meta?.lastPage;
 
@@ -44,7 +47,7 @@ export const useInfiniteScroll = (url, params = defaultParams) => {
         params,
       });
 
-      const previousData = listItems.length ? [...listItems] : [];
+      const previousData = listItems ? [...listItems] : [];
       let meta = { ...data };
       delete meta.items;
 
@@ -93,3 +96,5 @@ export const useInfiniteScroll = (url, params = defaultParams) => {
     isLoadingInitialData,
   };
 };
+
+export default useInfiniteScroll;
