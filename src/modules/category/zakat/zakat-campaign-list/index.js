@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Loading from '@material-ui/core/CircularProgress';
 import CampaignBox from 'components/CampaignBox';
 import PropTypes from 'prop-types';
+import CampaignBoxSkeleton from 'components/CampaignBoxSkeleton';
+import useInfiniteScroll from 'libs/hooks/useInfiniteScroll';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,8 +19,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ZakatScreen = ({ campaigns, filter, setFilter }) => {
+const ZakatScreen = ({ category }) => {
   const classes = useStyles();
+  const [params, setParams] = useState({
+    _category_id: category.id,
+    _published: true,
+    _is_active: true,
+  });
+
+  const { data, isLoadingInitialData, isFetching, error } = useInfiniteScroll(
+    '/campaigns',
+    params
+  );
+
+  console.log('params', params);
+  console.log('data', data);
 
   return (
     <Box className={classes.root}>
@@ -36,13 +53,18 @@ const ZakatScreen = ({ campaigns, filter, setFilter }) => {
         <Grid item>
           <Select
             variant="outlined"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            value={params._category_id}
+            onChange={(e) =>
+              setParams({
+                ...params,
+                _category_id: e.target.value,
+              })
+            }
             label="Sort"
             style={{ height: 40, fontSize: 12 }}
             autoWidth={true}
           >
-            <MenuItem value={'all'}>Semua</MenuItem>
+            <MenuItem value={'zakat'}>Semua</MenuItem>
             {categories.map((category) => (
               <MenuItem key={category.id} value={category.id}>
                 {category.name}
@@ -51,15 +73,40 @@ const ZakatScreen = ({ campaigns, filter, setFilter }) => {
           </Select>
         </Grid>
       </Grid>
-      {campaigns.map((campaign) => (
+
+      {isLoadingInitialData ? (
+        [1, 2, 3, 4].map((i) => <CampaignBoxSkeleton key={i} />)
+      ) : data?.length ? (
+        data.map((campaign) => (
+          <CampaignBox key={campaign.id} campaign={campaign} />
+        ))
+      ) : error ? (
+        <p style={{ color: 'red' }}>{error.message}</p>
+      ) : (
+        <p>Tidak ada campaign ditemukan.</p>
+      )}
+
+      {isFetching && !isLoadingInitialData && (
+        <Box
+          width="100%"
+          mt={2}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Loading color="secondary" size={20} />
+        </Box>
+      )}
+
+      {/* {campaigns.map((campaign) => (
         <CampaignBox key={campaign.id} campaign={campaign} />
-      ))}
+      ))} */}
     </Box>
   );
 };
 
 ZakatScreen.propTypes = {
-  campaigns: PropTypes.array,
+  category: PropTypes.object,
   filter: PropTypes.any,
   setFilter: PropTypes.func,
 };
@@ -68,35 +115,67 @@ export default ZakatScreen;
 
 const categories = [
   {
-    id: 1,
-    name: 'Fakir',
-  },
-  {
-    id: 2,
-    name: 'Miskin',
-  },
-  {
-    id: 3,
+    id: 'amil',
+    category_id: 'zakat',
     name: 'Amil',
+    created_at: '2020-12-03 15:41:45',
+    updated_at: '2020-12-03 15:41:45',
+    deleted_at: null,
   },
   {
-    id: 4,
-    name: 'Riqab',
+    id: 'fakir',
+    category_id: 'zakat',
+    name: 'Fakir',
+    created_at: '2020-12-03 15:41:45',
+    updated_at: '2020-12-03 15:41:45',
+    deleted_at: null,
   },
   {
-    id: 5,
-    name: 'Gharim',
-  },
-  {
-    id: 6,
+    id: 'fi-sabilillah',
+    category_id: 'zakat',
     name: 'Fi Sabilillah',
+    created_at: '2020-12-03 15:41:45',
+    updated_at: '2020-12-03 15:41:45',
+    deleted_at: null,
   },
   {
-    id: 7,
+    id: 'gharim',
+    category_id: 'zakat',
+    name: 'Gharim',
+    created_at: '2020-12-03 15:41:45',
+    updated_at: '2020-12-03 15:41:45',
+    deleted_at: null,
+  },
+  {
+    id: 'ibnu-sabil',
+    category_id: 'zakat',
     name: 'Ibnu Sabil',
+    created_at: '2020-12-03 15:41:45',
+    updated_at: '2020-12-03 15:41:45',
+    deleted_at: null,
   },
   {
-    id: 8,
+    id: 'miskin',
+    category_id: 'zakat',
+    name: 'Miskin',
+    created_at: '2020-12-03 15:41:45',
+    updated_at: '2020-12-03 15:41:45',
+    deleted_at: null,
+  },
+  {
+    id: 'muallaf',
+    category_id: 'zakat',
     name: 'Muallaf',
+    created_at: '2020-12-03 15:41:45',
+    updated_at: '2020-12-03 15:41:45',
+    deleted_at: null,
+  },
+  {
+    id: 'riqab',
+    category_id: 'zakat',
+    name: 'Riqab',
+    created_at: '2020-12-03 15:41:45',
+    updated_at: '2020-12-03 15:41:45',
+    deleted_at: null,
   },
 ];

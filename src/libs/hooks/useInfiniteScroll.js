@@ -22,6 +22,8 @@ export const useInfiniteScroll = (url, params) => {
   const isLoadingInitialData = !listItems && !error;
   // const isEmpty = dataState.data?.[0]?.length === 0;
   const isReachingEnd = meta?.page === meta?.lastPage;
+  console.log('queryParamss', queryParams);
+  console.log('paramssss', params);
 
   useEffect(() => {
     fetchData();
