@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -17,14 +18,28 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoryCampaignList = ({ category }) => {
   const classes = useStyles();
+  const [params] = useState({
+    _category_id: category.id,
+    _published: true,
+    _is_active: true,
+  });
+
   const { data, isLoadingInitialData, isFetching, error } = useInfiniteScroll(
     '/campaigns',
-    {
-      _category_id: category.id,
-      _published: true,
-      _is_active: true,
-    }
+    params
   );
+
+  // fix Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function
+  const [didMount, setDidMount] = useState(false);
+
+  useEffect(() => {
+    setDidMount(true);
+    return () => setDidMount(false);
+  }, []);
+
+  if (!didMount) {
+    return null;
+  }
 
   return (
     <Box className={classes.root}>

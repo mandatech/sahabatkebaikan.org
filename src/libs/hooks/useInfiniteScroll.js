@@ -3,7 +3,7 @@ import { axiosInstance } from 'config/axios';
 
 const defaultParams = {
   _page: 1,
-  _pageSize: 10,
+  _pageSize: 3,
   _sort: 'created_at',
   _order: 'DESC',
   _q: '',
@@ -22,13 +22,18 @@ export const useInfiniteScroll = (url, params) => {
   const isLoadingInitialData = !listItems && !error;
   // const isEmpty = dataState.data?.[0]?.length === 0;
   const isReachingEnd = meta?.page === meta?.lastPage;
-  console.log('queryParamss', queryParams);
-  console.log('paramssss', params);
 
   useEffect(() => {
     fetchData();
     window.addEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const newParams = { ...defaultParams, ...params };
+    setQueryParams(newParams);
+
+    fetchData(newParams, true);
+  }, [params]);
 
   const handleScroll = () => {
     if (
@@ -41,7 +46,7 @@ export const useInfiniteScroll = (url, params) => {
     setIsFetching(true);
   };
 
-  const fetchData = async (params = queryParams) => {
+  const fetchData = async (params = queryParams, reset = false) => {
     try {
       const { data } = await axiosInstance({
         url,
@@ -53,9 +58,16 @@ export const useInfiniteScroll = (url, params) => {
       let meta = { ...data };
       delete meta.items;
 
-      setListItems(() => {
-        return [...previousData, ...data.items];
-      });
+      if (reset) {
+        setListItems(() => {
+          return [...data.items];
+        });
+      } else {
+        setListItems(() => {
+          return [...previousData, ...data.items];
+        });
+      }
+
       setMeta(meta);
       setQueryParams({
         ...queryParams,

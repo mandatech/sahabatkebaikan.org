@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -26,14 +26,22 @@ const ZakatScreen = ({ category }) => {
     _published: true,
     _is_active: true,
   });
-
   const { data, isLoadingInitialData, isFetching, error } = useInfiniteScroll(
     '/campaigns',
     params
   );
 
-  console.log('params', params);
-  console.log('data', data);
+  // fix Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function
+  const [didMount, setDidMount] = useState(false);
+
+  useEffect(() => {
+    setDidMount(true);
+    return () => setDidMount(false);
+  }, []);
+
+  if (!didMount) {
+    return null;
+  }
 
   return (
     <Box className={classes.root}>
