@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -55,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CampaignList = () => {
   const classes = useStyles();
-  const params = {
+  const [params] = useState({
     _page: 1,
     _pageSize: 5,
     _sort: 'created_at',
@@ -64,7 +65,7 @@ const CampaignList = () => {
     _category_id: '',
     _published: true,
     _is_active: true,
-  };
+  });
 
   const {
     data,

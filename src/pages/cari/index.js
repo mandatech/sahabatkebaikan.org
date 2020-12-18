@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -12,8 +15,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Search = () => {
+const Search = ({ q }) => {
   const classes = useStyles();
+  const router = useRouter();
+  const [query, setQuery] = useState(q);
+
+  const handleSearchBoxChange = (e) => {
+    router.replace({
+      pathname: '/cari',
+      query: { q: encodeURI(e.target.value) },
+    });
+    setQuery(e.target.value);
+  };
 
   return (
     <Layout>
@@ -30,14 +43,28 @@ const Search = () => {
         searchbox
         SearchBoxProps={{
           autoFocus: true,
+          value: query,
+          onChange: handleSearchBoxChange,
         }}
       />
       <Box p={2} style={{ background: '#DEDEDE' }}>
         <Typography>Hasil Pencarian</Typography>
       </Box>
-      <SearchResultScreen campaigns={campaigns} />
+      <SearchResultScreen campaigns={campaigns} query={query} />
     </Layout>
   );
+};
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: {
+      q: query.q || '',
+    },
+  };
+}
+
+Search.propTypes = {
+  q: PropTypes.string,
 };
 
 export default Search;

@@ -20,7 +20,14 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
     error: null,
   });
 
-  const fetchFromApi = async (queryParams) => {
+  useEffect(() => {
+    const newParams = { ...defaultParams, ...params };
+    setQueryParams(newParams);
+
+    fetchFromApi(newParams, true);
+  }, [params]);
+
+  const fetchFromApi = async (queryParams, reset = false) => {
     try {
       setDataState({ ...dataState, isFetching: true });
       const { data } = await axiosInstance({
@@ -34,12 +41,22 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
       let meta = { ...data };
       delete meta.items;
 
-      setDataState({
-        ...dataState,
-        data: [...previousData, ...data.items],
-        meta,
-        isFetching: false,
-      });
+      if (reset) {
+        setDataState({
+          ...dataState,
+          data: [...data.items],
+          meta,
+          isFetching: false,
+        });
+      } else {
+        setDataState({
+          ...dataState,
+          data: [...previousData, ...data.items],
+          meta,
+          isFetching: false,
+        });
+      }
+
       setQueryParams({
         ...queryParams,
         _page: queryParams._page + 1,

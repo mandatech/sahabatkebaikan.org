@@ -123,6 +123,7 @@ const CustomHeader = (props) => {
           <div className={classes.search}>
             <InputBase
               placeholder={title}
+              fullWidth
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
