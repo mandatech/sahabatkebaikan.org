@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ profile }) => {
   const classes = useStyles();
   const router = useRouter();
 
@@ -83,25 +84,25 @@ const ProfileInfo = () => {
           Nama Lengkap
         </Typography>
         <Typography variant="body1" gutterBottom>
-          Sahabat Kebaikan
+          {profile?.full_name}
         </Typography>
         <Typography variant="body1" color="textSecondary">
           Username
         </Typography>
         <Typography variant="body1" gutterBottom>
-          SahabatKebaikan04
+          {profile?.username}
         </Typography>
         <Typography variant="body1" color="textSecondary">
           No Telepon
         </Typography>
         <Typography variant="body1" gutterBottom>
-          08123456789
+          {profile?.phone || '-'}
         </Typography>
         <Typography variant="body1" color="textSecondary">
           Email
         </Typography>
         <Typography variant="body1" gutterBottom>
-          me@sahabatkebaikan.org
+          {profile?.email}
         </Typography>
       </Box>
       <Divider variant="middle" />
@@ -124,6 +125,10 @@ const ProfileInfo = () => {
       </List>
     </Box>
   );
+};
+
+ProfileInfo.propTypes = {
+  profile: PropTypes.object,
 };
 
 export default ProfileInfo;

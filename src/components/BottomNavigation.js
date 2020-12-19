@@ -67,13 +67,21 @@ const SimpleBottomNavigation = ({ value }) => {
   const handleTabChange = (event, newValue) => {
     switch (newValue) {
       case 0:
-        Router.push('/kebaikanku');
+        if (localStorage.getItem('token')) {
+          Router.push('/kebaikanku');
+        } else {
+          Router.push('/login?redirect=/kebaikanku');
+        }
         break;
       case 1:
         Router.push('/');
         break;
       case 2:
-        Router.push('/profil');
+        if (localStorage.getItem('token')) {
+          Router.push('/profil');
+        } else {
+          Router.push('/login?redirect=/profil');
+        }
         break;
       default:
         break;

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -6,11 +7,15 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import FacebookIcon from 'assets/icons/facebook_icon.svg';
 import GoogleIcon from 'assets/icons/google_icon.svg';
 import Link from 'components/Link';
+import Loading from 'components/Loading';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
+import { loginWithUsernameOrEmailPassword } from 'services/auth.service';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -36,13 +41,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const validate = (values) => {
   const errors = {};
   if (!values.email) {
     errors.email = 'Harus diisi';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Alamat email salah';
   }
+  // if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+  //   errors.email = 'Alamat email salah';
+  // }
   if (!values.password) {
     errors.password = 'Harus diisi';
   }
@@ -53,6 +63,53 @@ const validate = (values) => {
 const LoginForm = () => {
   const classes = useStyles();
   const router = useRouter();
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
+  const handleLogin = async (values) => {
+    try {
+      setIsLoading(true);
+      const data = await loginWithUsernameOrEmailPassword(
+        values.email,
+        values.password
+      );
+
+      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('data_login', JSON.stringify(data));
+
+      if (router.query.redirect) {
+        router.push(window.location.search.slice(10));
+      } else {
+        router.push('/');
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      setOpenAlert(true);
+      console.log('error', error);
+      if (error.response) {
+        console.log(error.response.data);
+        setAlertMessage(error.response.data.message);
+      } else if (error.request) {
+        console.log(error.request);
+        setAlertMessage('Network Error');
+      } else {
+        console.log('Error', error.message);
+        setAlertMessage(error.message);
+      }
+
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Paper className={classes.root} elevation={2}>
@@ -108,13 +165,7 @@ const LoginForm = () => {
           password: '',
         }}
         validate={validate}
-        onSubmit={(values) => {
-          // alert(JSON.stringify(values, null, 2));
-          console.log(values);
-          setTimeout(() => {
-            router.push('/');
-          }, 1300);
-        }}
+        onSubmit={handleLogin}
       >
         {(formik) => (
           <form
@@ -178,6 +229,13 @@ const LoginForm = () => {
       >
         Daftar
       </Button>
+
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+      <Loading open={isLoading} onClose={() => setIsLoading(false)} />
     </Paper>
   );
 };
