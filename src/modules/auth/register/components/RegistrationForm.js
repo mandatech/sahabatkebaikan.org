@@ -41,6 +41,7 @@ const RegistrationForm = () => {
   const router = useRouter();
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('info');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = (event, reason) => {
@@ -62,18 +63,25 @@ const RegistrationForm = () => {
         values.password
       );
 
-      if (router.query.redirect) {
-        router.push(`/login?redirect=${window.location.search.slice(10)}`);
-      } else {
-        router.push('/login');
-      }
-
+      setAlertSeverity('info');
+      setAlertMessage('Register berhasil. Silahkan login.');
+      setOpenAlert(true);
       setSubmitting(false);
       setIsLoading(false);
+
+      setTimeout(() => {
+        if (router.query.redirect) {
+          router.push(`/login?redirect=${window.location.search.slice(10)}`);
+        } else {
+          router.push('/login');
+        }
+      }, 1200);
     } catch (error) {
       console.log('error', error);
+      setIsLoading(false);
       setSubmitting(false);
       setOpenAlert(true);
+      setAlertSeverity('error');
       if (error.response) {
         console.log(error.response.data);
         setAlertMessage(error.response.data.message);
@@ -84,8 +92,6 @@ const RegistrationForm = () => {
         console.log('Error', error.message);
         setAlertMessage(error.message);
       }
-
-      setIsLoading(false);
     }
   };
 
@@ -111,17 +117,9 @@ const RegistrationForm = () => {
             errors.username = 'Harus diisi';
           }
 
-          // if (!values.phone) {
-          //   errors.phone = 'Harus diisi';
-          // }
-
           if (!values.phone) {
             errors.phone = 'Harus diisi';
-          } else if (
-            !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(
-              values.phone
-            )
-          ) {
+          } else if (!/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/g.test(values.phone)) {
             errors.phone = 'Nomor telepon tidak valid';
           }
 
@@ -237,7 +235,7 @@ const RegistrationForm = () => {
         Sahabatkebaikan.org
       </Link>
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
+        <Alert onClose={handleClose} severity={alertSeverity}>
           {alertMessage}
         </Alert>
       </Snackbar>
