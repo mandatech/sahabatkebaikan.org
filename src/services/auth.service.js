@@ -21,3 +21,31 @@ export const loginWithUsernameOrEmailPassword = async (username, password) => {
 
   return data;
 };
+
+export const registerWithUsernameOrEmailPassword = async (
+  full_name,
+  username,
+  email,
+  phone,
+  password
+) => {
+  const bodyRequest = qs.stringify({
+    full_name,
+    username,
+    email,
+    phone,
+    password,
+    role: 'user',
+  });
+
+  const { data } = await axiosInstance({
+    url: '/users',
+    method: 'POST',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    data: bodyRequest,
+  });
+
+  return data;
+};
