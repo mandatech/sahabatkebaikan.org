@@ -12,6 +12,8 @@ const Login = ({ query }) => {
       } else {
         Router.push('/');
       }
+    } else {
+      Router.prefetch('/register');
     }
   }, []);
 

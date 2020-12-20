@@ -1,14 +1,20 @@
+/* eslint-disable no-useless-escape */
+import { useState } from 'react';
+import { Field, Form, Formik } from 'formik';
+import { TextField as FormikTextField } from 'formik-material-ui';
+import { useRouter } from 'next/router';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import FacebookIcon from 'assets/icons/facebook_icon.svg';
 import GoogleIcon from 'assets/icons/google_icon.svg';
 import DividerWithText from 'components/DividerWithText';
 import Link from 'components/Link';
-import { Field, Form, Formik } from 'formik';
-import { TextField as FormikTextField } from 'formik-material-ui';
-import { useRouter } from 'next/router';
+import Loading from 'components/Loading';
+import { registerWithUsernameOrEmailPassword } from 'services/auth.service';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -22,6 +28,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const TextField = (props) => (
   <FormikTextField variant="filled" size="small" fullWidth {...props} />
 );
@@ -29,11 +39,67 @@ const TextField = (props) => (
 const RegistrationForm = () => {
   const classes = useStyles();
   const router = useRouter();
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('info');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
+  const handleRegister = async (values, { setSubmitting }) => {
+    try {
+      setIsLoading(true);
+      await registerWithUsernameOrEmailPassword(
+        values.full_name,
+        values.username,
+        values.email,
+        values.phone,
+        values.password
+      );
+
+      setAlertSeverity('info');
+      setAlertMessage('Register berhasil. Silahkan login.');
+      setOpenAlert(true);
+      setSubmitting(false);
+      setIsLoading(false);
+
+      setTimeout(() => {
+        if (router.query.redirect) {
+          router.push(`/login?redirect=${window.location.search.slice(10)}`);
+        } else {
+          router.push('/login');
+        }
+      }, 1200);
+    } catch (error) {
+      console.log('error', error);
+      setIsLoading(false);
+      setSubmitting(false);
+      setOpenAlert(true);
+      setAlertSeverity('error');
+      if (error.response) {
+        console.log(error.response.data);
+        setAlertMessage(error.response.data.message);
+      } else if (error.request) {
+        console.log(error.request);
+        setAlertMessage('Network Error');
+      } else {
+        console.log('Error', error.message);
+        setAlertMessage(error.message);
+      }
+    }
+  };
 
   return (
     <Box display="flex" flexDirection="column" mt={4} p={1}>
       <Formik
         initialValues={{
+          full_name: '',
           username: '',
           phone: '',
           email: '',
@@ -42,12 +108,19 @@ const RegistrationForm = () => {
         }}
         validate={(values) => {
           const errors = {};
+
+          if (!values.full_name) {
+            errors.full_name = 'Harus diisi';
+          }
+
           if (!values.username) {
             errors.username = 'Harus diisi';
           }
 
           if (!values.phone) {
             errors.phone = 'Harus diisi';
+          } else if (!/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/g.test(values.phone)) {
+            errors.phone = 'Nomor telepon tidak valid';
           }
 
           if (!values.email) {
@@ -72,17 +145,16 @@ const RegistrationForm = () => {
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            console.log('values', values);
-            setSubmitting(false);
-            // alert(JSON.stringify(values, null, 2));
-            router.push('/');
-          }, 500);
-        }}
+        onSubmit={handleRegister}
       >
         {({ submitForm, isSubmitting }) => (
           <Form className={classes.form}>
+            <Field
+              component={TextField}
+              name="full_name"
+              type="text"
+              label="Nama Lengkap"
+            />
             <Field
               component={TextField}
               name="username"
@@ -162,6 +234,12 @@ const RegistrationForm = () => {
         Dengan mendaftar, kamu setuju dengan Syarat dan Ketentuan penggunaan
         Sahabatkebaikan.org
       </Link>
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={alertSeverity}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+      <Loading open={isLoading} onClose={() => setIsLoading(false)} />
     </Box>
   );
 };

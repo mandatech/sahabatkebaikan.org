@@ -111,6 +111,14 @@ const LoginForm = () => {
     }
   };
 
+  const goToRegisterPage = () => {
+    if (router.query.redirect) {
+      router.push(`/register?redirect=${window.location.search.slice(10)}`);
+    } else {
+      router.push('/register');
+    }
+  };
+
   return (
     <Paper className={classes.root} elevation={2}>
       <Typography
@@ -222,11 +230,7 @@ const LoginForm = () => {
         )}
       </Formik>
 
-      <Button
-        variant="outlined"
-        fullWidth
-        onClick={() => router.push('/register')}
-      >
+      <Button variant="outlined" fullWidth onClick={goToRegisterPage}>
         Daftar
       </Button>
 
