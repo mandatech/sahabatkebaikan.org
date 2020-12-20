@@ -49,3 +49,23 @@ export const registerWithUsernameOrEmailPassword = async (
 
   return data;
 };
+
+export const updateProfile = async (id, { full_name, phone }) => {
+  const bodyRequest = qs.stringify({
+    full_name,
+    // username,
+    // email,
+    phone,
+  });
+
+  const { data } = await axiosInstance({
+    url: `/users/${id}`,
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    data: bodyRequest,
+  });
+
+  return data;
+};

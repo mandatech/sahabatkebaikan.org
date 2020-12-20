@@ -119,7 +119,13 @@ const RegistrationForm = () => {
 
           if (!values.phone) {
             errors.phone = 'Harus diisi';
-          } else if (!/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/g.test(values.phone)) {
+          }
+
+          if (values.phone && !/^\d+$/i.test(values.phone)) {
+            errors.phone = 'Nomor telepon tidak valid';
+          }
+
+          if (values.phone?.length < 8) {
             errors.phone = 'Nomor telepon tidak valid';
           }
 

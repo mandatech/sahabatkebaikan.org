@@ -8,7 +8,13 @@ export const axiosInstance = axios.create({
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
+    const token = localStorage.getItem('token');
+
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+      ...config.headers,
+    };
+
     return config;
   },
   function (error) {
