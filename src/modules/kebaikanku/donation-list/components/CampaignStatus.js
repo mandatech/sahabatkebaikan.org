@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'default',
     textTransform: 'capitalize',
   },
-  completed: {
+  paid: {
     color: '#41CE34',
     border: '1px solid #41CE34',
   },
@@ -27,16 +27,22 @@ const useStyles = makeStyles((theme) => ({
     color: '#868686',
     border: '1px solid #868686',
   },
+  expired: {
+    color: '#d32323',
+    border: '1px solid #d32323',
+  },
 }));
 
 function formatStatus(status) {
   switch (status) {
-    case 'completed':
+    case 'paid':
       return 'Berhasil';
     case 'pending':
       return 'Tertunda';
     case 'cancelled':
       return 'Dibatalkan';
+    case 'expired':
+      return 'Expired';
 
     default:
       break;
@@ -50,9 +56,10 @@ const CampaignStatus = ({ status }) => {
     <Button
       variant="outlined"
       className={clsx(classes.donationStatus, {
-        [classes.completed]: status === 'completed',
+        [classes.paid]: status === 'paid',
         [classes.pending]: status === 'pending',
         [classes.cancelled]: status === 'cancelled',
+        [classes.expired]: status === 'expired',
       })}
     >
       {formatStatus(status)}
