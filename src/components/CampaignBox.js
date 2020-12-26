@@ -58,6 +58,17 @@ const CampaignBox = ({ campaign }) => {
   const classes = useStyles();
   const router = useRouter();
 
+  const handleDonateBtn = () => {
+    if (localStorage.getItem('token')) {
+      router.push({
+        pathname: '/campaign/[slug]/donation-amount',
+        query: { slug: campaign.slug },
+      });
+    } else {
+      router.push(`/login`);
+    }
+  };
+
   return (
     <>
       <Grid container className={classes.root}>
@@ -100,12 +111,13 @@ const CampaignBox = ({ campaign }) => {
                 color="secondary"
                 variant="contained"
                 className={classes.buttonDonasi}
-                onClick={() =>
-                  router.push({
-                    pathname: '/campaign/[slug]/donation-amount',
-                    query: { slug: campaign.slug },
-                  })
-                }
+                // onClick={() =>
+                //   router.push({
+                //     pathname: '/campaign/[slug]/donation-amount',
+                //     query: { slug: campaign.slug },
+                //   })
+                // }
+                onClick={handleDonateBtn}
               >
                 Donasi
               </Button>

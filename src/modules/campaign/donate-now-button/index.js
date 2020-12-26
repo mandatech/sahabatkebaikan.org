@@ -24,6 +24,16 @@ const DonateNowButton = () => {
   const { slug } = router.query;
 
   // console.log(router.query);
+  const handleDonateBtn = () => {
+    if (localStorage.getItem('token')) {
+      router.push({
+        pathname: '/campaign/[slug]/donation-amount',
+        query: { slug },
+      });
+    } else {
+      router.push(`/login?redirect=/campaign/${slug}`);
+    }
+  };
   return (
     <Box className={classes.root}>
       <Button
@@ -31,7 +41,8 @@ const DonateNowButton = () => {
         variant="contained"
         color="secondary"
         fullWidth
-        onClick={() => router.push(`/campaign/${slug}/donation-amount`)}
+        // onClick={() => router.push(`/campaign/${slug}/donation-amount`)}
+        onClick={handleDonateBtn}
       >
         Donasi
       </Button>
