@@ -5,7 +5,8 @@ import BackIcon from '@material-ui/icons/ChevronLeft';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
 import CategoryCampaignList from 'modules/category/other/category-campaign-list';
-import { axiosInstance } from 'config/axios';
+// import { axiosInstance } from 'config/axios';
+import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
   headerRoot: {
@@ -35,8 +36,8 @@ const CategoryPage = ({ category }) => {
 };
 
 export async function getServerSideProps({ params }) {
-  const { data: category } = await axiosInstance({
-    url: `/categories/${params.category}`,
+  const { data: category } = await axios({
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/v1/categories/${params.category}`,
     method: 'GET',
   });
 

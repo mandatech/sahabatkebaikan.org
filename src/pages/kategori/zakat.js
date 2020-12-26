@@ -5,7 +5,8 @@ import Header from 'components/Header';
 import Layout from 'components/Layout';
 import ZakatCampaignList from 'modules/category/zakat/zakat-campaign-list';
 import ZakatMenu from 'modules/category/zakat/zakat-menu';
-import { axiosInstance } from 'config/axios';
+// import { axiosInstance } from 'config/axios';
+import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
   headerRoot: {
@@ -36,8 +37,8 @@ const ZakatPage = ({ category }) => {
 };
 
 export async function getServerSideProps() {
-  const { data: category } = await axiosInstance({
-    url: `/categories/zakat`,
+  const { data: category } = await axios({
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/v1/categories/zakat`,
     method: 'GET',
   });
 
