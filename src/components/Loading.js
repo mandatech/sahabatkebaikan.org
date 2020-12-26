@@ -9,11 +9,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Loading = ({ width = 115, height = 115, open, onClose }) => {
+const Loading = ({
+  width = 115,
+  height = 115,
+  open,
+  onClose,
+  hideBackdrop,
+}) => {
   const classes = useStyles();
 
   return (
-    <Dialog open={open} onClose={onClose && onClose}>
+    <Dialog
+      open={open}
+      onClose={onClose && onClose}
+      hideBackdrop={hideBackdrop}
+    >
       <div className={classes.root}>
         <object
           type="image/svg+xml"
@@ -31,6 +41,7 @@ Loading.propTypes = {
   height: PropTypes.number,
   open: PropTypes.bool,
   onClose: PropTypes.func,
+  hideBackdrop: PropTypes.bool,
 };
 
 export default Loading;

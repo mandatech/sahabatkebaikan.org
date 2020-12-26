@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import Router from 'next/router';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -7,13 +10,15 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
 import formatCurrency from 'utils/formatCurrency';
+import { createDonation } from 'services/donation.service';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,13 +38,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DonationAmountScreen = () => {
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const DonationAmountScreen = ({ campaign }) => {
   const classes = useStyles();
-  const router = useRouter();
-  const { slug } = router.query;
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState({
     amount: 0,
-    anonim: false,
+    is_anonymous: false,
     infaq: false,
     infaqPercent: 5,
     note: '',
@@ -100,6 +110,54 @@ const DonationAmountScreen = () => {
     changeSelected();
   };
 
+  const handleCreateDonation = async () => {
+    try {
+      setIsLoading(true);
+      const infaq_amount = values.infaq
+        ? (Number(values.amount) * Number(values.infaqPercent)) / 100
+        : 0;
+
+      const data = await createDonation(
+        campaign.id,
+        values.amount,
+        infaq_amount,
+        values.is_anonymous,
+        values.note
+      );
+
+      setIsLoading(false);
+      openInNewTab(data.donation_payment.payment_link);
+      Router.push(`/campaign/${campaign.slug}/summary/${data.id}`);
+    } catch (error) {
+      setOpenAlert(true);
+      console.log('error', error);
+      if (error.response) {
+        console.log(error.response.data);
+        setAlertMessage(error.response.data.message);
+      } else if (error.request) {
+        console.log(error.request);
+        setAlertMessage('Network Error');
+      } else {
+        console.log('Error', error.message);
+        setAlertMessage(error.message);
+      }
+      setIsLoading(false);
+    }
+  };
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
+  const openInNewTab = (url) => {
+    const win = window.open(url, '_blank');
+    win.focus();
+  };
+
   return (
     <Box className={classes.root}>
       <Grid container style={{}}>
@@ -145,10 +203,10 @@ const DonationAmountScreen = () => {
 
         <Grid item>
           <Switch
-            checked={values.anonim}
+            checked={values.is_anonymous}
             onChange={handleChangeChecked}
             color="secondary"
-            name="anonim"
+            name="is_anonymous"
             inputProps={{ 'aria-label': 'primary checkbox' }}
           />
         </Grid>
@@ -267,15 +325,30 @@ const DonationAmountScreen = () => {
       <Button
         variant="contained"
         color="secondary"
-        disabled={!values.amount}
+        disabled={!values.amount || isLoading}
         fullWidth
         style={{ height: 50 }}
-        onClick={() => router.push(`/campaign/${slug}/donation-payment`)}
+        // onClick={() => router.push(`/campaign/${slug}/donation-payment`)}
+        onClick={handleCreateDonation}
       >
-        Lanjut
+        {isLoading && <CircularProgress size={20} style={{ marginRight: 8 }} />}
+        Donasi Sekarang
       </Button>
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={6000}
+        onClose={handleCloseAlert}
+      >
+        <Alert onClose={handleCloseAlert} severity="error">
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
+};
+
+DonationAmountScreen.propTypes = {
+  campaign: PropTypes.object,
 };
 
 export default DonationAmountScreen;

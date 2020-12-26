@@ -1,14 +1,14 @@
+import React from 'react';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import SvgIcon from '@material-ui/core/SvgIcon';
 import Typography from '@material-ui/core/Typography';
-import BNIIcon from 'assets/icons/bni_icon.svg';
-import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan.svg';
-import { useRouter } from 'next/router';
-import React from 'react';
 import formatCurrency from 'utils/formatCurrency';
+
+moment.locale('id');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     background: '#EDEDED',
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
@@ -51,22 +52,26 @@ const useStyles = makeStyles((theme) => ({
     padding: 16,
     background: theme.palette.background.paper,
   },
+  paymentLink: {
+    cursor: 'pointer',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
 }));
 
-const DonationSummaryScreen = () => {
+const openInNewTab = (url) => {
+  const win = window.open(url, '_blank');
+  win.focus();
+};
+
+const DonationSummaryScreen = ({ donation }) => {
   const classes = useStyles();
   const router = useRouter();
 
   return (
     <Box className={classes.root}>
       <Box className={classes.top}>
-        <Paper className={classes.logoContainer}>
-          <SvgIcon
-            component={SahabatkebaikanIcon}
-            viewBox="0 0 217 72"
-            style={{ width: 135, height: 44 }}
-          />
-        </Paper>
         <Box p={2} display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h6" gutterBottom>
             Informasi Pembayaran
@@ -78,7 +83,9 @@ const DonationSummaryScreen = () => {
             style={{ fontSize: 12 }}
           >
             Donasi untuk penggalang{' '}
-            <span style={{ fontWeight: 600 }}>Baitul MaalKu</span>
+            <span style={{ fontWeight: 600 }}>
+              {donation.campaign.campaigner.full_name}
+            </span>
           </Typography>
           <Typography
             variant="body2"
@@ -94,19 +101,44 @@ const DonationSummaryScreen = () => {
             gutterBottom
             style={{ fontWeight: 600, fontSize: 12 }}
           >
-            Bahagiakan Ribuan Mustahiq di Karawang Melalui Zakat Anda
+            {donation.campaign.title}
           </Typography>
           <Box className={classes.accounNumber}>
-            <BNIIcon />
-            <Typography variant="body2" align="center">
-              8578755899240880
-            </Typography>
-            <Button color="secondary">Salin</Button>
+            {donation.status === 'pending' ? (
+              <>
+                <Typography variant="body2" align="center" gutterBottom>
+                  Silahkan klik link berikut untuk pembayaran:
+                </Typography>
+                <Typography
+                  className={classes.paymentLink}
+                  variant="body1"
+                  align="center"
+                  color="primary"
+                  onClick={() =>
+                    openInNewTab(donation.donation_payment.payment_link)
+                  }
+                >
+                  {donation.donation_payment.payment_link}
+                </Typography>
+              </>
+            ) : donation.status === 'paid' ? (
+              <Typography>Donasi telah dibayar</Typography>
+            ) : donation.status === 'expired' ? (
+              <Typography>Donasi telah expired</Typography>
+            ) : donation.status === 'cancelled' ? (
+              <Typography>Donasi telah dibatalkan</Typography>
+            ) : (
+              <Typography>Donasi telah dibatalkan</Typography>
+            )}
           </Box>
           <Box className={classes.paymentLimit}>
             <Typography variant="body2" align="center" style={{ fontSize: 12 }}>
               Transfer sebelum{' '}
-              <span style={{ fontWeight: 600 }}>23 Sebtember 2020 19.14</span>{' '}
+              <span style={{ fontWeight: 600 }}>
+                {/* {new Date(donation.expiration).toLocaleString()} */}
+                {moment(donation.expiration).format('LL')}{' '}
+                {moment(donation.expiration).format('LT')}
+              </span>{' '}
               atau donasi kamu otomatis dibatalkan.
             </Typography>
           </Box>
@@ -117,22 +149,42 @@ const DonationSummaryScreen = () => {
         <Typography variant="body2" align="center" gutterBottom>
           Total Donasi yang diberikan
         </Typography>
-        <Typography
-          variant="body1"
-          align="center"
-          color="primary"
-          style={{ fontSize: 24, fontWeight: 600 }}
-        >
-          Rp {formatCurrency.format(57500)}
-        </Typography>
+        {donation.status === 'expired' || donation.status === 'cancelled' ? (
+          <Typography
+            variant="body1"
+            align="center"
+            color="primary"
+            style={{
+              fontSize: 24,
+              fontWeight: 600,
+              textDecoration: 'line-through',
+            }}
+          >
+            Rp {formatCurrency.format(donation.donation_amount)}
+          </Typography>
+        ) : (
+          <Typography
+            variant="body1"
+            align="center"
+            color="primary"
+            style={{
+              fontSize: 24,
+              fontWeight: 600,
+            }}
+          >
+            Rp {formatCurrency.format(donation.donation_amount)}
+          </Typography>
+        )}
       </Box>
 
       <Box p={2} display="flex" justifyContent="space-between">
         <Typography variant="body1" style={{ fontSize: 12 }}>
-          Order ID 4217
+          Invoice: {donation.invoice_number}
         </Typography>
         <Typography variant="body1" style={{ fontSize: 12 }}>
-          22 September 2020
+          {/* {new Date(donation.created_at).toLocaleString()} */}
+          {moment(donation.created_at).format('LL')}{' '}
+          {moment(donation.created_at).format('LT')}
         </Typography>
       </Box>
 
@@ -149,6 +201,10 @@ const DonationSummaryScreen = () => {
       </Box>
     </Box>
   );
+};
+
+DonationSummaryScreen.propTypes = {
+  donation: PropTypes.object,
 };
 
 export default DonationSummaryScreen;

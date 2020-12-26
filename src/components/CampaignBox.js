@@ -100,6 +100,12 @@ const CampaignBox = ({ campaign }) => {
                 color="secondary"
                 variant="contained"
                 className={classes.buttonDonasi}
+                onClick={() =>
+                  router.push({
+                    pathname: '/campaign/[slug]/donation-amount',
+                    query: { slug: campaign.slug },
+                  })
+                }
               >
                 Donasi
               </Button>

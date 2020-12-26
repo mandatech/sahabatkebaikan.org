@@ -1,8 +1,11 @@
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import BackIcon from '@material-ui/icons/ChevronLeft';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
+import Loading from 'components/Loading';
 import DonationAmountScreen from 'modules/donation-process/choose-donation-amount';
+import { getCampaignDetail } from 'services/campaign.service';
 
 const useStyles = makeStyles(() => ({
   headerRoot: {
@@ -12,8 +15,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DonationAmount = () => {
+const DonationAmount = ({ slug }) => {
   const classes = useStyles();
+  const { data, isFetching, error } = getCampaignDetail(slug);
 
   return (
     <Layout>
@@ -28,9 +32,31 @@ const DonationAmount = () => {
         icon={<BackIcon />}
         backButton={true}
       />
-      <DonationAmountScreen />
+
+      {data ? (
+        <DonationAmountScreen campaign={data} />
+      ) : (
+        error && (
+          <div>
+            <p>Tidak dapat menampilkan campaign</p>
+          </div>
+        )
+      )}
+      <Loading open={isFetching} hideBackdrop />
     </Layout>
   );
+};
+
+export async function getServerSideProps({ params }) {
+  return {
+    props: {
+      slug: params.slug,
+    },
+  };
+}
+
+DonationAmount.propTypes = {
+  slug: PropTypes.string,
 };
 
 export default DonationAmount;
