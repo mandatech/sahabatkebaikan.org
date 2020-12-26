@@ -69,3 +69,12 @@ export const updateProfile = async (id, { full_name, phone }) => {
 
   return data;
 };
+
+export const validateToken = async () => {
+  const { data } = await axiosInstance({
+    url: `/auth/validate-token`,
+    method: 'POST',
+  });
+
+  return data;
+};
