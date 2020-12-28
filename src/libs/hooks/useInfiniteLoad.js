@@ -27,6 +27,14 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
     fetchFromApi(newParams, true);
   }, [params]);
 
+  const isLoadingInitialData = !dataState.data && !dataState.error;
+  // const isEmpty = dataState.data?.[0]?.length === 0;
+  const isReachingEnd =
+    dataState.meta?.page === dataState.meta?.lastPage ||
+    dataState.meta?.total === 0;
+
+  console.log('isReachingEnd', isReachingEnd);
+
   const fetchFromApi = async (queryParams, reset = false) => {
     try {
       setDataState({ ...dataState, isFetching: true });
@@ -95,10 +103,6 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
   const loadMore = () => {
     fetchFromApi(queryParams);
   };
-
-  const isLoadingInitialData = !dataState.data && !dataState.error;
-  // const isEmpty = dataState.data?.[0]?.length === 0;
-  const isReachingEnd = dataState.meta?.page === dataState.meta?.lastPage;
 
   return {
     data: dataState.data,

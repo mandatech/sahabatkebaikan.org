@@ -6,12 +6,14 @@ import Loading from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import CampaignBox from 'components/CampaignBox';
 import CampaignBoxSkeleton from 'components/CampaignBoxSkeleton';
+import DataNotFound from 'components/DataNotFound';
 import PropTypes from 'prop-types';
 import { useInfiniteLoad } from 'libs/hooks/useInfiniteLoad';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: 16,
+    minHeight: '100vh',
     background: theme.palette.background.paper,
   },
 }));
@@ -67,7 +69,7 @@ const SearchResult = ({ query }) => {
       ) : error ? (
         <p style={{ color: 'red' }}>{error.message}</p>
       ) : (
-        <p>Tidak ada campaign ditemukan.</p>
+        <DataNotFound />
       )}
 
       {isFetching && !isLoadingInitialData && (

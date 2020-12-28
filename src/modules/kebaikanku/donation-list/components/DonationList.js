@@ -11,6 +11,7 @@ import { Button } from '@material-ui/core';
 import CampaignBoxSkeleton from 'components/CampaignBoxSkeleton';
 import CampaignStatus from './CampaignStatus';
 import useInfiniteLoadDonations from '../hooks/useInfiniteLoadDonations';
+import DataNotFound from 'components/DataNotFound';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -152,7 +153,7 @@ const DonationList = ({ status }) => {
           <p style={{ color: 'red' }}>{error.message}</p>
         </Box>
       ) : (
-        <Box p={3}>Maaf, belum ada data.</Box>
+        <DataNotFound message="Maaf, Kak! Belum ada Data." />
       )}
 
       {isFetching && !isLoadingInitialData && (
