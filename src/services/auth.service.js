@@ -29,22 +29,22 @@ export const registerWithUsernameOrEmailPassword = async (
   phone,
   password
 ) => {
-  const bodyRequest = qs.stringify({
-    full_name,
-    username,
-    email,
-    phone,
-    password,
-    role: 'user',
-  });
+  const form = new FormData();
+
+  form.append('full_name', full_name);
+  form.append('username', username);
+  form.append('email', email);
+  form.append('phone', phone);
+  form.append('password', password);
+  form.append('role', 'user');
 
   const { data } = await axiosInstance({
     url: '/users',
     method: 'POST',
     headers: {
-      'content-type': 'application/x-www-form-urlencoded',
+      'content-type': 'multipart/form-data',
     },
-    data: bodyRequest,
+    data: form,
   });
 
   return data;

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     background: theme.palette.background.paper,
     marginBottom: 100,
+    // border: 'solid brown 2px',
   },
   paper: {
     padding: theme.spacing(2),
@@ -81,7 +82,7 @@ const DonationList = ({ status }) => {
   } = useInfiniteLoadDonations('/donations/group-by-month', params);
 
   return (
-    <div>
+    <div className={classes.root}>
       {isLoadingInitialData ? (
         [1, 2, 3, 4].map((i) => <CampaignBoxSkeleton key={i} />)
       ) : data?.length ? (
@@ -153,7 +154,7 @@ const DonationList = ({ status }) => {
           <p style={{ color: 'red' }}>{error.message}</p>
         </Box>
       ) : (
-        <DataNotFound message="Maaf, Kak! Belum ada Data." />
+        <DataNotFound message="Maaf, Kak! Belum ada data." />
       )}
 
       {isFetching && !isLoadingInitialData && (

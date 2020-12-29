@@ -7,8 +7,9 @@ const DataNotFound = ({
 }) => {
   return (
     <Box
+      flexGrow={1}
       display="flex"
-      height="80vh"
+      // height="80vh"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
