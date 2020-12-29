@@ -13,6 +13,7 @@ function TabPanel(props) {
 
   return (
     <div
+      style={{ marginTop: 'auto' }}
       role="tabpanel"
       hidden={value !== index}
       id={`wrapped-tabpanel-${index}`}
@@ -41,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    marginBottom: 100,
+    paddingBottom: 100,
+    display: 'flex',
+    flexDirection: 'column',
   },
   tabStyle: {
     fontSize: 12,
@@ -65,7 +68,7 @@ const TabsMenu = () => {
       <Typography variant="subtitle2" style={{ margin: 16 }}>
         Catatan Kebaikan
       </Typography>
-      <Paper square>
+      <Paper elevation={0}>
         <Tabs
           value={value}
           onChange={handleChange}

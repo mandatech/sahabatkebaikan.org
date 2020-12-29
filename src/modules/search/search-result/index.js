@@ -12,9 +12,11 @@ import { useInfiniteLoad } from 'libs/hooks/useInfiniteLoad';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow: 1,
     padding: 16,
-    minHeight: '100vh',
     background: theme.palette.background.paper,
+    display: 'flex',
+    flexDirection: 'column',
   },
 }));
 
