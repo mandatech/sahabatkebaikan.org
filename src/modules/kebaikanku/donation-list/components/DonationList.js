@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     background: theme.palette.background.paper,
     marginBottom: 100,
+    display: 'flex',
+    flexDirection: 'column',
     // border: 'solid brown 2px',
   },
   paper: {
@@ -84,7 +86,7 @@ const DonationList = ({ status }) => {
   return (
     <div className={classes.root}>
       {isLoadingInitialData ? (
-        [1, 2, 3, 4].map((i) => <CampaignBoxSkeleton key={i} />)
+        [1, 2, 3, 4, 5, 6].map((i) => <CampaignBoxSkeleton key={i} />)
       ) : data?.length ? (
         data.map((group, i) => (
           <div key={i}>

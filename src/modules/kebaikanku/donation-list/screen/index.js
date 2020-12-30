@@ -13,7 +13,14 @@ function TabPanel(props) {
 
   return (
     <div
-      style={{ marginTop: 'auto' }}
+      style={{
+        // flexGrow: 1,
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        // border: 'solid blue 1px',
+        // display: 'flex',
+        // flexDirection: 'column',
+      }}
       role="tabpanel"
       hidden={value !== index}
       id={`wrapped-tabpanel-${index}`}
