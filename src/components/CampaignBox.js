@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   },
   campaignImage: {
     borderRadius: 8,
-    objectFit: 'cover',
+    objectFit: 'fill',
     width: '100%',
     maxWidth: 140,
     height: 105,
@@ -82,7 +82,10 @@ const CampaignBox = ({ campaign }) => {
             }
           >
             <img
-              src={campaign.images[0].url}
+              src={
+                campaign.images[0]?.url ||
+                'https://via.placeholder.com/600x400?text=No%20Image'
+              }
               className={classes.campaignImage}
               alt=""
               aria-hidden="true"

@@ -6,9 +6,9 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Image from 'material-ui-image';
 import formatCurrency from 'utils/formatCurrency';
 import getValueOfLinearProgress from 'utils/getValueOfLinearProgress';
+import SlideShow from './SlideShow';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -40,21 +40,7 @@ const CampaignBasicInfo = ({ campaign }) => {
 
   return (
     <Paper className={classes.root} elevation={0}>
-      <Image
-        src={
-          campaign.images.length
-            ? campaign.images[0].url
-            : 'https://via.placeholder.com/600x400'
-        }
-        onClick={() => console.log('onClick')}
-        aspectRatio={16 / 9}
-        imageStyle={{
-          borderRadius: 8,
-          objectFit: 'cover',
-          objectPosition: '50% 20%',
-        }}
-        disableSpinner
-      />
+      <SlideShow images={campaign.images} />
       <Typography variant="h6" style={{ lineHeight: 1.4 }}>
         {campaign.title}
       </Typography>

@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   root: {
+    flexGrow: 1,
     padding: '8px 16px 16px 16px',
     '& > *': {
       margin: '8px 0',
@@ -46,6 +47,16 @@ const BasicInfoSkeleton = () => {
         <Skeleton variant="text" animation="pulse" width="100%" height={16} />
         <Skeleton variant="text" animation="pulse" width="100%" height={16} />
       </Box>
+      <Box style={{ marginTop: 16 }}>
+        {/* <Skeleton variant="rect" width="100%" height={120} animation="pulse" /> */}
+        <Skeleton variant="text" animation="pulse" width="100%" height={16} />
+        <Skeleton variant="text" animation="pulse" width="100%" height={16} />
+        <Skeleton variant="text" animation="pulse" width="100%" height={16} />
+        <Skeleton variant="text" animation="pulse" width="100%" height={16} />
+        <Skeleton variant="text" animation="pulse" width="100%" height={16} />
+        <Skeleton variant="text" animation="pulse" width="100%" height={16} />
+      </Box>
+      <Skeleton variant="rect" width="100%" height={100} animation="pulse" />
     </Paper>
   );
 };
