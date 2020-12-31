@@ -3,12 +3,12 @@ import _ from 'lodash';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Loading from '@material-ui/core/CircularProgress';
-import Button from '@material-ui/core/Button';
 import CampaignBox from 'components/CampaignBox';
 import CampaignBoxSkeleton from 'components/CampaignBoxSkeleton';
 import DataNotFound from 'components/DataNotFound';
 import PropTypes from 'prop-types';
-import { useInfiniteLoad } from 'libs/hooks/useInfiniteLoad';
+import useInfiniteScroller from 'libs/hooks/useInfiniteScroller';
+import { Paper } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,24 +24,19 @@ const SearchResult = ({ query }) => {
   const classes = useStyles();
   const [params, setParams] = useState({
     _page: 1,
-    _pageSize: 10,
+    _pageSize: 3,
     _published: true,
     _is_active: true,
     _q: query,
   });
-  // const { data, isLoadingInitialData, isFetching, error } = useInfiniteScroll(
-  //   '/campaigns',
-  //   params
-  // );
 
   const {
+    ref,
     data,
     isFetching,
     error,
     isLoadingInitialData,
-    isReachingEnd,
-    loadMore,
-  } = useInfiniteLoad('/campaigns', params);
+  } = useInfiniteScroller('/campaigns', params);
 
   const updateParams = () => {
     // A search query api call.
@@ -61,7 +56,7 @@ const SearchResult = ({ query }) => {
   }, [query, delayedQuery]);
 
   return (
-    <Box className={classes.root}>
+    <Paper className={classes.root} ref={ref}>
       {isLoadingInitialData ? (
         [1, 2, 3, 4].map((i) => <CampaignBoxSkeleton key={i} />)
       ) : data?.length ? (
@@ -86,7 +81,7 @@ const SearchResult = ({ query }) => {
         </Box>
       )}
 
-      {!isReachingEnd && (
+      {/* {!isReachingEnd && (
         <Box
           width="100%"
           mt={2}
@@ -98,8 +93,8 @@ const SearchResult = ({ query }) => {
             Muat lagi
           </Button>
         </Box>
-      )}
-    </Box>
+      )} */}
+    </Paper>
   );
 };
 

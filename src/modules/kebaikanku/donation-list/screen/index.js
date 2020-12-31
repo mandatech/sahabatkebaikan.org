@@ -14,10 +14,7 @@ function TabPanel(props) {
   return (
     <div
       style={{
-        // flexGrow: 1,
-        marginTop: 'auto',
-        marginBottom: 'auto',
-        // border: 'solid blue 1px',
+        flexGrow: 1,
         // display: 'flex',
         // flexDirection: 'column',
       }}
@@ -48,10 +45,10 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    paddingBottom: 100,
     display: 'flex',
     flexDirection: 'column',
+    backgroundColor: theme.palette.background.paper,
+    paddingBottom: 100,
   },
   tabStyle: {
     fontSize: 12,

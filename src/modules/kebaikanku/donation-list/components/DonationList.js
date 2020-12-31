@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Loading from '@material-ui/core/CircularProgress';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import CampaignBoxSkeleton from 'components/CampaignBoxSkeleton';
 import CampaignStatus from './CampaignStatus';
 import useInfiniteLoadDonations from '../hooks/useInfiniteLoadDonations';
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 100,
     display: 'flex',
     flexDirection: 'column',
+    // marginTop: 8,
     // border: 'solid brown 2px',
   },
   paper: {
@@ -156,7 +157,9 @@ const DonationList = ({ status }) => {
           <p style={{ color: 'red' }}>{error.message}</p>
         </Box>
       ) : (
-        <DataNotFound message="Maaf, Kak! Belum ada data." />
+        <div style={{ marginTop: 50 }}>
+          <DataNotFound message="Maaf, Kak! Belum ada data." />
+        </div>
       )}
 
       {isFetching && !isLoadingInitialData && (

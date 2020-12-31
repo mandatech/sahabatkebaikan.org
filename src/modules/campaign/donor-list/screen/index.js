@@ -14,7 +14,8 @@ import formatCurrency from 'utils/formatCurrency';
 import TimeAgo from 'react-timeago';
 import id from 'react-timeago/lib/language-strings/id';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
-import { useInfiniteScroll } from 'libs/hooks/useInfiniteScroll';
+// import { useInfiniteScroll } from 'libs/hooks/useInfiniteScroll';
+import { useInfiniteScroller } from 'libs/hooks/useInfiniteScroller';
 
 const formatter = buildFormatter(id);
 
@@ -38,7 +39,7 @@ const DonorList = ({ campaign }) => {
   const classes = useStyles();
   const [params] = useState({
     _page: 1,
-    _pageSize: 10,
+    _pageSize: 2,
     _sort: 'created_at',
     _order: 'DESC',
     _q: '',
@@ -46,7 +47,10 @@ const DonorList = ({ campaign }) => {
     _status: 'paid',
   });
 
-  const { data, error, isFetching } = useInfiniteScroll('/donations', params);
+  const { ref, data, error, isFetching } = useInfiniteScroller(
+    '/donations',
+    params
+  );
 
   // const handleChangeOrder = (e) => {
   //   console.log(e.target.value);
@@ -59,7 +63,7 @@ const DonorList = ({ campaign }) => {
   // };
 
   return (
-    <Paper className={classes.root} elevation={0}>
+    <Paper className={classes.root} elevation={0} ref={ref}>
       <Box display="flex" justifyContent="space-between">
         <Typography variant="body1" style={{ fontWeight: 500 }}>
           Donasi ({campaign.donors_count})

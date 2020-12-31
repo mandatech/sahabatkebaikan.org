@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,10 +9,15 @@ import Loading from '@material-ui/core/CircularProgress';
 import CampaignBox from 'components/CampaignBox';
 import PropTypes from 'prop-types';
 import CampaignBoxSkeleton from 'components/CampaignBoxSkeleton';
-import useInfiniteScroll from 'libs/hooks/useInfiniteScroll';
+import { useInfiniteScroller } from 'libs/hooks/useInfiniteScroller';
+import { Paper } from '@material-ui/core';
+import DataNotFound from 'components/DataNotFound';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
     marginTop: 8,
     padding: 16,
     background: theme.palette.background.paper,
@@ -22,29 +27,34 @@ const useStyles = makeStyles((theme) => ({
 const ZakatScreen = ({ category }) => {
   const classes = useStyles();
   const [params, setParams] = useState({
+    _page: 1,
+    _pageSize: 10,
     _category_id: category.id,
     _published: true,
     _is_active: true,
   });
-  const { data, isLoadingInitialData, isFetching, error } = useInfiniteScroll(
-    '/campaigns',
-    params
-  );
+  const {
+    ref,
+    data,
+    isLoadingInitialData,
+    isFetching,
+    error,
+  } = useInfiniteScroller('/campaigns', params);
 
   // fix Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function
-  const [didMount, setDidMount] = useState(false);
+  // const [didMount, setDidMount] = useState(false);
 
-  useEffect(() => {
-    setDidMount(true);
-    return () => setDidMount(false);
-  }, []);
+  // useEffect(() => {
+  //   setDidMount(true);
+  //   return () => setDidMount(false);
+  // }, []);
 
-  if (!didMount) {
-    return null;
-  }
+  // if (!didMount) {
+  //   return null;
+  // }
 
   return (
-    <Box className={classes.root}>
+    <Paper className={classes.root} ref={ref}>
       <Typography
         variant="body1"
         gutterBottom
@@ -91,7 +101,7 @@ const ZakatScreen = ({ category }) => {
       ) : error ? (
         <p style={{ color: 'red' }}>{error.message}</p>
       ) : (
-        <p>Tidak ada campaign ditemukan.</p>
+        <DataNotFound />
       )}
 
       {isFetching && !isLoadingInitialData && (
@@ -109,7 +119,7 @@ const ZakatScreen = ({ category }) => {
       {/* {campaigns.map((campaign) => (
         <CampaignBox key={campaign.id} campaign={campaign} />
       ))} */}
-    </Box>
+    </Paper>
   );
 };
 

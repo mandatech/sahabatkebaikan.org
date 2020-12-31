@@ -31,7 +31,7 @@ const SlideShow = ({ images = [], videos = [] }) => {
       item.type === 'video' ? (
         <VideoSlide key={i} url={item.url} />
       ) : (
-        <ImageSlide url={item.url} />
+        <ImageSlide key={i} url={item.url} />
       )
     )
   ) : (

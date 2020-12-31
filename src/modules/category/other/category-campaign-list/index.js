@@ -3,13 +3,18 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Loading from '@material-ui/core/CircularProgress';
-import CampaignBox from 'components/CampaignBox';
+import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import CampaignBoxSkeleton from 'components/CampaignBoxSkeleton';
-import useInfiniteScroll from 'libs/hooks/useInfiniteScroll';
+import { useInfiniteScroller } from 'libs/hooks/useInfiniteScroller';
+import CampaignBox from 'components/CampaignBox';
+import DataNotFound from 'components/DataNotFound';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
     // marginTop: 8,
     padding: 16,
     background: theme.palette.background.paper,
@@ -19,15 +24,20 @@ const useStyles = makeStyles((theme) => ({
 const CategoryCampaignList = ({ category }) => {
   const classes = useStyles();
   const [params] = useState({
+    _page: 1,
+    _pageSize: 10,
     _category_id: category.id,
     _published: true,
     _is_active: true,
   });
 
-  const { data, isLoadingInitialData, isFetching, error } = useInfiniteScroll(
-    '/campaigns',
-    params
-  );
+  const {
+    ref,
+    data,
+    isLoadingInitialData,
+    isFetching,
+    error,
+  } = useInfiniteScroller('/campaigns', params);
 
   // fix Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function
   const [didMount, setDidMount] = useState(false);
@@ -42,7 +52,7 @@ const CategoryCampaignList = ({ category }) => {
   }
 
   return (
-    <Box className={classes.root}>
+    <Paper className={classes.root} ref={ref}>
       <Typography
         variant="body1"
         gutterBottom
@@ -60,7 +70,7 @@ const CategoryCampaignList = ({ category }) => {
       ) : error ? (
         <p style={{ color: 'red' }}>{error.message}</p>
       ) : (
-        <p>Tidak ada campaign ditemukan.</p>
+        <DataNotFound />
       )}
 
       {isFetching && !isLoadingInitialData && (
@@ -74,7 +84,7 @@ const CategoryCampaignList = ({ category }) => {
           <Loading color="secondary" size={20} />
         </Box>
       )}
-    </Box>
+    </Paper>
   );
 };
 
