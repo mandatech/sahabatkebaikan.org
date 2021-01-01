@@ -16,6 +16,7 @@ import LogoutIcon from 'assets/icons/logout_icon.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
     marginBottom: 100,
@@ -53,6 +54,7 @@ export default function SimpleList() {
           </ListItemIcon>
           <ListItemText primary="Keluar" />
         </ListItem>
+        <Divider variant="middle" />
       </List>
       {/* <Divider variant="middle" /> */}
       <Dialog

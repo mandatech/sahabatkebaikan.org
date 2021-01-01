@@ -17,11 +17,8 @@ import React from 'react';
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.background.paper,
-    // border: 'solid pink 2px',
   },
   avatarBackground: {
-    // border: 'solid black 2px',
-
     background: 'linear-gradient(270deg, #1BBCC2 0%, #4156A5 100%)',
     opacity: 0.3,
     width: '100%',
@@ -74,7 +71,7 @@ const ProfileInfo = ({ profile }) => {
         >
           <Avatar
             alt="Cindy Baker"
-            src="images/avatar_1.jpg"
+            src={profile?.profile_photo}
             className={classes.avatar}
           />
         </Box>

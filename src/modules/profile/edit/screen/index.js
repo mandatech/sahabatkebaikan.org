@@ -17,6 +17,7 @@ import Loading from 'components/Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow: 1,
     padding: 16,
     background: theme.palette.background.paper,
   },
@@ -43,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: 0,
   },
+  inputImage: {
+    display: 'none',
+  },
 }));
 
 function Alert(props) {
@@ -61,6 +65,10 @@ const EditProfile = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [alertSeverity, setAlertSeverity] = useState('info');
   const [isLoading, setIsLoading] = useState(false);
+  const [newProfilePhoto, setNewProfilePhoto] = useState({
+    url: null,
+    file: null,
+  });
 
   useEffect(() => {
     window.scrollTo({
@@ -81,6 +89,7 @@ const EditProfile = () => {
       const data = await updateProfile(profile.id, {
         full_name: values.full_name,
         phone: values.phone,
+        profile_photo: newProfilePhoto.file,
       });
       const data_login = JSON.parse(localStorage.getItem('data_login'));
 
@@ -125,6 +134,20 @@ const EditProfile = () => {
     setOpenAlert(false);
   };
 
+  const handleUploadClick = (event) => {
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+
+    setProfile({
+      ...profile,
+      profile_photo: url,
+    });
+    setNewProfilePhoto({
+      url,
+      file,
+    });
+  };
+
   return (
     <Box className={classes.root}>
       {profile && (
@@ -138,11 +161,21 @@ const EditProfile = () => {
             <Box className={classes.avatarContainer}>
               <Avatar
                 alt="Avatar"
-                src="https://material-ui.com/static/images/avatar/2.jpg"
+                src={profile.profile_photo}
+                // src={newProfilePhoto.url}
                 className={classes.avatar}
               />
+              <input
+                accept="image/*"
+                className={classes.inputImage}
+                id="input-image"
+                type="file"
+                onChange={handleUploadClick}
+              />
               <ButtonBase className={classes.changeAvatar}>
-                <PhotoCameraIcon style={{ color: 'white' }} />
+                <label htmlFor="input-image">
+                  <PhotoCameraIcon style={{ color: 'white' }} />
+                </label>
               </ButtonBase>
             </Box>
             <Box>
