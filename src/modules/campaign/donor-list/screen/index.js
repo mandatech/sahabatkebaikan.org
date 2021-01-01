@@ -87,7 +87,8 @@ const DonorList = ({ campaign }) => {
             <Grid item>
               <Avatar
                 style={{ width: 50, height: 50 }}
-                src="https://material-ui.com/static/images/avatar/1.jpg"
+                // src="https://material-ui.com/static/images/avatar/1.jpg"
+                src={!donation.is_anonymous && donation.donor.profile_photo}
               />
             </Grid>
             <Grid item xs style={{ marginLeft: 16 }}>

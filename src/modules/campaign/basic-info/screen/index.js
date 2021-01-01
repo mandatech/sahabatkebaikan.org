@@ -92,7 +92,7 @@ const CampaignBasicInfo = ({ campaign }) => {
       <Paper className={classes.author} elevation={0}>
         <Avatar
           className={classes.authorAvatar}
-          src={'https://via.placeholder.com/200?text=No%20Image'}
+          src={campaign.campaigner.profile_photo}
         />
         <Box ml={2}>
           <Typography>{campaign.campaigner.full_name}</Typography>

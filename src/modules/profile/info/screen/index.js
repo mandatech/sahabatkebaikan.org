@@ -74,7 +74,7 @@ const ProfileInfo = ({ profile }) => {
         >
           <Avatar
             alt="Cindy Baker"
-            src="images/avatar_1.jpg"
+            src={profile?.profile_photo || 'images/avatar_1.jpg'}
             className={classes.avatar}
           />
         </Box>
