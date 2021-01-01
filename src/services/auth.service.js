@@ -50,21 +50,22 @@ export const registerWithUsernameOrEmailPassword = async (
   return data;
 };
 
-export const updateProfile = async (id, { full_name, phone }) => {
-  const bodyRequest = qs.stringify({
-    full_name,
-    // username,
-    // email,
-    phone,
-  });
+export const updateProfile = async (
+  id,
+  { full_name, phone, profile_photo }
+) => {
+  const form = new FormData();
+  form.append('full_name', full_name);
+  form.append('phone', phone);
+  form.append('profile_photo', profile_photo);
 
   const { data } = await axiosInstance({
     url: `/users/${id}`,
     method: 'PUT',
     headers: {
-      'content-type': 'application/x-www-form-urlencoded',
+      'content-type': 'multipart/form-data',
     },
-    data: bodyRequest,
+    data: form,
   });
 
   return data;

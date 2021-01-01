@@ -33,8 +33,6 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
     dataState.meta?.page === dataState.meta?.lastPage ||
     dataState.meta?.total === 0;
 
-  console.log('isReachingEnd', isReachingEnd);
-
   const fetchFromApi = async (queryParams, reset = false) => {
     try {
       setDataState({ ...dataState, isFetching: true });
