@@ -118,7 +118,7 @@ const DonationList = ({ status }) => {
                         className={classes.img}
                         alt=""
                         src={
-                          donation.campaign.images[0].url ||
+                          donation.campaign.images[0]?.url ||
                           'https://via.placeholder.com/600x400?text=No%20Image'
                         }
                       />
