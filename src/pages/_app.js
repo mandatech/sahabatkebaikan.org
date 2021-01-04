@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 import theme from '../components/theme';
 import { validateToken } from 'services/auth.service';
-
+import { ToastProvider } from 'libs/toast';
 export default function MyApp(props) {
   const { Component, pageProps } = props;
   const router = useRouter();
@@ -54,7 +54,10 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+
+        <ToastProvider>
+          <Component {...pageProps} />
+        </ToastProvider>
       </ThemeProvider>
     </React.Fragment>
   );

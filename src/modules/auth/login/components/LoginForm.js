@@ -7,8 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import FacebookIcon from 'assets/icons/facebook_icon.svg';
 import GoogleIcon from 'assets/icons/google_icon.svg';
 import Link from 'components/Link';
@@ -16,6 +14,7 @@ import Loading from 'components/Loading';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { loginWithUsernameOrEmailPassword } from 'services/auth.service';
+import { useToast } from 'libs/toast';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -41,10 +40,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
 const validate = (values) => {
   const errors = {};
   if (!values.email) {
@@ -63,17 +58,8 @@ const validate = (values) => {
 const LoginForm = () => {
   const classes = useStyles();
   const router = useRouter();
-  const [openAlert, setOpenAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenAlert(false);
-  };
+  const toast = useToast();
 
   const handleLogin = async (values) => {
     try {
@@ -94,17 +80,16 @@ const LoginForm = () => {
 
       setIsLoading(false);
     } catch (error) {
-      setOpenAlert(true);
       console.log('error', error);
       if (error.response) {
         console.log(error.response.data);
-        setAlertMessage(error.response.data.message);
+        toast.showMessage(error.response.data.message, 'error');
       } else if (error.request) {
         console.log(error.request);
-        setAlertMessage('Network Error');
+        toast.showMessage('Network Error', 'error');
       } else {
         console.log('Error', error.message);
-        setAlertMessage(error.message);
+        toast.showMessage(error.message, 'error');
       }
 
       setIsLoading(false);
@@ -233,12 +218,6 @@ const LoginForm = () => {
       <Button variant="outlined" fullWidth onClick={goToRegisterPage}>
         Daftar
       </Button>
-
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          {alertMessage}
-        </Alert>
-      </Snackbar>
       <Loading open={isLoading} onClose={() => setIsLoading(false)} />
     </Paper>
   );
