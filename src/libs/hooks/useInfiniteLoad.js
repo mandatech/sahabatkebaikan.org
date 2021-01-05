@@ -94,10 +94,6 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
     }
   };
 
-  useEffect(() => {
-    fetchFromApi(queryParams);
-  }, []);
-
   const loadMore = () => {
     fetchFromApi(queryParams);
   };

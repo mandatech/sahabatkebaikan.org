@@ -153,9 +153,7 @@ const DonationList = ({ status }) => {
           </div>
         ))
       ) : error ? (
-        <Box p={3}>
-          <p style={{ color: 'red' }}>{error.message}</p>
-        </Box>
+        <DataNotFound message={error.message} />
       ) : (
         <div style={{ marginTop: 50 }}>
           <DataNotFound message="Maaf, Kak! Belum ada data." />
