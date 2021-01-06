@@ -4,8 +4,6 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import BackIcon from '@material-ui/icons/ChevronLeft';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
@@ -14,6 +12,8 @@ import { TextField as FormikTextField } from 'formik-material-ui';
 import { useRouter } from 'next/router';
 import { updateProfile } from 'services/auth.service';
 import Loading from 'components/Loading';
+import { useAuth } from 'libs/auth-context';
+import { useToast } from 'libs/toast';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,10 +49,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
 const TextField = (props) => (
   <FormikTextField variant="standard" fullWidth {...props} />
 );
@@ -60,10 +56,9 @@ const TextField = (props) => (
 const EditProfile = () => {
   const classes = useStyles();
   const router = useRouter();
+  const toast = useToast();
+  const { dataLogin, updateDataLogin } = useAuth();
   const [profile, setProfile] = useState('');
-  const [openAlert, setOpenAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertSeverity, setAlertSeverity] = useState('info');
   const [isLoading, setIsLoading] = useState(false);
   const [newProfilePhoto, setNewProfilePhoto] = useState({
     url: null,
@@ -75,13 +70,12 @@ const EditProfile = () => {
       top: 0,
       behavior: 'smooth',
     });
-    if (localStorage.getItem('token') && localStorage.getItem('data_login')) {
-      const dataLogin = JSON.parse(localStorage.getItem('data_login'));
+    if (dataLogin) {
       setProfile(dataLogin.user);
     } else {
       router.push('/login?redirect=/profil');
     }
-  }, []);
+  }, [dataLogin]);
 
   const handleUpdateProfile = async (values, { setSubmitting }) => {
     try {
@@ -91,47 +85,34 @@ const EditProfile = () => {
         phone: values.phone,
         profile_photo: newProfilePhoto.file,
       });
-      const data_login = JSON.parse(localStorage.getItem('data_login'));
 
-      data_login.user = data;
+      const newDataLogin = {
+        ...dataLogin,
+        user: data,
+      };
+      updateDataLogin(newDataLogin);
 
-      localStorage.setItem('data_login', JSON.stringify(data_login));
+      toast.showMessage('Profil berhasil diperbarui.');
 
-      setAlertSeverity('info');
-      setAlertMessage('Profil berhasil diperbarui.');
-      setOpenAlert(true);
       setSubmitting(false);
       setIsLoading(false);
 
       setTimeout(() => {
         router.replace('/profil');
-      }, [1200]);
+      }, [600]);
     } catch (error) {
-      setOpenAlert(true);
-      console.log('error', error);
       setIsLoading(false);
-      setSubmitting(false);
-      setOpenAlert(true);
-      setAlertSeverity('error');
       if (error.response) {
         console.log(error.response.data);
-        setAlertMessage(error.response.data.message);
+        toast.showMessage(error.response.data.message, 'error');
       } else if (error.request) {
         console.log(error.request);
-        setAlertMessage('Network Error');
+        toast.showMessage('Network Error', 'error');
       } else {
         console.log('Error', error.message);
-        setAlertMessage(error.message);
+        toast.showMessage(error.message, 'error');
       }
     }
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenAlert(false);
   };
 
   const handleUploadClick = (event) => {
@@ -162,7 +143,6 @@ const EditProfile = () => {
               <Avatar
                 alt="Avatar"
                 src={profile.profile_photo}
-                // src={newProfilePhoto.url}
                 className={classes.avatar}
               />
               <input
@@ -274,11 +254,6 @@ const EditProfile = () => {
           </Formik>
         </>
       )}
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={alertSeverity}>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
       <Loading open={isLoading} onClose={() => setIsLoading(false)} />
     </Box>
   );

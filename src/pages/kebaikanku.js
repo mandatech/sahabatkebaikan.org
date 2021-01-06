@@ -4,10 +4,12 @@ import Header from 'components/Header';
 import Layout from 'components/Layout';
 import DonationList from 'modules/kebaikanku/donation-list/screen';
 import React from 'react';
+import { useAuth } from 'libs/auth-context';
 // import { validateToken } from 'services/auth.service';
 
 const KebaikankuPage = () => {
   const router = useRouter();
+  const { dataLogin } = useAuth();
   const [user, setUser] = useState(null);
   // const [isLoading, setIsLoading] = useState(true);
   // const handleValidateToken = async () => {
@@ -34,14 +36,14 @@ const KebaikankuPage = () => {
       top: 0,
       behavior: 'smooth',
     });
-    if (localStorage.getItem('token') && localStorage.getItem('data_login')) {
+    if (dataLogin) {
       // handleValidateToken();
-      const data_login = JSON.parse(localStorage.getItem('data_login'));
-      setUser(data_login.user);
+      // const data_login = JSON.parse(localStorage.getItem('data_login'));
+      setUser(dataLogin.user);
     } else {
       router.push('/login?redirect=/kebaikanku');
     }
-  }, []);
+  }, [dataLogin]);
 
   return (
     <>

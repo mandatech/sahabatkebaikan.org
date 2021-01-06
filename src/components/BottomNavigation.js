@@ -7,6 +7,7 @@ import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan_icon_white.svg';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withAuth } from 'libs/auth-context';
 
 import FabNavigationAction from './FabNavigationAction';
 
@@ -61,13 +62,15 @@ const Circle = () => {
   return <div className={classes.circle} />;
 };
 
-const SimpleBottomNavigation = ({ value }) => {
+const SimpleBottomNavigation = ({ value, isLoggedIn }) => {
   const classes = useStyles();
+
+  // console.log('isLoggedId', isLoggedIn);
 
   const handleTabChange = (event, newValue) => {
     switch (newValue) {
       case 0:
-        if (localStorage.getItem('token')) {
+        if (isLoggedIn) {
           Router.push('/kebaikanku');
         } else {
           Router.push('/login?redirect=/kebaikanku');
@@ -77,7 +80,7 @@ const SimpleBottomNavigation = ({ value }) => {
         Router.push('/');
         break;
       case 2:
-        if (localStorage.getItem('token')) {
+        if (isLoggedIn) {
           Router.push('/profil');
         } else {
           Router.push('/login?redirect=/profil');
@@ -127,6 +130,7 @@ const SimpleBottomNavigation = ({ value }) => {
 
 SimpleBottomNavigation.propTypes = {
   value: PropTypes.number,
+  isLoggedIn: PropTypes.bool,
 };
 
-export default SimpleBottomNavigation;
+export default withAuth(SimpleBottomNavigation);

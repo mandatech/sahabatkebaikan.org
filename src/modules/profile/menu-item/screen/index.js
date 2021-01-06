@@ -13,6 +13,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import HelpIcon from 'assets/icons/help_icon.svg';
 import LogoutIcon from 'assets/icons/logout_icon.svg';
+import { useAuth } from 'libs/auth-context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,14 +28,16 @@ const useStyles = makeStyles((theme) => ({
 export default function SimpleList() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const auth = useAuth();
 
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('data_login');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('data_login');
+    auth.logout();
     Router.push('/');
   };
 

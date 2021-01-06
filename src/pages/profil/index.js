@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
 import ProfileInfo from 'modules/profile/info/screen';
 import MenuItem from 'modules/profile/menu-item/screen';
+import { useAuth } from 'libs/auth-context';
 // import { validateToken } from 'services/auth.service';
 
 const ProfilePage = () => {
   const router = useRouter();
-  const [profile, setProfile] = useState(null);
+  const { isLoggedIn } = useAuth();
+  // console.log('isLoggedIn', isLoggedIn);
 
   // const handleValidateToken = async () => {
   //   try {
@@ -34,26 +36,16 @@ const ProfilePage = () => {
       top: 0,
       behavior: 'smooth',
     });
-    if (localStorage.getItem('token') && localStorage.getItem('data_login')) {
-      // handleValidateToken();
-      const dataLogin = JSON.parse(localStorage.getItem('data_login'));
-      setProfile(dataLogin.user);
-    } else {
+    if (!isLoggedIn) {
       router.push('/login?redirect=/profil');
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (profile) setIsLoading(false);
-  // }, [profile]);
-
-  // if (isLoading) return 'Loading';
 
   return (
     <>
       <Layout menu={2} withBottomNav>
         <Header title="Profil Saya" />
-        <ProfileInfo profile={profile} />
+        <ProfileInfo />
         <MenuItem />
       </Layout>
     </>

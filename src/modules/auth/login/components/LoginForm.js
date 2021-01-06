@@ -15,6 +15,7 @@ import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { loginWithUsernameOrEmailPassword } from 'services/auth.service';
 import { useToast } from 'libs/toast';
+import { useAuth } from 'libs/auth-context';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -60,6 +61,7 @@ const LoginForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
+  const auth = useAuth();
 
   const handleLogin = async (values) => {
     try {
@@ -69,8 +71,10 @@ const LoginForm = () => {
         values.password
       );
 
-      localStorage.setItem('token', data.access_token);
-      localStorage.setItem('data_login', JSON.stringify(data));
+      // localStorage.setItem('token', data.access_token);
+      // localStorage.setItem('data_login', JSON.stringify(data));
+
+      auth.login(data);
 
       if (router.query.redirect) {
         router.push(window.location.search.slice(10));

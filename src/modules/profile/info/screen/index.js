@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import DompetIcon from 'assets/icons/dompet_without_circle.svg';
 import { useRouter } from 'next/router';
-import React from 'react';
+import { withAuth } from 'libs/auth-context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileInfo = ({ profile }) => {
+const ProfileInfo = ({ dataLogin }) => {
   const classes = useStyles();
   const router = useRouter();
 
@@ -71,7 +71,7 @@ const ProfileInfo = ({ profile }) => {
         >
           <Avatar
             alt="Cindy Baker"
-            src={profile?.profile_photo}
+            src={dataLogin?.user.profile_photo}
             className={classes.avatar}
           />
         </Box>
@@ -81,25 +81,25 @@ const ProfileInfo = ({ profile }) => {
           Nama Lengkap
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {profile?.full_name}
+          {dataLogin?.user.full_name}
         </Typography>
         <Typography variant="body1" color="textSecondary">
           Username
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {profile?.username}
+          {dataLogin?.user.username}
         </Typography>
         <Typography variant="body1" color="textSecondary">
           No Telepon
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {profile?.phone || '-'}
+          {dataLogin?.user.phone || '-'}
         </Typography>
         <Typography variant="body1" color="textSecondary">
           Email
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {profile?.email}
+          {dataLogin?.user.email}
         </Typography>
       </Box>
       <Divider variant="middle" />
@@ -126,6 +126,7 @@ const ProfileInfo = ({ profile }) => {
 
 ProfileInfo.propTypes = {
   profile: PropTypes.object,
+  dataLogin: PropTypes.object,
 };
 
-export default ProfileInfo;
+export default withAuth(ProfileInfo);

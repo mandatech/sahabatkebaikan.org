@@ -8,6 +8,7 @@ import React from 'react';
 import theme from '../components/theme';
 // import { validateToken } from 'services/auth.service';
 import { ToastProvider } from 'libs/toast';
+import { AuthProvider } from 'libs/auth-context';
 export default function MyApp(props) {
   const { Component, pageProps } = props;
   // const router = useRouter();
@@ -56,7 +57,9 @@ export default function MyApp(props) {
         <CssBaseline />
 
         <ToastProvider>
-          <Component {...pageProps} />
+          <AuthProvider>
+            <Component {...pageProps} />
+          </AuthProvider>
         </ToastProvider>
       </ThemeProvider>
     </React.Fragment>
