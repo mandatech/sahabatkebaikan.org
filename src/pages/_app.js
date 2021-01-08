@@ -8,6 +8,7 @@ import React from 'react';
 import theme from '../components/theme';
 // import { validateToken } from 'services/auth.service';
 import { ToastProvider } from 'libs/toast';
+import FacebookPixel from 'components/FacebookPixel';
 export default function MyApp(props) {
   const { Component, pageProps } = props;
   // const router = useRouter();
@@ -55,9 +56,11 @@ export default function MyApp(props) {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
 
-        <ToastProvider>
-          <Component {...pageProps} />
-        </ToastProvider>
+        <FacebookPixel>
+          <ToastProvider>
+            <Component {...pageProps} />
+          </ToastProvider>
+        </FacebookPixel>
       </ThemeProvider>
     </React.Fragment>
   );
