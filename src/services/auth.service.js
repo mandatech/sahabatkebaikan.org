@@ -79,3 +79,41 @@ export const validateToken = async () => {
 
   return data;
 };
+
+export const requestPasswordResetToken = async (email) => {
+  const { data } = await axiosInstance({
+    url: `/auth/request-password-reset-token`,
+    method: 'POST',
+    data: {
+      email,
+    },
+  });
+
+  return data;
+};
+
+export const validatePasswordResetToken = async (token) => {
+  const { data } = await axiosInstance({
+    url: `/auth/validate-password-reset-token`,
+    method: 'POST',
+    data: {
+      token,
+    },
+  });
+
+  return data;
+};
+
+export const resetPassword = async (email, new_password, token) => {
+  const { data } = await axiosInstance({
+    url: `/auth/reset-password`,
+    method: 'POST',
+    data: {
+      email,
+      new_password,
+      token,
+    },
+  });
+
+  return data;
+};
