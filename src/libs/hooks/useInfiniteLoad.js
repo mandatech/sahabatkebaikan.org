@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { axiosInstance } from 'config/axios';
 
 const defaultParams = {
-  page: 1,
+  _page: 1,
   _pageSize: 3,
   _sort: 'created_at',
   _order: 'DESC',

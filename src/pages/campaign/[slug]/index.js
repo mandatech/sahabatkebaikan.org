@@ -8,6 +8,7 @@ import CampaignBasicInfoSkeleton from 'modules/campaign/basic-info/skeleton';
 import DonateNowButton from 'modules/campaign/donate-now-button';
 import DonorList from 'modules/campaign/donor-list/screen';
 import CampaignStory from 'modules/campaign/story/screen';
+import LatestNews from 'modules/campaign/latest-news';
 import { getCampaignDetail } from 'services/campaign.service';
 
 const useStyles = makeStyles(() => ({
@@ -43,6 +44,7 @@ const DetailCampaign = ({ slug }) => {
         <>
           <CampaignBasicInfo campaign={data} />
           <CampaignStory campaign={data} />
+          <LatestNews campaign={data} />
           <DonorList campaign={data} />
           <DonateNowButton />
         </>

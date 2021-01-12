@@ -15,7 +15,7 @@ const DataNotFound = ({
       // border="solid pink 1px"
     >
       <DataNotFoundImage />
-      <Typography style={{ marginTop: 16 }} align="center">
+      <Typography style={{ marginTop: 16 }} align="center" variant="body2">
         {message}
       </Typography>
     </Box>

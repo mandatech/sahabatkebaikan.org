@@ -24,11 +24,11 @@ const useStyles = makeStyles(() => ({
     overflow: 'hidden',
     position: 'relative',
     maxHeight: 120,
-    '&$storyCropped': {
+    '&$storyUncropped': {
       maxHeight: 'none',
     },
   },
-  storyCropped: {},
+  storyUncropped: {},
   readAll: {},
   buttonReadAllContainer: {
     marginTop: 8,
@@ -68,7 +68,9 @@ const CampaignStory = ({ campaign }) => {
         </Typography>
       </Box>
 
-      <Box className={clsx(classes.story, { [classes.storyCropped]: readAll })}>
+      <Box
+        className={clsx(classes.story, { [classes.storyUncropped]: readAll })}
+      >
         <Box
           style={{
             display: 'flex',
