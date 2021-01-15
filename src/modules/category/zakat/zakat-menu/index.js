@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CalculatorIcon from 'assets/icons/calculator.svg';
 import QuestionMarkIcon from 'assets/icons/question_mark.svg';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ZakatMenu = () => {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <Box className={classes.root}>
@@ -32,6 +34,7 @@ const ZakatMenu = () => {
             variant="outlined"
             startIcon={<CalculatorIcon />}
             fullWidth
+            onClick={() => router.push('/zakah-calculator')}
           >
             Kalkulator
           </Button>

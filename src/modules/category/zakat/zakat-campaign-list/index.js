@@ -54,7 +54,7 @@ const ZakatScreen = ({ category }) => {
   // }
 
   return (
-    <Paper className={classes.root} ref={ref}>
+    <Paper className={classes.root} ref={ref} elevation={0}>
       <Typography
         variant="body1"
         gutterBottom
