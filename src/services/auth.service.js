@@ -1,5 +1,6 @@
 import qs from 'querystring';
 import { axiosInstance } from 'config/axios';
+import firebase, { FacebookProvider, GoogleProvider } from 'config/firebase';
 
 export const loginWithUsernameOrEmailPassword = async (username, password) => {
   const bodyRequest = qs.stringify({
@@ -116,4 +117,36 @@ export const resetPassword = async (email, new_password, token) => {
   });
 
   return data;
+};
+
+export const loginWithFirebaseToken = async (token) => {
+  const { data } = await axiosInstance({
+    url: `/auth/login-user-with-firebase`,
+    method: 'POST',
+    data: {
+      token,
+    },
+  });
+
+  return data;
+};
+
+export const getFirebaseTokenWithGoogle = async () => {
+  const result = await firebase.auth().signInWithPopup(GoogleProvider);
+
+  const user = result.user;
+
+  const token = await user.getIdToken(true);
+
+  return token;
+};
+
+export const getFirebaseTokenWithFacebook = async () => {
+  const result = await firebase.auth().signInWithPopup(FacebookProvider);
+
+  const user = result.user;
+
+  const token = await user.getIdToken(true);
+
+  return token;
 };

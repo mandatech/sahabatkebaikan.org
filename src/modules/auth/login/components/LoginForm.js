@@ -13,7 +13,12 @@ import Link from 'components/Link';
 import Loading from 'components/Loading';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
-import { loginWithUsernameOrEmailPassword } from 'services/auth.service';
+import {
+  loginWithUsernameOrEmailPassword,
+  getFirebaseTokenWithGoogle,
+  loginWithFirebaseToken,
+  getFirebaseTokenWithFacebook,
+} from 'services/auth.service';
 import { useToast } from 'libs/toast';
 
 const useStyles = makeStyles(() => ({
@@ -104,6 +109,76 @@ const LoginForm = () => {
     }
   };
 
+  const handleLoginWithGoogle = async () => {
+    try {
+      setIsLoading(true);
+
+      const token = await getFirebaseTokenWithGoogle();
+
+      const data = await loginWithFirebaseToken(token);
+
+      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('data_login', JSON.stringify(data));
+
+      if (router.query.redirect) {
+        router.push(window.location.search.slice(10));
+      } else {
+        router.push('/');
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log('error', error);
+      if (error.response) {
+        console.log(error.response.data);
+        toast.showMessage(error.response.data.message, 'error');
+      } else if (error.request) {
+        console.log(error.request);
+        toast.showMessage('Network Error', 'error');
+      } else {
+        console.log('Error', error.message);
+        toast.showMessage(error.message, 'error');
+      }
+
+      setIsLoading(false);
+    }
+  };
+
+  const handleLoginWithFacebook = async () => {
+    try {
+      setIsLoading(true);
+
+      const token = await getFirebaseTokenWithFacebook();
+
+      const data = await loginWithFirebaseToken(token);
+
+      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('data_login', JSON.stringify(data));
+
+      if (router.query.redirect) {
+        router.push(window.location.search.slice(10));
+      } else {
+        router.push('/');
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log('error', error);
+      if (error.response) {
+        console.log(error.response.data);
+        toast.showMessage(error.response.data.message, 'error');
+      } else if (error.request) {
+        console.log(error.request);
+        toast.showMessage('Network Error', 'error');
+      } else {
+        console.log('Error', error.message);
+        toast.showMessage(error.message, 'error');
+      }
+
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Paper className={classes.root} elevation={2}>
       <Typography
@@ -134,6 +209,7 @@ const LoginForm = () => {
           variant="outlined"
           className={classes.button}
           startIcon={<GoogleIcon style={{ width: 18, height: 18 }} />}
+          onClick={handleLoginWithGoogle}
         >
           Google
         </Button>
@@ -143,6 +219,7 @@ const LoginForm = () => {
           startIcon={
             <FacebookIcon style={{ width: 18, height: 18, borderRadius: 2 }} />
           }
+          onClick={handleLoginWithFacebook}
         >
           Facebook
         </Button>
