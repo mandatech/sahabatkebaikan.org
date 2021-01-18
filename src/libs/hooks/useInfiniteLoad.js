@@ -68,29 +68,32 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
         _page: queryParams._page + 1,
       });
     } catch (error) {
+      console.log('errorrr', error);
+      console.log('error', JSON.stringify(error, null, 2));
       if (error.response) {
-        console.log(error.response.data);
+        // console.log(error.response.data);
         setDataState({
           ...dataState,
           isFetching: false,
           error: error.response.data,
         });
       } else if (error.request) {
-        console.log(error.request);
+        // console.log(error.request);
         setDataState({
           ...dataState,
           isFetching: false,
-          error: error.request,
+          error: {
+            message: 'Network error',
+          },
         });
       } else {
-        console.log('Error', error.message);
         setDataState({
           ...dataState,
           isFetching: false,
-          error: error.message,
+          error,
         });
       }
-      setDataState({ ...dataState, isFetching: false, error });
+      // setDataState({ ...dataState, isFetching: false, error });
     }
   };
 
