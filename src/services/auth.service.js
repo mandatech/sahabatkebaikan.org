@@ -124,6 +124,8 @@ export const loginWithFirebaseToken = async (token) => {
     url: `/auth/login-user-with-firebase`,
     method: 'POST',
     data: {
+      client_id: '1bzb3z830jo4077fp',
+      client_secret: 'uBS0Gh4p1cyuwApMpg4yIiKfFhq77KhP',
       token,
     },
   });
