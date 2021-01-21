@@ -78,37 +78,11 @@ const CampaignStory = ({ campaign }) => {
             alignItems: 'center',
           }}
         >
-          {campaign.description}
-          {/* <div>
-            Sepanjang tahun 2020, BMKu telah menyalurkan dana zakat kepada 2.293
-            penerima manfaat di Kabupaten Karawang dan sekitarnya. Sesuai dengan
-            perintah dalam Al-Qur’an surat At-Taubah ayat 60, dana zakat oleh
-            BMKu disalurkan kepada 8 asnaf melalui 4 pilar program, diantaranya
-            kebutuhan hidup, kesehatan, pendidikan dan pemberdayaan.
-          </div>
-          <img
-            style={{
-              objectFit: 'cover',
-              width: 300,
-              height: 200,
-              margin: '8px 0',
+          <div
+            dangerouslySetInnerHTML={{
+              __html: campaign.description,
             }}
-            src="https://sahabatkebaikan.org/wp-content/uploads/2020/07/IMG-20200324-WA0447-300x200.jpg"
-            alt=""
           />
-          <div>
-            Dengan harapan para penerima manfaat/mustahiq akan Mak Darmi
-            melakukan hal tersebut untuk menjaga agar dirinya tidak menjadi
-            peminta-minta. “Alhamdulillah dapat bantuan dari BaitulMaalKu, buat
-            nutupin kebutuhan emak. Kadang hasil jual emak habis untuk beli obat
-            kalau emak sakit. Sukses untuk BaitulMaalKu” Ujar Mak Darmi kepada
-            tim saat penyaluran bulanan. Mak Darmi hanyalah satu dari ribuan
-            penerima manfaat dari zakat yang dikelola BaitulMaalKu. Kami
-            mengajak para muzakki sekalian untuk menunaikan zakat melalui LAZ
-            BaitulMaalKu. Selain karena merupakan kewajiban yang tertera di QS.
-            At-Taubah ayat 103, zakat merupakan instrumen keuangan Islam yang
-            dapat meningkatkan kesejahteraan masyarakat di lingkungan sekitar.
-          </div> */}
         </Box>
         <Box
           className={clsx(classes.buttonReadAllContainer, {

@@ -10,6 +10,8 @@ import DonorList from 'modules/campaign/donor-list/screen';
 import CampaignStory from 'modules/campaign/story/screen';
 import LatestNews from 'modules/campaign/latest-news';
 import { getCampaignDetail } from 'services/campaign.service';
+import DataNotFound from 'components/DataNotFound';
+import { Paper } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   headerRoot: {
@@ -50,9 +52,14 @@ const DetailCampaign = ({ slug }) => {
         </>
       ) : (
         error && (
-          <div>
-            <p>Tidak dapat menampilkan campaign</p>
-          </div>
+          <Paper
+            style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+            elevation={0}
+            square
+          >
+            {/* <p>Tidak dapat menampilkan campaign</p> */}
+            <DataNotFound />
+          </Paper>
         )
       )}
     </Layout>
