@@ -40,7 +40,7 @@ const CampaignBasicInfo = ({ campaign }) => {
 
   return (
     <Paper className={classes.root} elevation={0}>
-      <SlideShow images={campaign.images} />
+      <SlideShow images={campaign.images} videos={campaign.videos} />
       <Typography variant="h6" style={{ lineHeight: 1.4 }}>
         {campaign.title}
       </Typography>
