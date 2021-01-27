@@ -9,6 +9,7 @@ import theme from '../components/theme';
 // import { validateToken } from 'services/auth.service';
 import { ToastProvider } from 'libs/toast';
 import FacebookPixel from 'components/FacebookPixel';
+import { DonationProvider } from 'context/donation.context';
 export default function MyApp(props) {
   const { Component, pageProps } = props;
   // const router = useRouter();
@@ -58,7 +59,9 @@ export default function MyApp(props) {
 
         <FacebookPixel>
           <ToastProvider>
-            <Component {...pageProps} />
+            <DonationProvider>
+              <Component {...pageProps} />
+            </DonationProvider>
           </ToastProvider>
         </FacebookPixel>
       </ThemeProvider>

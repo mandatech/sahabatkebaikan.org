@@ -6,7 +6,8 @@ export const createDonation = async (
   donation_amount,
   infaq_amount,
   is_anonymous,
-  note
+  note,
+  payment_method_id
 ) => {
   const { data } = await axiosInstance({
     url: '/donations',
@@ -17,6 +18,7 @@ export const createDonation = async (
       infaq_amount,
       is_anonymous,
       note,
+      payment_method_id,
     },
   });
 

@@ -115,10 +115,10 @@ const DonationSummaryScreen = ({ donation }) => {
                   align="center"
                   color="primary"
                   onClick={() =>
-                    openInNewTab(donation.donation_payment.payment_link)
+                    openInNewTab(donation.donation_payment.redirect_url)
                   }
                 >
-                  {donation.donation_payment.payment_link}
+                  {donation.donation_payment.redirect_url}
                 </Typography>
               </>
             ) : donation.status === 'paid' ? (

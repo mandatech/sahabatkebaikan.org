@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -10,15 +10,14 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import formatCurrency from 'utils/formatCurrency';
-import { createDonation } from 'services/donation.service';
+// import { createDonation } from 'services/donation.service';
+import { useDonation } from 'context/donation.context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,14 +37,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
 const DonationAmountScreen = ({ campaign }) => {
   const classes = useStyles();
-  const [openAlert, setOpenAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const router = useRouter();
+  const { donationValue, setDonationValue } = useDonation();
   const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState({
     amount: 0,
@@ -72,6 +67,10 @@ const DonationAmountScreen = ({ campaign }) => {
       selected: false,
     },
   ]);
+
+  const { slug } = router.query;
+
+  console.log('donationValue', donationValue);
 
   const changeSelected = (i) => {
     console.log('i', i);
@@ -110,53 +109,92 @@ const DonationAmountScreen = ({ campaign }) => {
     changeSelected();
   };
 
-  const handleCreateDonation = async () => {
-    try {
-      setIsLoading(true);
-      const infaq_amount = values.infaq
+  // const handleCreateDonation = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const infaq_amount = values.infaq
+  //       ? (Number(values.amount) * Number(values.infaqPercent)) / 100
+  //       : 0;
+
+  //     const data = await createDonation(
+  //       campaign.id,
+  //       values.amount,
+  //       infaq_amount,
+  //       values.is_anonymous,
+  //       values.note
+  //     );
+
+  //     setIsLoading(false);
+  //     openInNewTab(data.donation_payment.payment_link);
+  //     Router.push(`/campaign/${campaign.slug}/summary/${data.id}`);
+  //   } catch (error) {
+  //     setOpenAlert(true);
+  //     console.log('error', error);
+  //     if (error.response) {
+  //       console.log(error.response.data);
+  //       setAlertMessage(error.response.data.message);
+  //     } else if (error.request) {
+  //       console.log(error.request);
+  //       setAlertMessage('Network Error');
+  //     } else {
+  //       console.log('Error', error.message);
+  //       setAlertMessage(error.message);
+  //     }
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const handleSetDonationValue = () => {
+    setIsLoading(true);
+    setDonationValue({
+      campaign_id: campaign.id,
+      donation_amount: values.amount,
+      infaq_amount: values.infaq
         ? (Number(values.amount) * Number(values.infaqPercent)) / 100
-        : 0;
+        : 0,
+      is_anonymous: values.is_anonymous,
+      note: values.note,
+    });
 
-      const data = await createDonation(
-        campaign.id,
-        values.amount,
-        infaq_amount,
-        values.is_anonymous,
-        values.note
-      );
+    router.push(`/campaign/${slug}/donation-payment`);
+  };
 
-      setIsLoading(false);
-      openInNewTab(data.donation_payment.payment_link);
-      Router.push(`/campaign/${campaign.slug}/summary/${data.id}`);
-    } catch (error) {
-      setOpenAlert(true);
-      console.log('error', error);
-      if (error.response) {
-        console.log(error.response.data);
-        setAlertMessage(error.response.data.message);
-      } else if (error.request) {
-        console.log(error.request);
-        setAlertMessage('Network Error');
-      } else {
-        console.log('Error', error.message);
-        setAlertMessage(error.message);
-      }
-      setIsLoading(false);
+  // const handleCloseAlert = (event, reason) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+
+  //   setOpenAlert(false);
+  // };
+
+  // const openInNewTab = (url) => {
+  //   const win = window.open(url, '_blank');
+  //   win.focus();
+  // };
+
+  React.useEffect(() => {
+    const values = {
+      amount: donationValue.donation_amount,
+      infaq: donationValue.infaq_amount >= 0 ? true : false,
+      is_anonymous: donationValue.is_anonymous,
+      note: donationValue.note,
+      infaqPercent:
+        (donationValue.infaq_amount / donationValue.donation_amount) * 100,
+    };
+
+    if (donationValue.campaign_id === campaign.id) {
+      setValues(values);
+
+      const newPredefinedAmounts = predefinedAmounts.map((amount) => ({
+        value: amount.value,
+        selected: amount.value === donationValue.donation_amount ? true : false,
+      }));
+
+      setPredefinedAmounts(newPredefinedAmounts);
     }
-  };
-
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenAlert(false);
-  };
-
-  const openInNewTab = (url) => {
-    const win = window.open(url, '_blank');
-    win.focus();
-  };
+    console.log('values', values);
+    // setValues(values);
+  }, []);
 
   return (
     <Box className={classes.root}>
@@ -328,13 +366,13 @@ const DonationAmountScreen = ({ campaign }) => {
         disabled={!values.amount || isLoading}
         fullWidth
         style={{ height: 50 }}
-        // onClick={() => router.push(`/campaign/${slug}/donation-payment`)}
-        onClick={handleCreateDonation}
+        onClick={handleSetDonationValue}
+        // onClick={handleCreateDonation}
       >
         {isLoading && <CircularProgress size={20} style={{ marginRight: 8 }} />}
-        Donasi Sekarang
+        Lanjut Pembayaran
       </Button>
-      <Snackbar
+      {/* <Snackbar
         open={openAlert}
         autoHideDuration={6000}
         onClose={handleCloseAlert}
@@ -342,7 +380,7 @@ const DonationAmountScreen = ({ campaign }) => {
         <Alert onClose={handleCloseAlert} severity="error">
           {alertMessage}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </Box>
   );
 };
