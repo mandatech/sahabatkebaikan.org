@@ -9,13 +9,17 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: '#1BBCC2',
+      contrastText: '#fff',
     },
     error: {
       main: red.A400,
     },
     background: {
-      default: '#fff',
+      default: '#F7F7F7',
     },
+  },
+  typography: {
+    fontFamily: ['Poppins', '-apple-system', 'sans-serif'],
   },
 });
 
