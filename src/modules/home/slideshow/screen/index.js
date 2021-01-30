@@ -1,5 +1,6 @@
 import 'react-slideshow-image/dist/styles.css';
-
+import Box from '@material-ui/core/Box';
+import { useRouter } from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import { Zoom } from 'react-slideshow-image';
 
@@ -12,10 +13,25 @@ const useStyles = makeStyles((theme) => ({
 
 const Slideshow = () => {
   const classes = useStyles();
+  const router = useRouter();
   const images = [
-    'images/slideshow_1.jpg',
-    'images/slideshow_2.jpg',
-    'images/slideshow_3.jpg',
+    {
+      id: 1,
+      banner_image: 'images/slideshow_1.jpg',
+      link:
+        '/campaign/sedekah-beras-untuk-mewujudkan-senyum-di-wajah-abah-dan-emak',
+    },
+    {
+      id: 2,
+      banner_image: 'images/slideshow_2.jpg',
+      link: '/kategori/kemanusiaan',
+    },
+    {
+      id: 3,
+      banner_image: 'images/slideshow_3.jpg',
+      link:
+        '/campaign/yuk-ikut-distribusi-10000-wakaf-al-quran-untuk-santri-dan-masyarakat-muslim-di-pelosok-karawang-dan-jawa-barat',
+    },
   ];
 
   const zoomInProperties = {
@@ -23,19 +39,23 @@ const Slideshow = () => {
     // scale: 1.2,
   };
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Zoom {...zoomInProperties}>
         {images.map((each, index) => (
-          <div key={index} style={{ width: '100%', cursor: 'pointer' }}>
+          <Box
+            key={index}
+            style={{ width: '100%', cursor: 'pointer' }}
+            onClick={() => router.push(each.link)}
+          >
             <img
               style={{ objectFit: 'cover', width: '100%', borderRadius: 6 }}
-              src={each}
+              src={each.banner_image}
               alt=""
             />
-          </div>
+          </Box>
         ))}
       </Zoom>
-    </div>
+    </Box>
   );
 };
 
