@@ -84,13 +84,13 @@ const TabsMenu = () => {
         >
           <Tab
             value="one"
-            label="Berhasil"
+            label="Tertunda"
             {...a11yProps('one')}
             classes={{ root: classes.tabStyle }}
           />
           <Tab
             value="two"
-            label="Tertunda"
+            label="Berhasil"
             {...a11yProps('two')}
             classes={{ root: classes.tabStyle }}
           />
@@ -109,10 +109,10 @@ const TabsMenu = () => {
         </Tabs>
       </Paper>
       <TabPanel value={value} index="one">
-        <DonationList status="paid" />
+        <DonationList status="pending" />
       </TabPanel>
       <TabPanel value={value} index="two">
-        <DonationList status="pending" />
+        <DonationList status="paid" />
       </TabPanel>
       <TabPanel value={value} index="three">
         <DonationList status="cancelled" />

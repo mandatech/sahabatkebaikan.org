@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '50%',
     position: 'absolute',
     bottom: 0,
+    cursor: 'pointer',
   },
   inputImage: {
     display: 'none',
@@ -86,11 +87,16 @@ const EditProfile = () => {
   const handleUpdateProfile = async (values, { setSubmitting }) => {
     try {
       setIsLoading(true);
-      const data = await updateProfile(profile.id, {
+      const bodyRequest = {
         full_name: values.full_name,
         phone: values.phone,
-        profile_photo: newProfilePhoto.file,
-      });
+      };
+
+      if (newProfilePhoto.file) {
+        bodyRequest.profile_photo = newProfilePhoto.file;
+      }
+
+      const data = await updateProfile(profile.id, bodyRequest);
       const data_login = JSON.parse(localStorage.getItem('data_login'));
 
       data_login.user = data;
@@ -165,16 +171,18 @@ const EditProfile = () => {
                 // src={newProfilePhoto.url}
                 className={classes.avatar}
               />
-              <input
-                accept="image/*"
-                className={classes.inputImage}
-                id="input-image"
-                type="file"
-                onChange={handleUploadClick}
-              />
               <ButtonBase className={classes.changeAvatar}>
+                <input
+                  accept="image/*"
+                  className={classes.inputImage}
+                  id="input-image"
+                  type="file"
+                  onChange={handleUploadClick}
+                />
                 <label htmlFor="input-image">
-                  <PhotoCameraIcon style={{ color: 'white' }} />
+                  <PhotoCameraIcon
+                    style={{ color: 'white', cursor: 'pointer' }}
+                  />
                 </label>
               </ButtonBase>
             </Box>
