@@ -60,7 +60,7 @@ const Dompet = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle>Nantikan di release selanjutnya!</DialogTitle>
+        <DialogTitle>Nantikan!</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Fitur ini sedang kami kembangkan, doakan agar segera bisa digunakan
