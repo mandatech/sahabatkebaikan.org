@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
@@ -9,10 +11,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import EditIcon from '@material-ui/icons/Edit';
 import DompetIcon from 'assets/icons/dompet_without_circle.svg';
-import { useRouter } from 'next/router';
-import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
 const ProfileInfo = ({ profile }) => {
   const classes = useStyles();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box className={classes.root}>
@@ -111,15 +121,44 @@ const ProfileInfo = ({ profile }) => {
           </ListItemIcon>
           <ListItemText primary="Dompet Kebaikan" />
           <ListItemText style={{ textAlign: 'right', overflow: 'auto' }}>
-            <span style={{ fontWeight: 600 }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => setOpen(true)}
+            >
+              Aktifkan
+            </Button>
+            {/* <span style={{ fontWeight: 600 }}>
               {new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR',
-              }).format(120000)}
-            </span>
+              }).format(0)}
+            </span> */}
           </ListItemText>
         </ListItem>
       </List>
+      <Dialog
+        style={{ marginLeft: -12 }}
+        open={open}
+        onClose={handleClose}
+        maxWidth="xs"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>Nantikan!</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Fitur ini sedang kami kembangkan, doakan agar segera bisa digunakan
+            ya!
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+          <Button variant="outlined" color="secondary" onClick={handleClose}>
+            Amin
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

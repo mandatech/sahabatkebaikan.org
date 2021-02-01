@@ -156,7 +156,7 @@ const DonationList = ({ status }) => {
         <DataNotFound message={error.message} />
       ) : (
         <div style={{ marginTop: 50 }}>
-          <DataNotFound message="Maaf, Kak! Belum ada data." />
+          <DataNotFound message="Maaf, tidak ada data ditemukan." />
         </div>
       )}
 
