@@ -1,31 +1,33 @@
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Copyright from 'components/Copyright';
+import { makeStyles } from '@material-ui/core/styles';
 import Layout from 'components/Layout';
-import Link from 'components/Link';
-import ProTip from 'components/ProTip';
-import React from 'react';
+import Header from 'components/Header';
+import AboutScreen from 'modules/about/screen';
 
-export default function About() {
+const useStyles = makeStyles(() => ({
+  headerRoot: {
+    borderBottom: 'solid 1px lightgrey',
+  },
+}));
+
+const AboutPage = () => {
+  const classes = useStyles();
+
   return (
-    <Layout container="paper">
-      <Box m={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js example
-        </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          component={Link}
-          naked
-          href="/"
-        >
-          Go to the main page
-        </Button>
-        <ProTip />
-        <Copyright />
-      </Box>
+    <Layout>
+      <Header
+        title="Tentang Sahabatkebaikan"
+        // icon={<BackIcon />}
+        // backButton={true}
+        // TitleProps={{ align: 'left' }}
+        // color="inherit"
+        elevation={0}
+        classes={{
+          root: classes.headerRoot,
+        }}
+      />
+      <AboutScreen />
     </Layout>
   );
-}
+};
+
+export default AboutPage;
