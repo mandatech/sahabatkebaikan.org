@@ -94,12 +94,12 @@ const TabsMenu = () => {
             {...a11yProps('two')}
             classes={{ root: classes.tabStyle }}
           />
-          <Tab
+          {/* <Tab
             value="three"
             label="Dibatalkan"
             {...a11yProps('three')}
             classes={{ root: classes.tabStyle }}
-          />
+          /> */}
           <Tab
             value="four"
             label="Gagal"
@@ -114,9 +114,9 @@ const TabsMenu = () => {
       <TabPanel value={value} index="two">
         <DonationList status="paid" />
       </TabPanel>
-      <TabPanel value={value} index="three">
+      {/* <TabPanel value={value} index="three">
         <DonationList status="cancelled" />
-      </TabPanel>
+      </TabPanel> */}
       <TabPanel value={value} index="four">
         <DonationList status="expired" />
       </TabPanel>
