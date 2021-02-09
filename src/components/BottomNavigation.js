@@ -1,7 +1,8 @@
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { makeStyles } from '@material-ui/core/styles';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+// import LocationOnIcon from '@material-ui/icons/LocationOn';
+import PersonIcon from '@material-ui/icons/Person';
 import RestoreIcon from '@material-ui/icons/Restore';
 import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan_icon_white.svg';
 import Router from 'next/router';
@@ -119,7 +120,7 @@ const SimpleBottomNavigation = ({ value }) => {
           selected: classes.bottomNavActionSelected,
         }}
         label="Profil Saya"
-        icon={<LocationOnIcon />}
+        icon={<PersonIcon />}
       />
     </BottomNavigation>
   );
