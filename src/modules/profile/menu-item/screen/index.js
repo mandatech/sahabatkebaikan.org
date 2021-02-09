@@ -42,31 +42,25 @@ export default function SimpleList() {
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        <ListItem button>
+        <ListItem button onClick={() => Router.push('/faq')}>
           <ListItemIcon>
             <HelpIcon />
           </ListItemIcon>
-          <ListItemText primary="Bantuan" />
+          <ListItemText primary="FAQ" />
         </ListItem>
         <Divider variant="middle" />
-        <ListItem button>
-          <ListItemIcon>
-            <SahabatkebaikanLogoIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary="Tentang Sahabatkebaikan"
-            onClick={() => Router.push('/about')}
-          />
-        </ListItem>
-        <Divider variant="middle" />
-        <ListItem button>
+        <ListItem button onClick={() => Router.push('/contact')}>
           <ListItemIcon>
             <PhoneIcon color="primary" />
           </ListItemIcon>
-          <ListItemText
-            primary="Kontak Kami"
-            onClick={() => Router.push('/contact')}
-          />
+          <ListItemText primary="Kontak Kami" />
+        </ListItem>
+        <Divider variant="middle" />
+        <ListItem button onClick={() => Router.push('/about')}>
+          <ListItemIcon>
+            <SahabatkebaikanLogoIcon />
+          </ListItemIcon>
+          <ListItemText primary="Tentang Sahabatkebaikan" />
         </ListItem>
         <Divider variant="middle" />
         <ListItem button onClick={() => setOpen(true)}>
