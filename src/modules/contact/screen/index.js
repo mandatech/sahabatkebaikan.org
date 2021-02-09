@@ -10,13 +10,13 @@ import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flex: 1,
     padding: '16px 32px',
     background: theme.palette.background.paper,
-    minHeight: '100vh',
     paddingBottom: 32,
   },
   title: {
-    fontWeight: 600,
+    fontWeight: 500,
     textTransform: 'uppercase',
   },
   card: {
@@ -39,13 +39,11 @@ const AboutScreen = () => {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
+        mt={2}
         mb={4}
       >
         <SahabatkebaikanIcon />
       </Box>
-      <Typography className={classes.title} align="center">
-        Yayasan BaitulMaalKu
-      </Typography>
       <Paper className={classes.card} variant="outlined">
         <PhoneEnabledIcon fontSize="large" style={{ marginBottom: 8 }} />
         <Typography>+62 81 1160 0660</Typography>
@@ -57,6 +55,9 @@ const AboutScreen = () => {
       </Paper>
       <Paper className={classes.card} variant="outlined">
         <LocationOnIcon fontSize="large" style={{ marginBottom: 8 }} />
+        <Typography className={classes.title} align="center">
+          Yayasan BaitulMaalKu
+        </Typography>
         <Typography align="center">
           Jl. Jendral A Yani No.427 Ruko Claster Primadona No.B1 Cikampek
           Selatan-Karawang
