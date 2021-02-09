@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
+import PhoneIcon from '@material-ui/icons/Phone';
 import HelpIcon from 'assets/icons/help_icon.svg';
 import LogoutIcon from 'assets/icons/logout_icon.svg';
 import SahabatkebaikanLogoIcon from 'assets/icons/sahabatkebaikan_logo.svg';
@@ -55,6 +56,16 @@ export default function SimpleList() {
           <ListItemText
             primary="Tentang Sahabatkebaikan"
             onClick={() => Router.push('/about')}
+          />
+        </ListItem>
+        <Divider variant="middle" />
+        <ListItem button>
+          <ListItemIcon>
+            <PhoneIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText
+            primary="Kontak Kami"
+            onClick={() => Router.push('/contact')}
           />
         </ListItem>
         <Divider variant="middle" />
