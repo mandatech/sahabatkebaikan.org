@@ -24,7 +24,7 @@ variables:
 build_production:
   stage: build
   tags:
-    - dev-env-sahabatkebaikan
+    - prod-env-sahabatkebaikan
   script:
     # Only copy changed files to project folder
     - cp -r -u . $PROJECT_DIR
@@ -37,7 +37,7 @@ build_production:
 deploy_production:
   stage: deploy
   tags:
-    - dev-env-sahabatkebaikan
+    - prod-env-sahabatkebaikan
   script:
     - cd $PROJECT_DIR
     - pm2 delete ecosystem.config.js --only sahabatkebaikan-production
