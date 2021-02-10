@@ -9,7 +9,7 @@ cache:
 
 variables:
   NODE_ENV: 'production'
-  PROJECT_DIR: '/www/sahabatkebaikan-frontend-production'
+  PROJECT_DIR: '/www/wwwroot/sahabatkebaikan-frontend-production'
   NEXT_PUBLIC_BASE_URL: 'https://api.sahabatkebaikan.org'
   NEXT_PUBLIC_FACEBOOK_PIXEL_ID: 116707706908977
   NEXT_PUBLIC_FIREBASE_API_KEY: 'AIzaSyBCT7iD1ZfXKQnVCoKFZqoRVkvzfaZ16K8'
