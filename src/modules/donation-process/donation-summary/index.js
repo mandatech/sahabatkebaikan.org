@@ -131,17 +131,23 @@ const DonationSummaryScreen = ({ donation }) => {
               <Typography>Donasi telah dibatalkan</Typography>
             )}
           </Box>
-          <Box className={classes.paymentLimit}>
-            <Typography variant="body2" align="center" style={{ fontSize: 12 }}>
-              Transfer sebelum{' '}
-              <span style={{ fontWeight: 600 }}>
-                {/* {new Date(donation.expiration).toLocaleString()} */}
-                {moment(donation.expiration).format('LL')}{' '}
-                {moment(donation.expiration).format('LT')}
-              </span>{' '}
-              atau donasi kamu otomatis dibatalkan.
-            </Typography>
-          </Box>
+          {donation.status === 'pending' && (
+            <Box className={classes.paymentLimit}>
+              <Typography
+                variant="body2"
+                align="center"
+                style={{ fontSize: 12 }}
+              >
+                Transfer sebelum{' '}
+                <span style={{ fontWeight: 600 }}>
+                  {/* {new Date(donation.expiration).toLocaleString()} */}
+                  {moment(donation.expiration).format('LL')}{' '}
+                  {moment(donation.expiration).format('LT')}
+                </span>{' '}
+                atau donasi kamu otomatis dibatalkan.
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Box>
 

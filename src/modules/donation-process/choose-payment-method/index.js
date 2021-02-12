@@ -81,7 +81,9 @@ const PaymentMethod = () => {
       );
 
       setIsLoading(false);
-      openInNewTab(data.donation_payment.redirect_url);
+      if (data.donation_payment.redirect_url) {
+        openInNewTab(data.donation_payment.redirect_url);
+      }
       router.push(`/campaign/${slug}/summary/${data.id}`);
     } catch (error) {
       console.log('error', error);

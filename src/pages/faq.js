@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Layout from 'components/Layout';
 import Header from 'components/Header';
-import AboutScreen from 'modules/about/screen';
+import FAQScreen from 'modules/faq/screen';
+import BackIcon from '@material-ui/icons/ChevronLeft';
 
 const useStyles = makeStyles(() => ({
   headerRoot: {
@@ -9,25 +10,25 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const AboutPage = () => {
+const ContactPage = () => {
   const classes = useStyles();
 
   return (
     <Layout>
       <Header
-        title="Tentang Sahabatkebaikan"
-        // icon={<BackIcon />}
-        // backButton={true}
-        // TitleProps={{ align: 'left' }}
-        // color="inherit"
+        title="Frequently Asked Question"
+        icon={<BackIcon />}
+        backButton={true}
+        TitleProps={{ align: 'left' }}
+        color="inherit"
         elevation={0}
         classes={{
           root: classes.headerRoot,
         }}
       />
-      <AboutScreen />
+      <FAQScreen />
     </Layout>
   );
 };
 
-export default AboutPage;
+export default ContactPage;
