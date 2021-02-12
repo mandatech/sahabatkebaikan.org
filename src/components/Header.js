@@ -71,7 +71,7 @@ const CustomHeader = (props) => {
     size = 'normal',
     dompet = false,
     color = 'primary',
-    elevation = 4,
+    elevation = 0,
     backButton = false,
     TitleProps = {
       variant: 'h6',
