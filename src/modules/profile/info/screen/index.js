@@ -18,6 +18,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import EditIcon from '@material-ui/icons/Edit';
 import DompetIcon from 'assets/icons/dompet_without_circle.svg';
+import { ZipayUserActivation } from '../../../zipay/user-activation/ZipayUserActivation';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +57,7 @@ const ProfileInfo = ({ profile }) => {
   const classes = useStyles();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [openZipayDialog, setOpenZipayDialog] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -124,7 +126,8 @@ const ProfileInfo = ({ profile }) => {
             <Button
               variant="outlined"
               color="primary"
-              onClick={() => setOpen(true)}
+              // onClick={() => setOpen(true)}
+              onClick={() => setOpenZipayDialog(true)}
             >
               Aktifkan
             </Button>
@@ -159,6 +162,10 @@ const ProfileInfo = ({ profile }) => {
           </Button>
         </DialogActions>
       </Dialog>
+      <ZipayUserActivation
+        open={openZipayDialog}
+        onClose={() => setOpenZipayDialog(false)}
+      />
     </Box>
   );
 };
