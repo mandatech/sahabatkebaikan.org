@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -74,6 +75,7 @@ const DonationList = ({ status }) => {
     _campaign_id: '',
     _status: status || null,
   });
+  const router = useRouter();
 
   const {
     data,
@@ -111,7 +113,15 @@ const DonationList = ({ status }) => {
             </Box>
             {group.donations.map((donation, i) => (
               <Box key={i} m={2}>
-                <Grid container style={{ margin: '16px 0' }}>
+                <Grid
+                  container
+                  style={{ margin: '16px 0' }}
+                  onClick={() =>
+                    router.push(
+                      `/campaign/${donation.campaign.slug}/summary/${donation.id}`
+                    )
+                  }
+                >
                   <Grid item xs={4}>
                     <ButtonBase className={classes.image}>
                       <img

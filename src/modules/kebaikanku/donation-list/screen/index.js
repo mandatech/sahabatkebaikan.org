@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -61,11 +62,27 @@ const useStyles = makeStyles((theme) => ({
 
 const TabsMenu = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState('one');
+  const router = useRouter();
+  const [value, setValue] = React.useState('pending');
 
   const handleChange = (event, newValue) => {
+    router.push(`${router.pathname}?status=${newValue}`);
     setValue(newValue);
   };
+
+  React.useEffect(() => {
+    if (router.query.status) {
+      if (router.query.status === 'paid') {
+        setValue('paid');
+      } else if (router.query.status === 'expired') {
+        setValue('expired');
+      } else if (router.query.status === 'pending') {
+        setValue('pending');
+      } else {
+        router.push(`${router.pathname}?status=pending`);
+      }
+    }
+  }, [router.query]);
 
   return (
     <div className={classes.root}>
@@ -83,15 +100,15 @@ const TabsMenu = () => {
           aria-label="wrapped label tabs example"
         >
           <Tab
-            value="one"
+            value="pending"
             label="Tertunda"
-            {...a11yProps('one')}
+            {...a11yProps('pending')}
             classes={{ root: classes.tabStyle }}
           />
           <Tab
-            value="two"
+            value="paid"
             label="Berhasil"
-            {...a11yProps('two')}
+            {...a11yProps('paid')}
             classes={{ root: classes.tabStyle }}
           />
           {/* <Tab
@@ -101,23 +118,23 @@ const TabsMenu = () => {
             classes={{ root: classes.tabStyle }}
           /> */}
           <Tab
-            value="four"
+            value="expired"
             label="Gagal"
             {...a11yProps('three')}
             classes={{ root: classes.tabStyle }}
           />
         </Tabs>
       </Paper>
-      <TabPanel value={value} index="one">
+      <TabPanel value={value} index="pending">
         <DonationList status="pending" />
       </TabPanel>
-      <TabPanel value={value} index="two">
+      <TabPanel value={value} index="paid">
         <DonationList status="paid" />
       </TabPanel>
       {/* <TabPanel value={value} index="three">
         <DonationList status="cancelled" />
       </TabPanel> */}
-      <TabPanel value={value} index="four">
+      <TabPanel value={value} index="expired">
         <DonationList status="expired" />
       </TabPanel>
     </div>
