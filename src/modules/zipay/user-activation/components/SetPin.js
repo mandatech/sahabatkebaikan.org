@@ -54,7 +54,7 @@ const SetPin = ({ handleNext = () => {} }) => {
             errors.retype_pin = 'Harus diisi';
           }
           if (values.retype_pin !== values.pin) {
-            errors.retype_pin = 'Password tidak sama';
+            errors.retype_pin = 'Pin tidak sama';
           }
           return errors;
         }}

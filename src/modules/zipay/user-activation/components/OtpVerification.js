@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { Field, Form, Formik } from 'formik';
 import { TextField as FormikTextField } from 'formik-material-ui';
+import Countdown from 'react-countdown';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -26,6 +27,29 @@ const SetPin = ({ handleNext = () => {} }) => {
   const classes = useStyles();
   const [successMessage, setSuccessMessage] = React.useState();
   const [errorMessage, setErrorMessage] = React.useState();
+
+  const renderer = ({ minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return (
+        <Button
+          variant="text"
+          color="primary"
+          size="small"
+          style={{ textTransform: 'capitalize', marginTop: 8 }}
+        >
+          Kirim ulang
+        </Button>
+      );
+    } else {
+      // Render a countdown
+      return (
+        <Typography variant="caption" color="error">
+          Kirim ulang dalam {minutes}:{seconds}
+        </Typography>
+      );
+    }
+  };
 
   return (
     <DialogContent dividers>
@@ -78,17 +102,7 @@ const SetPin = ({ handleNext = () => {} }) => {
               }}
             />
             <Box display="flex" flexDirection="column" alignItems="center">
-              <Typography variant="caption" color="error">
-                Kirim ulang dalam 00:59
-              </Typography>
-              <Button
-                variant="text"
-                color="primary"
-                size="small"
-                style={{ textTransform: 'capitalize', marginTop: 8 }}
-              >
-                Kirim ulang
-              </Button>
+              <Countdown date={Date.now() + 60000} renderer={renderer} />
             </Box>
             <Button
               variant="contained"
