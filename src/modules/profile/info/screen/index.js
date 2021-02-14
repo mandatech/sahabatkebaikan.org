@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
@@ -14,11 +14,14 @@ import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import EditIcon from '@material-ui/icons/Edit';
 import DompetIcon from 'assets/icons/dompet_without_circle.svg';
 import { ZipayUserActivation } from 'modules/zipay/user-activation';
+import { checkBalance } from 'services/zipay.service';
+import formatCurrency from 'utils/formatCurrency';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,9 +62,40 @@ const ProfileInfo = ({ profile }) => {
   const [open, setOpen] = useState(false);
   const [openZipayDialog, setOpenZipayDialog] = useState(false);
 
+  const [isLoading, setIsloading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [balance, setBalance] = useState(null);
+
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleCheckBalance = async () => {
+    try {
+      setIsloading(true);
+      setErrorMessage(null);
+      const data = await checkBalance();
+
+      setBalance(data.zipay_pocket);
+      setIsloading(false);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        setErrorMessage(error.response.data.message);
+      } else if (error.request) {
+        console.log(error.request);
+        setErrorMessage('Network error');
+      } else {
+        console.log('Error', error.message);
+        setErrorMessage(error.message);
+      }
+      setIsloading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleCheckBalance();
+  }, []);
 
   return (
     <Box className={classes.root}>
@@ -121,21 +155,34 @@ const ProfileInfo = ({ profile }) => {
           <ListItemIcon>
             <DompetIcon />
           </ListItemIcon>
-          <ListItemText primary="Zipay Wallet" />
+          <ListItemText
+            primary="Zipay Wallet"
+            secondary={errorMessage ? 'Error' : null}
+          />
           <ListItemText style={{ textAlign: 'right', overflow: 'auto' }}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => setOpenZipayDialog(true)}
-            >
-              Aktifkan
-            </Button>
-            {/* <span style={{ fontWeight: 600 }}>
-              {new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-              }).format(0)}
-            </span> */}
+            {isLoading ? (
+              <CircularProgress size={20} />
+            ) : errorMessage ? (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => handleCheckBalance()}
+              >
+                Reload
+              </Button>
+            ) : balance >= 0 ? (
+              <span style={{ fontWeight: 600 }}>
+                Rp {formatCurrency.format(balance)}
+              </span>
+            ) : (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => setOpenZipayDialog(true)}
+              >
+                Aktifkan
+              </Button>
+            )}
           </ListItemText>
         </ListItem>
       </List>
