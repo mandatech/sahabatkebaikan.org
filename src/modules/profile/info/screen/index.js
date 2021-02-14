@@ -18,7 +18,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import EditIcon from '@material-ui/icons/Edit';
 import DompetIcon from 'assets/icons/dompet_without_circle.svg';
-import { ZipayUserActivation } from '../../../zipay/user-activation/ZipayUserActivation';
+import { ZipayUserActivation } from 'modules/zipay/user-activation';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -121,12 +121,11 @@ const ProfileInfo = ({ profile }) => {
           <ListItemIcon>
             <DompetIcon />
           </ListItemIcon>
-          <ListItemText primary="Dompet Kebaikan" />
+          <ListItemText primary="Zipay Wallet" />
           <ListItemText style={{ textAlign: 'right', overflow: 'auto' }}>
             <Button
               variant="outlined"
               color="primary"
-              // onClick={() => setOpen(true)}
               onClick={() => setOpenZipayDialog(true)}
             >
               Aktifkan
