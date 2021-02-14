@@ -37,3 +37,12 @@ export const verifyOtp = async (otp_code) => {
 
   return data;
 };
+
+export const checkBalance = async () => {
+  const { data } = await axiosInstance({
+    url: '/zipay/check-balance',
+    method: 'POST',
+  });
+
+  return data;
+};
