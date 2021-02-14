@@ -23,8 +23,10 @@ const TextField = (props) => (
 
 const SetPin = ({ handleNext = () => {} }) => {
   const classes = useStyles();
-  const [successMessage, setSuccessMessage] = React.useState();
-  const [errorMessage, setErrorMessage] = React.useState();
+
+  const onSubmit = (value) => {
+    handleNext('pin', value.pin);
+  };
 
   return (
     <DialogContent dividers>
@@ -58,7 +60,7 @@ const SetPin = ({ handleNext = () => {} }) => {
           }
           return errors;
         }}
-        onSubmit={handleNext}
+        onSubmit={onSubmit}
       >
         {({ submitForm, isSubmitting, handleBlur, setFieldValue }) => (
           <Form className={classes.form}>
@@ -68,7 +70,6 @@ const SetPin = ({ handleNext = () => {} }) => {
               label="Pin"
               name="pin"
               min="0"
-              disabled={!!errorMessage}
               onChange={(e) => {
                 e.preventDefault();
                 const { value } = e.target;
@@ -87,7 +88,6 @@ const SetPin = ({ handleNext = () => {} }) => {
               type="password"
               label="Masukkan Ulang Pin"
               name="retype_pin"
-              disabled={!!errorMessage}
               onChange={(e) => {
                 e.preventDefault();
                 const { value } = e.target;
@@ -105,7 +105,7 @@ const SetPin = ({ handleNext = () => {} }) => {
               variant="contained"
               color="secondary"
               fullWidth
-              disabled={isSubmitting || !!errorMessage}
+              disabled={isSubmitting}
               type="submit"
               onClick={submitForm}
               style={{
@@ -117,9 +117,6 @@ const SetPin = ({ handleNext = () => {} }) => {
               )}
               Lanjut
             </Button>
-            <Typography color="error" align="center" variant="body2">
-              {errorMessage}
-            </Typography>
           </Form>
         )}
       </Formik>
