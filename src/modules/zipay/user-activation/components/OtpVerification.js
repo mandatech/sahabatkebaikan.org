@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -10,6 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Field, Form, Formik } from 'formik';
 import { TextField as FormikTextField } from 'formik-material-ui';
 import Countdown from 'react-countdown';
+import { useToast } from 'libs/toast';
+import { resendOtp, verifyOtp } from 'services/zipay.service';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -23,12 +26,37 @@ const TextField = (props) => (
   <FormikTextField size="medium" fullWidth {...props} />
 );
 
-const SetPin = ({ handleNext = () => {} }) => {
+const OtpVerification = ({ handleClose = () => {}, state }) => {
   const classes = useStyles();
-  const [successMessage, setSuccessMessage] = React.useState();
+  const toast = useToast();
+  const [timer] = React.useState(Date.now() + 30000);
   const [errorMessage, setErrorMessage] = React.useState();
 
-  const renderer = ({ minutes, seconds, completed }) => {
+  const onSubmit = async (value) => {
+    try {
+      await verifyOtp(value.otp);
+
+      toast.showMessage('Zipay account activated', 'info');
+
+      handleClose();
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        setErrorMessage(error.response.data.message);
+        toast.showMessage(error.response.data.message, 'error');
+      } else if (error.request) {
+        console.log(error.request);
+        setErrorMessage('Network Error');
+        toast.showMessage('Network Error', 'error');
+      } else {
+        console.log('Error', error.message);
+        setErrorMessage(error.message);
+        toast.showMessage(error.message, 'error');
+      }
+    }
+  };
+
+  const renderer = ({ minutes, seconds, completed, api }) => {
     if (completed) {
       // Render a completed state
       return (
@@ -37,6 +65,27 @@ const SetPin = ({ handleNext = () => {} }) => {
           color="primary"
           size="small"
           style={{ textTransform: 'capitalize', marginTop: 8 }}
+          onClick={async () => {
+            api.stop();
+            try {
+              await resendOtp(state.phone);
+              api.start();
+            } catch (error) {
+              if (error.response) {
+                console.log(error.response.data);
+                setErrorMessage(error.response.data.message);
+                toast.showMessage(error.response.data.message, 'error');
+              } else if (error.request) {
+                console.log(error.request);
+                setErrorMessage('Network Error');
+                toast.showMessage('Network Error', 'error');
+              } else {
+                console.log('Error', error.message);
+                setErrorMessage(error.message);
+                toast.showMessage(error.message, 'error');
+              }
+            }
+          }}
         >
           Kirim ulang
         </Button>
@@ -58,7 +107,7 @@ const SetPin = ({ handleNext = () => {} }) => {
           Verifikasi Kode OTP
         </Typography>
         <Typography gutterBottom variant="body2">
-          Masukkan 6 digit kode OTP yang telah dikirimkan ke 085712343333.
+          Masukkan 6 digit kode OTP yang telah dikirimkan ke {state.phone}.
         </Typography>
       </DialogContentText>
       <Formik
@@ -68,17 +117,15 @@ const SetPin = ({ handleNext = () => {} }) => {
         validate={(values) => {
           const errors = {};
 
-          console.log('values', values);
-
-          if (!values.phone) {
-            errors.phone = 'Harus diisi';
-          } else if (values.phone.toString().length < 8) {
-            errors.phone = 'Nomor telepon minimal 8 karakter';
+          if (!values.otp) {
+            errors.otp = 'Harus diisi';
+          } else if (values.otp.toString().length < 6) {
+            errors.otp = 'Nomor telepon minimal 6 karakter';
           }
 
           return errors;
         }}
-        onSubmit={handleNext}
+        onSubmit={onSubmit}
       >
         {({ submitForm, isSubmitting, handleBlur, setFieldValue }) => (
           <Form className={classes.form}>
@@ -87,7 +134,7 @@ const SetPin = ({ handleNext = () => {} }) => {
               type="text"
               label="Kode OTP"
               name="otp"
-              disabled={!!errorMessage}
+              disabled={isSubmitting}
               onBlur={handleBlur}
               onChange={(e) => {
                 e.preventDefault();
@@ -102,13 +149,13 @@ const SetPin = ({ handleNext = () => {} }) => {
               }}
             />
             <Box display="flex" flexDirection="column" alignItems="center">
-              <Countdown date={Date.now() + 60000} renderer={renderer} />
+              <Countdown date={timer} renderer={renderer} autoStart={true} />
             </Box>
             <Button
               variant="contained"
               color="secondary"
               fullWidth
-              disabled={isSubmitting || !!errorMessage}
+              disabled={isSubmitting}
               type="submit"
               onClick={submitForm}
               // style={{
@@ -130,4 +177,9 @@ const SetPin = ({ handleNext = () => {} }) => {
   );
 };
 
-export default SetPin;
+OtpVerification.propTypes = {
+  handleClose: PropTypes.func,
+  state: PropTypes.object,
+};
+
+export default OtpVerification;

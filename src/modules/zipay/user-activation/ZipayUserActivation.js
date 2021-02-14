@@ -10,13 +10,9 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
-import Divider from '@material-ui/core/Divider';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles, withStyles, useTheme } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
-import { Field, Form, Formik } from 'formik';
-import { TextField as FormikTextField } from 'formik-material-ui';
 import DompetIcon from 'assets/icons/dompet_without_circle.svg';
 import SetPin from './components/SetPin';
 import InputPhone from './components/InputPhone';
@@ -24,11 +20,6 @@ import OtpVerification from './components/OtpVerification';
 
 const useStyles = makeStyles(() => ({
   root: {
-    // display: 'flex',
-    // flexDirection: 'column',
-    // // alignItems: 'end',
-    // justifyContent: 'flex-end',
-    // maxWidth: 446,
     width: '100%',
   },
   paper: {
@@ -81,10 +72,25 @@ export function ZipayUserActivation({ open = false, onClose = () => {} }) {
   const classes = useStyles();
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [step, setStep] = React.useState(1);
+  const [state, setState] = React.useState({
+    pin: '',
+    phone: '',
+  });
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleNext = () => setStep(step + 1);
+  const handleNext = (key, value) => {
+    setState({
+      ...state,
+      [key]: value,
+    });
+    setStep(step + 1);
+  };
+
+  const handleClose = () => {
+    setStep(1);
+    onClose();
+  };
 
   return (
     <Dialog
@@ -107,11 +113,11 @@ export function ZipayUserActivation({ open = false, onClose = () => {} }) {
         Aktivasi Zipay Wallet
       </DialogTitle>
       {step === 1 ? (
-        <SetPin handleNext={handleNext} />
+        <SetPin handleNext={handleNext} state={state} />
       ) : step === 2 ? (
-        <InputPhone handleNext={handleNext} />
+        <InputPhone handleNext={handleNext} state={state} />
       ) : step === 3 ? (
-        <OtpVerification />
+        <OtpVerification handleClose={handleClose} state={state} />
       ) : null}
 
       <Dialog
