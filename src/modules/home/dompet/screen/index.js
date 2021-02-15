@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Router from 'next/router';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Dompet = () => {
   const classes = useStyles();
+  const [profile, setProfile] = useState(null);
   const [openZipayDialog, setOpenZipayDialog] = useState(false);
   const [isLoading, setIsloading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -60,42 +62,64 @@ const Dompet = () => {
   };
 
   useEffect(() => {
-    handleCheckBalance();
+    if (localStorage.getItem('token') && localStorage.getItem('data_login')) {
+      // handleValidateToken();
+      const dataLogin = JSON.parse(localStorage.getItem('data_login'));
+      setProfile(dataLogin.user);
+    }
   }, []);
+
+  useEffect(() => {
+    if (profile) {
+      handleCheckBalance();
+    }
+  }, [profile]);
 
   return (
     <Paper className={classes.root}>
       <DompetIcon className={classes.dompetIcon} />
       <Box display="flex" flexDirection="column">
-        {isLoading ? (
+        {!profile ? (
+          <span style={{ fontWeight: 600 }}>Rp -</span>
+        ) : isLoading ? (
           <CircularProgress size={15} />
-        ) : errorMessage ? (
-          <Typography variant="caption" color="error">
-            Failed to get balance
-          </Typography>
+        ) : errorMessage === 'Zipay Account is not activated' ? (
+          <span style={{ fontWeight: 600 }}>Rp -</span>
         ) : balance >= 0 ? (
           <span style={{ fontWeight: 600 }}>
             Rp {formatCurrency.format(balance)}
           </span>
         ) : (
-          <span style={{ fontWeight: 600 }}>Rp -</span>
+          <Typography variant="caption" color="error">
+            Failed to get balance
+          </Typography>
         )}
         <span style={{ fontSize: 12, color: '#7D7D7D' }}>Zipay Wallet</span>
       </Box>
 
-      {isLoading ? (
-        <CircularProgress style={{ marginLeft: 'auto' }} size={20} />
-      ) : errorMessage ? (
+      {!profile ? (
         <Button
           className={classes.isiSaldo}
           variant="outlined"
           color="primary"
           size="small"
-          onClick={() => handleCheckBalance()}
+          onClick={() => Router.push('/login')}
         >
-          Reload
+          Login
         </Button>
-      ) : balance >= 0 ? (
+      ) : isLoading ? (
+        <CircularProgress style={{ marginLeft: 'auto' }} size={20} />
+      ) : errorMessage === 'Zipay Account is not activated' ? (
+        <Button
+          className={classes.isiSaldo}
+          variant="outlined"
+          color="primary"
+          size="small"
+          onClick={() => setOpenZipayDialog(true)}
+        >
+          Aktifkan
+        </Button>
+      ) : balance !== null ? (
         <Button
           className={classes.isiSaldo}
           variant="outlined"
@@ -111,9 +135,9 @@ const Dompet = () => {
           variant="outlined"
           color="primary"
           size="small"
-          onClick={() => setOpenZipayDialog(true)}
+          onClick={() => handleCheckBalance()}
         >
-          Aktifkan
+          Reload
         </Button>
       )}
       <ZipayUserActivation
