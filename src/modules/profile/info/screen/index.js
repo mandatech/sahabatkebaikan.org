@@ -157,20 +157,24 @@ const ProfileInfo = ({ profile }) => {
           </ListItemIcon>
           <ListItemText
             primary="Zipay Wallet"
-            secondary={errorMessage ? 'Error' : null}
+            secondary={
+              errorMessage && errorMessage !== 'Zipay Account is not activated'
+                ? 'Error'
+                : null
+            }
           />
           <ListItemText style={{ textAlign: 'right', overflow: 'auto' }}>
             {isLoading ? (
               <CircularProgress size={20} />
-            ) : errorMessage ? (
+            ) : errorMessage === 'Zipay Account is not activated' ? (
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={() => handleCheckBalance()}
+                onClick={() => setOpenZipayDialog(true)}
               >
-                Reload
+                Aktifkan
               </Button>
-            ) : balance >= 0 ? (
+            ) : balance !== null ? (
               <span style={{ fontWeight: 600 }}>
                 Rp {formatCurrency.format(balance)}
               </span>
@@ -178,9 +182,9 @@ const ProfileInfo = ({ profile }) => {
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={() => setOpenZipayDialog(true)}
+                onClick={() => handleCheckBalance()}
               >
-                Aktifkan
+                Reload
               </Button>
             )}
           </ListItemText>
