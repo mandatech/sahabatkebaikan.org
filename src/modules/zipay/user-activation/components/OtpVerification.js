@@ -32,11 +32,19 @@ const OtpVerification = ({ handleClose = () => {}, state }) => {
   const [timer] = React.useState(Date.now() + 30000);
   const [errorMessage, setErrorMessage] = React.useState();
 
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   const onSubmit = async (value) => {
     try {
       await verifyOtp(value.otp);
 
       toast.showMessage('Zipay account activated', 'info');
+
+      setTimeout(() => {
+        refreshPage();
+      }, 1000);
 
       handleClose();
     } catch (error) {
