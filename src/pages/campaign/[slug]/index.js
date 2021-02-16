@@ -12,6 +12,7 @@ import LatestNews from 'modules/campaign/latest-news';
 import { getCampaignDetail } from 'services/campaign.service';
 import DataNotFound from 'components/DataNotFound';
 import { Paper } from '@material-ui/core';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles(() => ({
   headerRoot: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles(() => ({
 
 const DetailCampaign = ({ slug }) => {
   const classes = useStyles();
+  const router = useRouter();
   const { data, error, isFetching } = getCampaignDetail(slug);
   // const [isFetching] = useState(true);
 
@@ -31,7 +33,9 @@ const DetailCampaign = ({ slug }) => {
       <Header
         title="Detail Campaign"
         icon={<BackIcon />}
-        backButton={true}
+        IconButtonProps={{
+          onClick: () => router.push('/'),
+        }}
         TitleProps={{ align: 'left' }}
         color="inherit"
         elevation={0}
