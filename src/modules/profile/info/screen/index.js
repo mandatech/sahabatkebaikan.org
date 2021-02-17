@@ -150,7 +150,14 @@ const ProfileInfo = ({ profile }) => {
       </Box>
       <Divider variant="middle" />
 
-      <List component="nav" aria-label="info">
+      <List
+        component="nav"
+        aria-label="info"
+        onClick={() => balance !== null && router.push('/zipay')}
+        style={{
+          cursor: balance !== null && 'pointer',
+        }}
+      >
         <ListItem>
           <ListItemIcon>
             <DompetIcon />
