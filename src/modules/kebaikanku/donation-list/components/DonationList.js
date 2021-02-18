@@ -21,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 100,
     display: 'flex',
     flexDirection: 'column',
-    // marginTop: 8,
-    // border: 'solid brown 2px',
   },
   paper: {
     padding: theme.spacing(2),
@@ -35,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   image: {
     maxWidth: 190,
     marginRight: 8,
-    // height: 90,
   },
   img: {
     objectFit: 'cover',
@@ -76,6 +73,25 @@ const DonationList = ({ status }) => {
     _status: status || null,
   });
   const router = useRouter();
+  let message = '';
+
+  switch (status) {
+    case 'pending':
+      message = 'Alhamdulillah. Tidak ada donasi yang tertunda.';
+      break;
+    case 'paid':
+      message =
+        'Wah belum ada donasimu yang berhasil nih. Yuk klik tab donasi di tengah bawah lalu selesaikan donasimu!';
+      break;
+    case 'expired':
+      message = 'Alhamdulillah belum ada donasimu yang gagal.';
+      break;
+    default:
+      message = 'Maaf, tidak ada data ditemukan.';
+      break;
+  }
+  console.log('status', status);
+  console.log('message', message);
 
   const {
     data,
@@ -166,7 +182,7 @@ const DonationList = ({ status }) => {
         <DataNotFound message={error.message} />
       ) : (
         <div style={{ marginTop: 50 }}>
-          <DataNotFound message="Maaf, tidak ada data ditemukan." />
+          <DataNotFound message={message} />
         </div>
       )}
 
