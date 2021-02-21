@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import Router from 'next/router';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleList() {
+function MenuItem({ profile }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -63,13 +64,17 @@ export default function SimpleList() {
           <ListItemText primary="Tentang Sahabatkebaikan" />
         </ListItem>
         <Divider variant="middle" />
-        <ListItem button onClick={() => setOpen(true)}>
-          <ListItemIcon>
-            <LogoutIcon />
-          </ListItemIcon>
-          <ListItemText primary="Keluar" />
-        </ListItem>
-        <Divider variant="middle" />
+        {profile && (
+          <>
+            <ListItem button onClick={() => setOpen(true)}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Keluar" />
+            </ListItem>
+            <Divider variant="middle" />
+          </>
+        )}
       </List>
       {/* <Divider variant="middle" /> */}
       <Dialog
@@ -93,3 +98,9 @@ export default function SimpleList() {
     </div>
   );
 }
+
+MenuItem.propTypes = {
+  profile: PropTypes.object,
+};
+
+export default MenuItem;

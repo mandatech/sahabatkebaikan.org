@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
 import ProfileInfo from 'modules/profile/info/screen';
+import NotLoggedIn from 'modules/profile/not-logged-in/screen';
 import MenuItem from 'modules/profile/menu-item/screen';
 // import { validateToken } from 'services/auth.service';
 
 const ProfilePage = () => {
-  const router = useRouter();
   const [profile, setProfile] = useState(null);
 
   // const handleValidateToken = async () => {
@@ -38,9 +37,10 @@ const ProfilePage = () => {
       // handleValidateToken();
       const dataLogin = JSON.parse(localStorage.getItem('data_login'));
       setProfile(dataLogin.user);
-    } else {
-      router.push('/login?redirect=/profil');
     }
+    // else {
+    //   router.push('/login?redirect=/profil');
+    // }
   }, []);
 
   // useEffect(() => {
@@ -53,8 +53,8 @@ const ProfilePage = () => {
     <>
       <Layout menu={2} withBottomNav>
         <Header title="Profil Saya" />
-        <ProfileInfo profile={profile} />
-        <MenuItem />
+        {!profile ? <NotLoggedIn /> : <ProfileInfo profile={profile} />}
+        <MenuItem profile={profile} />
       </Layout>
     </>
   );
