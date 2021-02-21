@@ -78,11 +78,12 @@ const SimpleBottomNavigation = ({ value }) => {
         Router.push('/');
         break;
       case 2:
-        if (localStorage.getItem('token')) {
-          Router.push('/profil');
-        } else {
-          Router.push('/login?redirect=/profil');
-        }
+        // if (localStorage.getItem('token')) {
+        //   Router.push('/profil');
+        // } else {
+        //   Router.push('/login?redirect=/profil');
+        // }
+        Router.push('/profil');
         break;
       default:
         break;
