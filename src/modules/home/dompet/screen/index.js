@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import DompetIcon from 'assets/icons/dompet.svg';
 import { ZipayUserActivation } from 'modules/zipay/user-activation';
+import { ZipayTopupBalance } from 'modules/zipay/topup';
 import { checkBalance } from 'services/zipay.service';
 import formatCurrency from 'utils/formatCurrency';
 
@@ -33,6 +34,7 @@ const Dompet = () => {
   const classes = useStyles();
   const [profile, setProfile] = useState(null);
   const [openZipayDialog, setOpenZipayDialog] = useState(false);
+  // const [openZipayDialog, setOpenZipayDialog] = useState(false);
   const [isLoading, setIsloading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [balance, setBalance] = useState(null);
@@ -125,7 +127,7 @@ const Dompet = () => {
           variant="outlined"
           color="primary"
           size="small"
-          // onClick={() => setOpenZipayDialog(true)}
+          onClick={() => setOpenZipayDialog(true)}
         >
           Isi Saldo
         </Button>
@@ -140,10 +142,17 @@ const Dompet = () => {
           Reload
         </Button>
       )}
-      <ZipayUserActivation
-        open={openZipayDialog}
-        onClose={() => setOpenZipayDialog(false)}
-      />
+      {balance !== null ? (
+        <ZipayTopupBalance
+          open={openZipayDialog}
+          onClose={() => setOpenZipayDialog(false)}
+        />
+      ) : (
+        <ZipayUserActivation
+          open={openZipayDialog}
+          onClose={() => setOpenZipayDialog(false)}
+        />
+      )}
     </Paper>
   );
 };
