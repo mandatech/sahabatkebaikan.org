@@ -10,6 +10,7 @@ import theme from '../components/theme';
 import { ToastProvider } from 'libs/toast';
 import FacebookPixel from 'components/FacebookPixel';
 import { DonationProvider } from 'context/donation.context';
+import '../styles/editor.css';
 export default function MyApp(props) {
   const { Component, pageProps } = props;
   // const router = useRouter();
