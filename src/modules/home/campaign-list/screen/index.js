@@ -58,8 +58,8 @@ const CampaignList = () => {
   const classes = useStyles();
   const [params] = useState({
     _page: 1,
-    _pageSize: 5,
-    _sort: 'created_at',
+    _pageSize: 7,
+    _sort: 'random',
     _order: 'DESC',
     _q: '',
     _category_id: '',
