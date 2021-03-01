@@ -29,8 +29,8 @@ build_production:
     # Only copy changed files to project folder
     - cp -r -u . $PROJECT_DIR
     - cd $PROJECT_DIR
-    - npm install
-    - npm run build
+    - yarn install
+    - yarn run build
   only:
     - master
 
