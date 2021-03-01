@@ -8,6 +8,7 @@
     "@ckeditor/ckeditor5-block-quote": "^22.0.0",
     "@ckeditor/ckeditor5-editor-classic": "^22.0.0",
     "@ckeditor/ckeditor5-essentials": "^22.0.0",
+    "@ckeditor/ckeditor5-dev-utils": "^24.2.0",
     "@ckeditor/ckeditor5-font": "^22.0.0",
     "@ckeditor/ckeditor5-heading": "^22.0.0",
     "@ckeditor/ckeditor5-image": "^22.0.0",
@@ -67,7 +68,6 @@
     "commit": "git cz"
   },
   "devDependencies": {
-    "@ckeditor/ckeditor5-dev-utils": "^24.2.0",
     "@svgr/webpack": "^5.4.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.11.0",
