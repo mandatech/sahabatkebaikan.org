@@ -45,7 +45,7 @@ const Slideshow = () => {
   });
 
   const zoomInProperties = {
-    indicators: true,
+    indicators: false,
     // scale: 1.2,
   };
   return (
