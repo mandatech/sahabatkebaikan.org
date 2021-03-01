@@ -1,5 +1,6 @@
 import { useGetList } from 'libs/hooks/useGetList';
 import { useGetOne } from 'libs/hooks/useGetOne';
+import { axiosInstance } from 'config/axios';
 
 export function getCampaignList({
   _page = 1,
@@ -29,4 +30,48 @@ export function getCampaignDetail(slug) {
   const { data, isFetching, error } = useGetOne(`/campaigns/${slug}`);
 
   return { data, isFetching, error };
+}
+
+export async function createNewCampaign({
+  category_id,
+  title,
+  slug,
+  description,
+  donation_target,
+  start_date,
+  end_date,
+  is_never_end,
+  published,
+  videos,
+  images,
+}) {
+  const form = new FormData();
+
+  console.log('videos', videos[0]);
+  console.log('images', images);
+
+  form.append('category_id', category_id);
+  form.append('title', title);
+  form.append('slug', slug);
+  form.append('description', description);
+  form.append('donation_target', donation_target);
+  form.append('start_date', start_date);
+  if (!is_never_end) {
+    form.append('end_date', end_date);
+  }
+  form.append('is_never_end', is_never_end);
+  form.append('published', published);
+  form.append('videos[]', videos[0]);
+  form.append('images', images);
+
+  const { data } = await axiosInstance({
+    url: '/campaigns',
+    method: 'POST',
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+    data: form,
+  });
+
+  return data;
 }

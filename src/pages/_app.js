@@ -3,6 +3,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+
 // import { useRouter } from 'next/router';
 
 import theme from '../components/theme';
@@ -57,14 +60,15 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-
-        <FacebookPixel>
-          <ToastProvider>
-            <DonationProvider>
-              <Component {...pageProps} />
-            </DonationProvider>
-          </ToastProvider>
-        </FacebookPixel>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <FacebookPixel>
+            <ToastProvider>
+              <DonationProvider>
+                <Component {...pageProps} />
+              </DonationProvider>
+            </ToastProvider>
+          </FacebookPixel>
+        </MuiPickersUtilsProvider>
       </ThemeProvider>
     </React.Fragment>
   );
