@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -20,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 100,
     display: 'flex',
     flexDirection: 'column',
-    // marginTop: 8,
-    // border: 'solid brown 2px',
   },
   paper: {
     padding: theme.spacing(2),
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   image: {
     maxWidth: 190,
     marginRight: 8,
-    // height: 90,
   },
   img: {
     objectFit: 'cover',
@@ -74,6 +72,26 @@ const DonationList = ({ status }) => {
     _campaign_id: '',
     _status: status || null,
   });
+  const router = useRouter();
+  let message = '';
+
+  switch (status) {
+    case 'pending':
+      message = 'Alhamdulillah. Tidak ada donasi yang tertunda.';
+      break;
+    case 'paid':
+      message =
+        'Wah belum ada donasimu yang berhasil nih. Yuk klik tab donasi di tengah bawah lalu selesaikan donasimu!';
+      break;
+    case 'expired':
+      message = 'Alhamdulillah belum ada donasimu yang gagal.';
+      break;
+    default:
+      message = 'Maaf, tidak ada data ditemukan.';
+      break;
+  }
+  console.log('status', status);
+  console.log('message', message);
 
   const {
     data,
@@ -111,7 +129,15 @@ const DonationList = ({ status }) => {
             </Box>
             {group.donations.map((donation, i) => (
               <Box key={i} m={2}>
-                <Grid container style={{ margin: '16px 0' }}>
+                <Grid
+                  container
+                  style={{ margin: '16px 0' }}
+                  onClick={() =>
+                    router.push(
+                      `/campaign/${donation.campaign.slug}/summary/${donation.id}`
+                    )
+                  }
+                >
                   <Grid item xs={4}>
                     <ButtonBase className={classes.image}>
                       <img
@@ -156,7 +182,7 @@ const DonationList = ({ status }) => {
         <DataNotFound message={error.message} />
       ) : (
         <div style={{ marginTop: 50 }}>
-          <DataNotFound message="Maaf, tidak ada data ditemukan." />
+          <DataNotFound message={message} />
         </div>
       )}
 

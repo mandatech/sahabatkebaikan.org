@@ -76,9 +76,11 @@ const CampaignStory = ({ campaign }) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            maxWidth: 446,
           }}
         >
           <div
+            className="ck-content"
             dangerouslySetInnerHTML={{
               __html: campaign.description,
             }}

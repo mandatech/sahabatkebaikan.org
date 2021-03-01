@@ -71,8 +71,9 @@ const CustomHeader = (props) => {
     size = 'normal',
     dompet = false,
     color = 'primary',
-    elevation = 4,
+    elevation = 0,
     backButton = false,
+    IconButtonProps,
     TitleProps = {
       variant: 'h6',
       align: 'center',
@@ -114,6 +115,7 @@ const CustomHeader = (props) => {
             color="inherit"
             aria-label="open drawer"
             onClick={() => backButton && router.back()}
+            {...IconButtonProps}
           >
             {icon}
           </IconButton>
@@ -162,6 +164,7 @@ CustomHeader.propTypes = {
   color: PropTypes.string,
   elevation: PropTypes.number,
   backButton: PropTypes.bool,
+  IconButtonProps: PropTypes.object,
   TitleProps: PropTypes.object,
   SearchBoxProps: PropTypes.object,
 };

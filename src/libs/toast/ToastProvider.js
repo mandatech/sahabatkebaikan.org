@@ -37,8 +37,17 @@ const ToastProvider = ({ children, autoHideDuration = 3000 }) => {
         open={openAlert}
         autoHideDuration={autoHideDuration}
         onClose={handleClose}
+        style={{
+          zIndex: 999999999999999,
+        }}
       >
-        <Alert onClose={handleClose} severity={severity}>
+        <Alert
+          onClose={handleClose}
+          severity={severity}
+          style={{
+            zIndex: 999999999999999,
+          }}
+        >
           {message}
         </Alert>
       </Snackbar>
