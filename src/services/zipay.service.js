@@ -1,4 +1,5 @@
 import { axiosInstance } from 'config/axios';
+import useGetList from 'libs/hooks/useGetList';
 // import useGetOne from 'libs/hooks/useGetOne';
 
 export const activateZipayAccount = async (phone, pin) => {
@@ -46,3 +47,11 @@ export const checkBalance = async () => {
 
   return data;
 };
+
+export function getTransactionHistory() {
+  const { data, isFetching, error } = useGetList(
+    '/zipay/history-user-transaction'
+  );
+
+  return { data, isFetching, error };
+}
