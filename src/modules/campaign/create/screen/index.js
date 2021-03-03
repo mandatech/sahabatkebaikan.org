@@ -252,7 +252,7 @@ const CreateNewCampaign = () => {
               {isSubmitting && (
                 <CircularProgress size={20} style={{ marginRight: 8 }} />
               )}
-              Daftar
+              Simpan
             </Button>
           </Form>
         )}
