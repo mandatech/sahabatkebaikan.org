@@ -113,7 +113,7 @@ const CreateNewCampaign = () => {
         initialValues={{
           title: '',
           category: 'zakat',
-          donation_target: null,
+          donation_target: undefined,
           start_date: new Date(),
           end_date: new Date(),
           is_never_end: false,
@@ -159,14 +159,6 @@ const CreateNewCampaign = () => {
           return errors;
         }}
         onSubmit={onSubmit}
-        // onSubmit={(values, { setSubmitting }) => {
-        //   console.log('valuess', values);
-        //   setTimeout(() => {
-        //     setSubmitting(false);
-        //     console.log('values', JSON.stringify(values, null, 2));
-        //     // alert(JSON.stringify(values, null, 2));
-        //   }, 500);
-        // }}
       >
         {({ submitForm, isSubmitting, values }) => (
           <Form className={classes.form}>
@@ -189,7 +181,9 @@ const CreateNewCampaign = () => {
             <FormControl fullWidth>
               <InputLabel htmlFor="select-category">Kategori</InputLabel>
               <Field
-                component={(props) => <Select fullWidth {...props} />}
+                component={(props) => (
+                  <Select {...props} MenuProps={{ disableScrollLock: true }} />
+                )}
                 name="category"
                 inputProps={{
                   id: 'select-category',
