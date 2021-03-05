@@ -1,225 +1,3 @@
-// import Box from '@material-ui/core/Box';
-// import { Formik, Form, Field, useFormik } from 'formik';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import Grid from '@material-ui/core/Grid';
-// import LinearProgress from '@material-ui/core/LinearProgress';
-
-// import FormControl from '@material-ui/core/FormControl';
-// import InputLabel from '@material-ui/core/InputLabel';
-
-// import { makeStyles } from '@material-ui/core/styles';
-// import {
-//   Select,
-//   CheckboxWithLabel,
-//   SimpleFileUpload,
-// } from 'formik-material-ui';
-// import * as yup from 'yup';
-// import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
-// import { DatePicker } from 'formik-material-ui-pickers';
-// import dynamic from 'next/dynamic';
-
-// const Editor = dynamic(() => import('components/Editor'), {
-//   ssr: false,
-// });
-
-// const FormikTextField = (props) => (
-//   <TextField size="small" fullWidth {...props} />
-// );
-
-// const FormikDatePicker = (props) => (
-//   <DatePicker style={{ width: '100%' }} {...props} />
-// );
-
-// const validationSchema = yup.object({
-//   title: yup
-//     .string('Masukkan judul campagin')
-//     .required('Masukkan judul campaign'),
-//   description: yup.string().required('Masukkan deskripsi campaign'),
-//   category: yup.string().required('Masukkan category'),
-//   donation_target: yup.number().required('Masukkan target donasi'),
-//   start_date: yup.date().required('Masukkan tanggal mulai'),
-//   end_date: yup.date(),
-//   is_never_end: yup.boolean(),
-//   image: yup.object(),
-// });
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1,
-//     // marginBottom: 100,
-//     padding: 16,
-//     paddingBottom: 32,
-//     background: theme.palette.background.paper,
-//   },
-//   form: {
-//     '& > *': {
-//       margin: '8px 0',
-//     },
-//   },
-//   formControl: {
-//     widht: '100%',
-//   },
-// }));
-
-// const CreateNewCampaign = () => {
-//   const classes = useStyles();
-//   // const formik = useFormik({
-//   //   initialValues: {
-//   //     email: '',
-//   //     description: '',
-//   //     category: 'zakat',
-//   //   },
-//   //   validationSchema: validationSchema,
-//   //   onSubmit: (values) => {
-//   //     alert(JSON.stringify(values, null, 2));
-//   //   },
-//   // });
-
-//   return (
-//     <Box className={classes.root}>
-//       <Formik
-//         initialValues={{
-//           title: '',
-//           category: 'zakat',
-//           donation_target: null,
-//           start_date: new Date(),
-//           end_date: new Date(),
-//           is_never_end: false,
-//           image: '',
-//         }}
-//         validate={(values) => {
-//           const errors = {
-//             title: null,
-//             category: null,
-//             donation_target: null,
-//             start_date: null,
-//             end_date: null,
-//             is_never_end: null,
-//             image: null,
-//           };
-//           if (!values.title) {
-//             errors.title = 'Required';
-//           }
-
-//           if (!values.description) {
-//             errors.description = 'Required';
-//           }
-
-//           if (!values.category) {
-//             errors.category = 'Required';
-//           }
-
-//           if (!values.donation_target) {
-//             errors.donation_target = 'Required';
-//           }
-
-//           if (!values.start_date) {
-//             errors.start_date = 'Required';
-//           }
-
-//           if (!values.end_date) {
-//             errors.start_date = 'Required';
-//           }
-
-//           return errors;
-//         }}
-//         // validationSchema={validationSchema}
-//         onSubmit={(values, { setSubmitting }) => {
-//           console.log('valuess', values);
-//           setTimeout(() => {
-//             setSubmitting(false);
-//             console.log('values', JSON.stringify(values, null, 2));
-//             // alert(JSON.stringify(values, null, 2));
-//           }, 500);
-//         }}
-//       >
-//         {({ submitForm, isSubmitting, values }) => (
-//           <Form className={classes.form}>
-//             <Field
-//               component={FormikTextField}
-//               name="title"
-//               label="Judul Campaign"
-//             />
-//             <InputLabel htmlFor="description">Deskripsi Campaign</InputLabel>
-//             <Editor
-//               id="description"
-//               // onChange={formik.handleChange}
-//             />
-//             <FormControl fullWidth>
-//               <InputLabel htmlFor="select-category">Kategori</InputLabel>
-//               <Field
-//                 component={(props) => <Select fullWidth {...props} />}
-//                 name="category"
-//                 inputProps={{
-//                   id: 'select-category',
-//                 }}
-//               >
-//                 <MenuItem value="zakat">Zakat</MenuItem>
-//                 <MenuItem value="wakaf">Wakaf</MenuItem>
-//                 <MenuItem value="pendidikan">Pendidikan</MenuItem>
-//                 <MenuItem value="kemanusiaan">Kemanusiaan</MenuItem>
-//                 <MenuItem value="sosial">Sosial</MenuItem>
-//               </Field>
-//             </FormControl>
-//             <Field
-//               component={(props) => (
-//                 <TextField type="number" style={{ width: '100%' }} {...props} />
-//               )}
-//               name="donation_target"
-//               label="Target Donasi"
-//             />
-//             <Field
-//               component={FormikDatePicker}
-//               label="Tanggal mulai"
-//               name="start_date"
-//             />
-//             {!values.is_never_end && (
-//               <Field
-//                 component={FormikDatePicker}
-//                 label="Tanggal selesai"
-//                 name="end_date"
-//               />
-//             )}
-//             <Field
-//               component={CheckboxWithLabel}
-//               type="checkbox"
-//               name="is_never_end"
-//               Label={{ label: 'Tanpa batas waktu' }}
-//             />
-
-//             <Field
-//               component={SimpleFileUpload}
-//               name="image"
-//               label="Gambar"
-//               style={{ width: '100%' }}
-//             />
-
-//             <Field
-//               component={FormikTextField}
-//               name="video"
-//               label="Link Video"
-//             />
-
-//             {isSubmitting && <LinearProgress />}
-//             <Button
-//               variant="contained"
-//               color="secondary"
-//               disabled={isSubmitting}
-//               onClick={submitForm}
-//               fullWidth
-//             >
-//               Submit
-//             </Button>
-//           </Form>
-//         )}
-//       </Formik>
-//     </Box>
-//   );
-// };
-
-// export default CreateNewCampaign;
-
 /* eslint-disable no-useless-escape */
 import { useState } from 'react';
 import { Field, Form, Formik } from 'formik';
@@ -282,7 +60,7 @@ const FormikDatePicker = (props) => (
   />
 );
 
-const RegistrationForm = () => {
+const CreateNewCampaign = () => {
   const classes = useStyles();
   const [description, setDescription] = useState('');
   const toast = useToast();
@@ -294,7 +72,7 @@ const RegistrationForm = () => {
     const newCampaign = {
       category_id: values.category,
       title: values.title,
-      slug: slugify(values.title, { lower: 'true', remove: /[*+~.()'"!:@–]/g }),
+      slug: slugify(values.title, { lower: 'true', remove: /[^\w\s]/ }),
       description,
       donation_target: values.donation_target,
       start_date: format(values.start_date, 'yyyy-MM-dd HH:mm:ss'),
@@ -335,7 +113,7 @@ const RegistrationForm = () => {
         initialValues={{
           title: '',
           category: 'zakat',
-          donation_target: null,
+          donation_target: undefined,
           start_date: new Date(),
           end_date: new Date(),
           is_never_end: false,
@@ -381,14 +159,6 @@ const RegistrationForm = () => {
           return errors;
         }}
         onSubmit={onSubmit}
-        // onSubmit={(values, { setSubmitting }) => {
-        //   console.log('valuess', values);
-        //   setTimeout(() => {
-        //     setSubmitting(false);
-        //     console.log('values', JSON.stringify(values, null, 2));
-        //     // alert(JSON.stringify(values, null, 2));
-        //   }, 500);
-        // }}
       >
         {({ submitForm, isSubmitting, values }) => (
           <Form className={classes.form}>
@@ -411,7 +181,9 @@ const RegistrationForm = () => {
             <FormControl fullWidth>
               <InputLabel htmlFor="select-category">Kategori</InputLabel>
               <Field
-                component={(props) => <Select fullWidth {...props} />}
+                component={(props) => (
+                  <Select {...props} MenuProps={{ disableScrollLock: true }} />
+                )}
                 name="category"
                 inputProps={{
                   id: 'select-category',
@@ -474,7 +246,7 @@ const RegistrationForm = () => {
               {isSubmitting && (
                 <CircularProgress size={20} style={{ marginRight: 8 }} />
               )}
-              Daftar
+              Simpan
             </Button>
           </Form>
         )}
@@ -483,4 +255,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default CreateNewCampaign;
