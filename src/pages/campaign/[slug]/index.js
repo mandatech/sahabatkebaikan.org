@@ -52,7 +52,7 @@ const DetailCampaign = ({ slug }) => {
           <CampaignStory campaign={data} />
           <LatestNews campaign={data} />
           <DonorList campaign={data} />
-          <DonateNowButton />
+          <DonateNowButton campaign={data} />
         </>
       ) : (
         error && (
