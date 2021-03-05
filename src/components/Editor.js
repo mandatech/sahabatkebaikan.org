@@ -26,7 +26,7 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
-import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
+import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 
 function Editor({
   data,
@@ -41,9 +41,13 @@ function Editor({
   },
 }) {
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     setIsLayoutReady(true);
+    const token = localStorage.getItem('token');
+
+    setToken(token);
   }, []);
 
   return (
@@ -80,7 +84,8 @@ function Editor({
               ImageToolbar,
               ImageUpload,
               ImageResize,
-              Base64UploadAdapter,
+              // Base64UploadAdapter,
+              SimpleUploadAdapter,
               Table,
               TableToolbar,
               TextTransformation,
@@ -112,6 +117,19 @@ function Editor({
               'undo',
               'redo',
             ],
+            simpleUpload: {
+              // The URL that the images are uploaded to.
+              uploadUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/v1/images`,
+
+              // Enable the XMLHttpRequest.withCredentials property.
+              withCredentials: false,
+
+              // Headers sent along with the XMLHttpRequest to the upload server.
+              headers: {
+                // 'X-CSRF-TOKEN': 'CSRF-Token',
+                Authorization: `Bearer ${token}`,
+              },
+            },
             heading: {
               options: [
                 {
