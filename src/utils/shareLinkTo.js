@@ -17,7 +17,7 @@ export const share = ({ link, message }) => ({
       return openInNewTab(
         `https://api.whatsapp.com/send?text=${encodeURIComponent(
           message
-        )}%20${encodeURIComponent(link)}`
+        )}%0A%0A${encodeURIComponent(link)}`
       );
     }
 
