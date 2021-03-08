@@ -12,6 +12,7 @@ import theme from '../components/theme';
 // import { validateToken } from 'services/auth.service';
 import { ToastProvider } from 'libs/toast';
 import FacebookPixel from 'components/FacebookPixel';
+import GoogleAnalitycs from 'components/GoogleAnalitycs';
 import { DonationProvider } from 'context/donation.context';
 import '../styles/editor.css';
 export default function MyApp(props) {
@@ -61,13 +62,15 @@ export default function MyApp(props) {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <FacebookPixel>
-            <ToastProvider>
-              <DonationProvider>
-                <Component {...pageProps} />
-              </DonationProvider>
-            </ToastProvider>
-          </FacebookPixel>
+          <GoogleAnalitycs>
+            <FacebookPixel>
+              <ToastProvider>
+                <DonationProvider>
+                  <Component {...pageProps} />
+                </DonationProvider>
+              </ToastProvider>
+            </FacebookPixel>
+          </GoogleAnalitycs>
         </MuiPickersUtilsProvider>
       </ThemeProvider>
     </React.Fragment>
