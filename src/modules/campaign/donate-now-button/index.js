@@ -51,7 +51,7 @@ const DonateNowButton = ({ campaign }) => {
   const [copied, setCopied] = useState(false);
 
   const [content] = useState({
-    link: `${process.env.NEXT_PUBLIC_WEB_URL}/${campaign.slug}`,
+    link: `${process.env.NEXT_PUBLIC_WEB_URL}/campaign/${campaign.slug}`,
     message: `Assalamualaikum. Yuk donasikan sebagian harta sahabat pada campaign ${campaign.title}! Silahkan klik link berikut:`,
   });
 
