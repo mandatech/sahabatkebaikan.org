@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Disallow: /campaign/new
+
+# Host
+Host: https://sahabatkebaikan.org
+
+# Sitemaps
+Sitemap: https://sahabatkebaikan.org/sitemap.xml
+Sitemap: https://sahabatkebaikan.org/campaign-sitemap.xml
+Sitemap: https://sahabatkebaikan.org/category-sitemap.xml
