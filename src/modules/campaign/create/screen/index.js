@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-escape */
 import { useState } from 'react';
+import imageCompression from 'browser-image-compression';
 import { Field, Form, Formik } from 'formik';
 import { TextField as FormikTextField } from 'formik-material-ui';
 import { useRouter } from 'next/router';
@@ -69,28 +70,35 @@ const CreateNewCampaign = () => {
   const onSubmit = async (values, { setSubmitting }) => {
     console.log('valuess', values);
 
-    const newCampaign = {
-      category_id: values.category,
-      title: values.title,
-      slug: slugify(values.title, { lower: 'true', remove: /[^\w\s]/ }),
-      description,
-      donation_target: values.donation_target,
-      start_date: format(values.start_date, 'yyyy-MM-dd HH:mm:ss'),
-      end_date: !values.is_never_end
-        ? format(values.end_date, 'yyyy-MM-dd HH:mm:ss')
-        : null,
-      is_never_end: values.is_never_end,
-      published: true,
-      videos: [values.video],
-      images: values.image,
-    };
-
     try {
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1024,
+        useWebWorker: true,
+      };
+
+      const compressedFile = await imageCompression(values.image, options);
+
+      const newCampaign = {
+        category_id: values.category,
+        title: values.title,
+        slug: slugify(values.title, { lower: 'true', remove: /[^\w\s]/ }),
+        description,
+        donation_target: values.donation_target,
+        start_date: format(values.start_date, 'yyyy-MM-dd HH:mm:ss'),
+        end_date: !values.is_never_end
+          ? format(values.end_date, 'yyyy-MM-dd HH:mm:ss')
+          : null,
+        is_never_end: values.is_never_end,
+        published: true,
+        videos: values.video ? [values.video] : null,
+        images: compressedFile,
+      };
+
       await createNewCampaign(newCampaign);
       toast.showMessage('Campaign berhasil ditambahkan', 'info');
       setSubmitting(false);
       router.push('/');
-      // }, 1200);
     } catch (error) {
       console.log('error', error);
       setSubmitting(false);
