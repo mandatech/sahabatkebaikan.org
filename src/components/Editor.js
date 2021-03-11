@@ -26,7 +26,8 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
-import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
+// import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
+import { CustomUploadAdapter } from 'libs/CKEditorCustomUploadAdapter';
 
 function Editor({
   data,
@@ -85,7 +86,8 @@ function Editor({
               ImageUpload,
               ImageResize,
               // Base64UploadAdapter,
-              SimpleUploadAdapter,
+              // SimpleUploadAdapter,
+              CustomUploadAdapter,
               Table,
               TableToolbar,
               TextTransformation,
