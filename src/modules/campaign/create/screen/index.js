@@ -68,8 +68,6 @@ const CreateNewCampaign = () => {
   const router = useRouter();
 
   const onSubmit = async (values, { setSubmitting }) => {
-    console.log('valuess', values);
-
     try {
       const options = {
         maxSizeMB: 1,
@@ -77,7 +75,12 @@ const CreateNewCampaign = () => {
         useWebWorker: true,
       };
 
-      const compressedFile = await imageCompression(values.image, options);
+      const compressedBlob = await imageCompression(values.image, options);
+
+      const compressedFile = new File([compressedBlob], compressedBlob.name, {
+        lastModified: new Date().getTime(),
+        type: compressedBlob.type,
+      });
 
       const newCampaign = {
         category_id: values.category,
