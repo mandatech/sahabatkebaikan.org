@@ -8,9 +8,11 @@ import CampaignBox from 'components/CampaignBox';
 import { Button } from '@material-ui/core';
 import { useInfiniteLoad } from 'libs/hooks/useInfiniteLoad';
 import CampaignBoxSkeleton from 'components/CampaignBoxSkeleton';
+import DataNotFound from 'components/DataNotFound';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow: 1,
     background: theme.palette.background.paper,
     marginBottom: 100,
     padding: '16px 16px',
@@ -93,7 +95,7 @@ const CampaignList = ({ profile }) => {
       ) : error ? (
         <p style={{ color: 'red' }}>{error.message}</p>
       ) : (
-        <p>Maaf, belum ada campaign tersedia.</p>
+        <DataNotFound />
       )}
 
       {isFetching && !isLoadingInitialData && (
