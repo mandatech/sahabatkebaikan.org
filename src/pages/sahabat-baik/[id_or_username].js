@@ -68,7 +68,7 @@ const ProfilePage = ({ user }) => {
 
 export async function getServerSideProps({ params }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/${params.id}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/${params.id_or_username}`
   );
   const user = await res.json();
 
