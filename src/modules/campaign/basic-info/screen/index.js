@@ -97,7 +97,7 @@ const CampaignBasicInfo = ({ campaign }) => {
         />
         <Box ml={2}>
           <Link
-            href={`/sahabat-baik/${campaign.campaigner.id}`}
+            href={`/sahabat-baik/${campaign.campaigner.username}`}
             style={{ textDecoration: 'none' }}
           >
             <Typography>{campaign.campaigner.full_name}</Typography>
