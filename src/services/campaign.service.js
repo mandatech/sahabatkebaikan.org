@@ -62,7 +62,9 @@ export async function createNewCampaign({
 
   if (videos?.length) {
     videos.forEach((video) => {
-      form.append('videos[]', video);
+      if (video) {
+        form.append('videos[]', video);
+      }
     });
   }
 
