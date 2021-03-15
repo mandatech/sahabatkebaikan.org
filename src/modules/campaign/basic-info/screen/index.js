@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import formatCurrency from 'utils/formatCurrency';
 import getValueOfLinearProgress from 'utils/getValueOfLinearProgress';
+import Link from 'components/Link';
 import SlideShow from './SlideShow';
 
 const useStyles = makeStyles(() => ({
@@ -95,7 +96,12 @@ const CampaignBasicInfo = ({ campaign }) => {
           src={campaign.campaigner.profile_photo}
         />
         <Box ml={2}>
-          <Typography>{campaign.campaigner.full_name}</Typography>
+          <Link
+            href={`/sahabat-baik/${campaign.campaigner.username}`}
+            style={{ textDecoration: 'none' }}
+          >
+            <Typography>{campaign.campaigner.full_name}</Typography>
+          </Link>
           <Typography variant="body2" color="textSecondary">
             {campaign.campaigner.description}
           </Typography>

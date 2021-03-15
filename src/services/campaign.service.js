@@ -47,9 +47,6 @@ export async function createNewCampaign({
 }) {
   const form = new FormData();
 
-  console.log('videos', videos[0]);
-  console.log('images', images);
-
   form.append('category_id', category_id);
   form.append('title', title);
   form.append('slug', slug);
@@ -61,8 +58,15 @@ export async function createNewCampaign({
   }
   form.append('is_never_end', is_never_end);
   form.append('published', published);
-  form.append('videos[]', videos[0]);
   form.append('images', images);
+
+  if (videos?.length) {
+    videos.forEach((video) => {
+      if (video) {
+        form.append('videos[]', video);
+      }
+    });
+  }
 
   const { data } = await axiosInstance({
     url: '/campaigns',
