@@ -98,10 +98,11 @@ const CreateNewCampaign = () => {
         images: compressedFile,
       };
 
-      await createNewCampaign(newCampaign);
+      const data = await createNewCampaign(newCampaign);
+
       toast.showMessage('Campaign berhasil ditambahkan', 'info');
       setSubmitting(false);
-      router.push('/');
+      router.push(`/campaign/${data.slug}`);
     } catch (error) {
       console.log('error', error);
       setSubmitting(false);
