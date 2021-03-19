@@ -10,14 +10,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import slugify from 'slugify';
-import {
-  Select,
-  CheckboxWithLabel,
-  SimpleFileUpload,
-} from 'formik-material-ui';
+import { Select, CheckboxWithLabel } from 'formik-material-ui';
 import { DateTimePicker } from 'formik-material-ui-pickers';
 import format from 'date-fns/format';
 
@@ -46,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginTop: 8,
   },
+  input: {
+    display: 'none',
+  },
+  error: {
+    color: theme.palette.error.main,
+  },
 }));
 
 const TextField = (props) => (
@@ -66,6 +69,11 @@ const CreateNewCampaign = () => {
   const [description, setDescription] = useState('');
   const toast = useToast();
   const router = useRouter();
+  // const [image, setImage] = useState(null);
+
+  // const handleCapture = ({ target }) => {
+  //   setImage(target.files[0]);
+  // };
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
@@ -171,7 +179,14 @@ const CreateNewCampaign = () => {
         }}
         onSubmit={onSubmit}
       >
-        {({ submitForm, isSubmitting, values }) => (
+        {({
+          submitForm,
+          isSubmitting,
+          values,
+          errors,
+          setFieldValue,
+          touched,
+        }) => (
           <Form className={classes.form}>
             <Field
               component={TextField}
@@ -232,12 +247,21 @@ const CreateNewCampaign = () => {
               Label={{ label: 'Tanpa batas waktu' }}
             />
 
-            <Field
-              component={SimpleFileUpload}
-              name="image"
-              label="Gambar"
-              style={{ width: '100%' }}
-            />
+            <InputLabel error={touched.image && !!errors.image}>
+              Gambar
+            </InputLabel>
+            <FormControl fullWidth error={touched.image && !!errors.image}>
+              <input
+                name="image"
+                accept="image/*"
+                type="file"
+                onChange={(e) => setFieldValue('image', e.target.files[0])}
+              />
+
+              {touched.image && errors.image && (
+                <FormHelperText>{errors.image}</FormHelperText>
+              )}
+            </FormControl>
 
             <Field
               component={TextField}
