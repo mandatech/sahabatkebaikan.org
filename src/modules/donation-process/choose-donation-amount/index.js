@@ -70,10 +70,7 @@ const DonationAmountScreen = ({ campaign }) => {
 
   const { slug } = router.query;
 
-  console.log('donationValue', donationValue);
-
   const changeSelected = (i) => {
-    console.log('i', i);
     const newPredefinedAmounts = predefinedAmounts.map((amount) => ({
       value: amount.value,
       selected: false,
@@ -147,8 +144,9 @@ const DonationAmountScreen = ({ campaign }) => {
   const handleSetDonationValue = () => {
     setIsLoading(true);
     setDonationValue({
+      campaign: campaign,
       campaign_id: campaign.id,
-      donation_amount: values.amount,
+      donation_amount: Number(values.amount),
       infaq_amount: values.infaq
         ? (Number(values.amount) * Number(values.infaqPercent)) / 100
         : 0,
@@ -192,7 +190,6 @@ const DonationAmountScreen = ({ campaign }) => {
 
       setPredefinedAmounts(newPredefinedAmounts);
     }
-    console.log('values', values);
     // setValues(values);
   }, []);
 
