@@ -55,3 +55,16 @@ export function getTransactionHistory() {
 
   return { data, isFetching, error };
 }
+
+export const confirmPayment = async (inquiry_id, pin) => {
+  const { data } = await axiosInstance({
+    url: '/zipay/confirm-payment',
+    method: 'POST',
+    data: {
+      inquiry_id,
+      pin,
+    },
+  });
+
+  return data;
+};
