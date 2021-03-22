@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -18,6 +19,7 @@ import DompetIcon from 'assets/icons/dompet_without_circle.svg';
 import PaymentRecap from './components/payment-recap';
 import ConfirmPin from './components/confirm-pin';
 import ThankyouPage from './components/thankyou';
+import { useDonation } from 'context/donation.context';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -71,9 +73,11 @@ const DialogTitle = withStyles(styles)((props) => {
 
 function PayWithZipayWallet({ open = false, onClose = () => {} }) {
   const classes = useStyles();
+  const router = useRouter();
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [step, setStep] = React.useState(1);
   const theme = useTheme();
+  const { donationValue } = useDonation();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleNext = () => {
@@ -84,18 +88,15 @@ function PayWithZipayWallet({ open = false, onClose = () => {} }) {
     setStep(1);
     onClose();
   };
-
   return (
     <Dialog
       fullWidth
       open={open}
-      // onClose={onClose}
       onClose={() => setOpenConfirm(true)}
       aria-labelledby="pay-with-zipay-wallet"
       maxWidth="xs"
       fullScreen={fullScreen}
       TransitionComponent={Transition}
-      // keepMounted
       classes={{
         root: classes.root,
         paper: classes.paper,
@@ -123,14 +124,22 @@ function PayWithZipayWallet({ open = false, onClose = () => {} }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         hideBackdrop
-        // maxWidth="xs"
+        maxWidth="xs"
       >
         <DialogTitle id="alert-dialog-title">
-          {'Ganti metode pembayaran?'}
+          {step === 1 || (step === 2 && !donationValue.donation_created)
+            ? 'Batalkan pembayaran?'
+            : step === 2 && donationValue.donation_created
+            ? 'Tunda pembayaran?'
+            : 'Tutup halaman pembayaran?'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Ganti metode pembayaran?
+            {step === 1 || (step === 2 && !donationValue.donation_created)
+              ? 'Batalkan proses pembayaran menggunakan Zipay Wallet?'
+              : step === 2 && donationValue.donation_created
+              ? 'Anda dapat melakukan pembayaran donasi nanti melalui halaman Kebaikanku.'
+              : 'Tutup halaman pembayaran?'}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -139,9 +148,13 @@ function PayWithZipayWallet({ open = false, onClose = () => {} }) {
           </Button>
           <Button
             onClick={() => {
-              setOpenConfirm(false);
-              setStep(1);
-              onClose();
+              if (step === 2 && donationValue.donation_created) {
+                router.push('/kebaikanku');
+              } else {
+                setOpenConfirm(false);
+                setStep(1);
+                onClose();
+              }
             }}
             color="primary"
             autoFocus

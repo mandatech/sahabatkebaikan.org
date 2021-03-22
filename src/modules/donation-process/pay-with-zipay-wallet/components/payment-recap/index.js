@@ -77,8 +77,6 @@ const PaymentRecap = ({ handleClose = () => {}, handleNext = () => {} }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [balance, setBalance] = useState(null);
 
-  console.log('donationValue', donationValue);
-
   const handleCheckBalance = async () => {
     try {
       setIsloading(true);
@@ -157,7 +155,7 @@ const PaymentRecap = ({ handleClose = () => {}, handleNext = () => {} }) => {
 
             <img
               className={classes.zipayLogo}
-              src={donationValue.paymentMethod.image}
+              src={donationValue.payment_method.image}
               alt="zipay logo"
             />
 

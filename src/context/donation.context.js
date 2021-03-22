@@ -10,8 +10,9 @@ const defaultValue = {
     infaq_amount: 0,
     is_anonymous: false,
     note: null,
-    paymentMethod: null,
+    payment_method: null,
     payment_method_id: null,
+    donation_created: null,
   },
   setDonationValue: ({
     campaign,
@@ -20,8 +21,9 @@ const defaultValue = {
     infaq_amount,
     is_anonymous,
     note,
-    paymentMethod,
+    payment_method,
     payment_method_id,
+    donation_created,
   }) => {},
 };
 
@@ -35,8 +37,9 @@ export const DonationProvider = ({ children }) => {
     infaq_amount: 0,
     is_anonymous: null,
     note: null,
-    paymentMethod: null,
+    payment_method: null,
     payment_method_id: null,
+    donation_created: null,
   });
 
   const handleSetDonationValue = (value) => {
