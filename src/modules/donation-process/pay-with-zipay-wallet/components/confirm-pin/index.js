@@ -40,25 +40,28 @@ const ConfirmPin = ({ handleNext = () => {} }) => {
   const toast = useToast();
   const { donationValue, setDonationValue } = useDonation();
   const [isLoading, setIsLoading] = useState(false);
-  const [donation, setDonation] = useState(null);
+  // const [donation, setDonation] = useState(null);
 
   const onSubmit = async (values) => {
     // handleNext('pin', value.pin);
     try {
       setIsLoading(true);
-      let donationCreated = donation;
+      let donationCreated = donationValue.donation_created;
 
-      if (!donation) {
+      if (!donationCreated) {
         donationCreated = await createDonation(
           donationValue.campaign_id,
           donationValue.donation_amount,
           donationValue.infaq_amount,
           donationValue.is_anonymous,
           donationValue.note,
-          donationValue.paymentMethod.id
+          donationValue.payment_method.id
         );
 
-        setDonation(donationCreated);
+        setDonationValue({
+          ...donationValue,
+          donation_created: donationCreated,
+        });
       }
 
       await confirmPayment(
@@ -67,10 +70,19 @@ const ConfirmPin = ({ handleNext = () => {} }) => {
       );
 
       setIsLoading(false);
+
       setDonationValue({
-        ...donationValue,
-        donationCreated,
+        campaign: null,
+        campaign_id: null,
+        donation_amount: 0,
+        infaq_amount: 0,
+        is_anonymous: false,
+        note: null,
+        payment_method: null,
+        payment_method_id: null,
+        donation_created: null,
       });
+
       handleNext();
       // router.push(
       //   `/campaign/${donationValue.campaign.slug}/summary/${donationCreated.id}`

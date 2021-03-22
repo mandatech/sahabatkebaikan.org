@@ -71,7 +71,7 @@ const PaymentMethod = () => {
     setSelectedPaymentMethod(paymentMethod);
     setDonationValue({
       ...donationValue,
-      paymentMethod: paymentMethod,
+      payment_method: paymentMethod,
     });
     if (paymentMethod.code === 'zipay-wallet') {
       setOpenPayWithZipayWallet(true);
