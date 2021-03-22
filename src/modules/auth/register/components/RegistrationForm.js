@@ -93,9 +93,11 @@ const RegistrationForm = () => {
       localStorage.setItem('data_login', JSON.stringify(data));
 
       if (router.query.redirect) {
-        router.push(window.location.search.slice(10));
+        router.push(
+          `/profil/edit?redirect=${window.location.search.slice(10)}`
+        );
       } else {
-        router.push('/');
+        router.push('/profil/edit');
       }
 
       setIsLoading(false);
@@ -128,9 +130,11 @@ const RegistrationForm = () => {
       localStorage.setItem('data_login', JSON.stringify(data));
 
       if (router.query.redirect) {
-        router.push(window.location.search.slice(10));
+        router.push(
+          `/profil/edit?redirect=${window.location.search.slice(10)}`
+        );
       } else {
-        router.push('/');
+        router.push('/profil/edit');
       }
 
       setIsLoading(false);
