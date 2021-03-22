@@ -110,7 +110,11 @@ const EditProfile = () => {
       setIsLoading(false);
 
       setTimeout(() => {
-        router.replace('/profil');
+        if (router.query.redirect) {
+          router.replace(window.location.search.slice(10));
+        } else {
+          router.replace('/profil');
+        }
       }, [1200]);
     } catch (error) {
       setOpenAlert(true);
