@@ -90,8 +90,6 @@ const DonationList = ({ status }) => {
       message = 'Maaf, tidak ada data ditemukan.';
       break;
   }
-  console.log('status', status);
-  console.log('message', message);
 
   const {
     data,

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import formatCurrency from 'utils/formatCurrency';
+import PayWithZipayWallet from '../pay-with-zipay-wallet';
+import { useDonation } from 'context/donation.context';
 
 moment.locale('id');
 
@@ -68,6 +70,22 @@ const openInNewTab = (url) => {
 const DonationSummaryScreen = ({ donation }) => {
   const classes = useStyles();
   const router = useRouter();
+  const { donationValue, setDonationValue } = useDonation();
+  const [openPayWithZipayWallet, setOpenPayWithZipayWallet] = useState(false);
+
+  useEffect(() => {
+    setDonationValue({
+      ...donationValue,
+      campaign: donation.campaign,
+      donation_created: donation,
+      payment_method: donation.donation_payment?.payment_method,
+      donation_amount: donation.donation_amount,
+      infaq_amount: donation.infaq_amount,
+      is_anonymous: donation.is_anonymous,
+      note: donation.note,
+      payment_method_id: donation.donation_payment?.payment_method?.id,
+    });
+  }, []);
 
   return (
     <Box className={classes.root}>
@@ -107,9 +125,13 @@ const DonationSummaryScreen = ({ donation }) => {
             {donation.status === 'pending' ? (
               donation.donation_payment.payment_method.code ===
               'zipay-wallet' ? (
-                <Typography align="center">
-                  Transaksi pembayaran sedang diproses menggunakan Zipay Wallet
-                </Typography>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => setOpenPayWithZipayWallet(true)}
+                >
+                  Bayar dengan Zipay Wallet
+                </Button>
               ) : (
                 <>
                   <Typography variant="body2" align="center" gutterBottom>
@@ -131,7 +153,10 @@ const DonationSummaryScreen = ({ donation }) => {
             ) : donation.status === 'paid' ? (
               <Typography align="center">
                 Donasi telah dibayar menggunakan{' '}
-                {donation?.donation_payment?.payment_method?.name}
+                {donation?.donation_payment?.payment_method?.name} pada{' '}
+                {moment(donation.payment_confirmed_time).format('LL')}
+                {' pukul '}
+                {moment(donation.payment_confirmed_time).format('LT')}
               </Typography>
             ) : donation.status === 'expired' ? (
               <Typography>Donasi telah expired</Typography>
@@ -141,25 +166,23 @@ const DonationSummaryScreen = ({ donation }) => {
               <Typography>Donasi telah dibatalkan</Typography>
             )}
           </Box>
-          {donation.status === 'pending' &&
-            donation?.donation_payment?.payment_method?.code !==
-              'zipay-wallet' && (
-              <Box className={classes.paymentLimit}>
-                <Typography
-                  variant="body2"
-                  align="center"
-                  style={{ fontSize: 12 }}
-                >
-                  Transfer sebelum{' '}
-                  <span style={{ fontWeight: 600 }}>
-                    {/* {new Date(donation.expiration).toLocaleString()} */}
-                    {moment(donation.expiration).format('LL')}{' '}
-                    {moment(donation.expiration).format('LT')}
-                  </span>{' '}
-                  atau donasi kamu otomatis dibatalkan.
-                </Typography>
-              </Box>
-            )}
+          {donation.status === 'pending' && (
+            <Box className={classes.paymentLimit}>
+              <Typography
+                variant="body2"
+                align="center"
+                style={{ fontSize: 12 }}
+              >
+                Bayar sebelum{' '}
+                <span style={{ fontWeight: 600 }}>
+                  {/* {new Date(donation.expiration).toLocaleString()} */}
+                  {moment(donation.expiration).format('LL')}{' '}
+                  {moment(donation.expiration).format('LT')}
+                </span>{' '}
+                atau donasi kamu otomatis dibatalkan.
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Box>
 
@@ -289,6 +312,11 @@ const DonationSummaryScreen = ({ donation }) => {
           Kembali ke Halaman Utama
         </Button>
       </Box>
+
+      <PayWithZipayWallet
+        open={openPayWithZipayWallet}
+        onClose={() => setOpenPayWithZipayWallet(false)}
+      />
     </Box>
   );
 };
