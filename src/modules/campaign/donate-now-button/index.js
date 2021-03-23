@@ -56,14 +56,14 @@ const DonateNowButton = ({ campaign }) => {
   });
 
   const handleDonateBtn = () => {
-    if (localStorage.getItem('token')) {
-      router.push({
-        pathname: '/campaign/[slug]/donation-amount',
-        query: { slug },
-      });
-    } else {
-      router.push(`/login?redirect=/campaign/${slug}`);
-    }
+    // if (localStorage.getItem('token')) {
+    router.push({
+      pathname: '/campaign/[slug]/donation-amount',
+      query: { slug },
+    });
+    // } else {
+    //   router.push(`/login?redirect=/campaign/${slug}`);
+    // }
   };
 
   const [open, setOpen] = useState(false);
