@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import BackIcon from '@material-ui/icons/ChevronLeft';
@@ -19,16 +18,15 @@ const useStyles = makeStyles(() => ({
 
 const DonationAmount = ({ slug }) => {
   const classes = useStyles();
-  const router = useRouter();
   const { data, isFetching, error } = getCampaignDetail(slug);
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-    if (!localStorage.getItem('token')) {
-      router.push(`/login?redirect=/campaign/${slug}`);
-    }
+    // if (!localStorage.getItem('token')) {
+    //   router.push(`/login?redirect=/campaign/${slug}`);
+    // }
   }, []);
 
   return (

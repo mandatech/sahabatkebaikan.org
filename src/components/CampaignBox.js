@@ -59,14 +59,14 @@ const CampaignBox = ({ campaign }) => {
   const router = useRouter();
 
   const handleDonateBtn = () => {
-    if (localStorage.getItem('token')) {
-      router.push({
-        pathname: '/campaign/[slug]/donation-amount',
-        query: { slug: campaign.slug },
-      });
-    } else {
-      router.push(`/login`);
-    }
+    // if (localStorage.getItem('token')) {
+    router.push({
+      pathname: '/campaign/[slug]/donation-amount',
+      query: { slug: campaign.slug },
+    });
+    // } else {
+    //   router.push(`/login`);
+    // }
   };
 
   return (

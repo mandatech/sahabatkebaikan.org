@@ -36,11 +36,9 @@ const TextField = (props) => (
 
 const ConfirmPin = ({ handleNext = () => {} }) => {
   const classes = useStyles();
-  const router = useRouter();
   const toast = useToast();
   const { donationValue, setDonationValue } = useDonation();
   const [isLoading, setIsLoading] = useState(false);
-  // const [donation, setDonation] = useState(null);
 
   const onSubmit = async (values) => {
     // handleNext('pin', value.pin);
@@ -50,6 +48,9 @@ const ConfirmPin = ({ handleNext = () => {} }) => {
 
       if (!donationCreated) {
         donationCreated = await createDonation(
+          donationValue.full_name,
+          donationValue.email,
+          donationValue.phone,
           donationValue.campaign_id,
           donationValue.donation_amount,
           donationValue.infaq_amount,

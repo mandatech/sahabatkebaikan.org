@@ -2,6 +2,9 @@ import { axiosInstance } from 'config/axios';
 import useGetOne from 'libs/hooks/useGetOne';
 
 export const createDonation = async (
+  full_name,
+  email,
+  phone,
   campaign_id,
   donation_amount,
   infaq_amount,
@@ -13,6 +16,9 @@ export const createDonation = async (
     url: '/donations',
     method: 'POST',
     data: {
+      full_name,
+      email,
+      phone,
       campaign_id,
       donation_amount,
       infaq_amount,

@@ -91,6 +91,9 @@ const PaymentMethod = () => {
       setIsLoading(true);
 
       const data = await createDonation(
+        donationValue.full_name,
+        donationValue.email,
+        donationValue.phone,
         donationValue.campaign_id,
         donationValue.donation_amount,
         donationValue.infaq_amount,

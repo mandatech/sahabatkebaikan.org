@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import SvgIcon from '@material-ui/core/SvgIcon';
@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 
 const DonationSummary = ({ donation_id }) => {
   const classes = useStyles();
-  const router = useRouter();
+  // const router = useRouter();
   const { data, error, isFetching } = getDonationDetail(donation_id);
 
   useEffect(() => {
@@ -31,9 +31,9 @@ const DonationSummary = ({ donation_id }) => {
       top: 0,
       behavior: 'smooth',
     });
-    if (!localStorage.getItem('token')) {
-      router.push(`/login`);
-    }
+    // if (!localStorage.getItem('token')) {
+    //   router.push(`/login`);
+    // }
   }, []);
 
   return (
