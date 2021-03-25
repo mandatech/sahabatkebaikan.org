@@ -18,10 +18,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import EditIcon from '@material-ui/icons/Edit';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import DompetIcon from 'assets/icons/dompet_without_circle.svg';
 import { ZipayUserActivation } from 'modules/zipay/user-activation';
 import { checkBalance } from 'services/zipay.service';
 import formatCurrency from 'utils/formatCurrency';
+import { requestEmailVerificationToken } from 'services/auth.service';
+import { useToast } from 'libs/toast';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,12 +62,15 @@ const useStyles = makeStyles((theme) => ({
 const ProfileInfo = ({ profile }) => {
   const classes = useStyles();
   const router = useRouter();
+  const toast = useToast();
   const [open, setOpen] = useState(false);
   const [openZipayDialog, setOpenZipayDialog] = useState(false);
 
   const [isLoading, setIsloading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [balance, setBalance] = useState(null);
+  const [isRequesting, setIsRequesting] = useState(false);
+  const [isRequested, setIsRequested] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -90,6 +96,32 @@ const ProfileInfo = ({ profile }) => {
         setErrorMessage(error.message);
       }
       setIsloading(false);
+    }
+  };
+
+  const handleRequestEmailVerification = async () => {
+    try {
+      setIsRequesting(true);
+      setErrorMessage(null);
+      await requestEmailVerificationToken(profile.email);
+
+      setIsRequested(true);
+      setIsRequesting(false);
+      toast.showMessage(
+        `Permintaan verifikasi email telah dikirim ke ${profile.email}`
+      );
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        toast.showMessage(error.response.data.message, 'error');
+      } else if (error.request) {
+        console.log(error.request);
+        toast.showMessage('Network error', 'error');
+      } else {
+        console.log('Error', error.message);
+        toast.showMessage(error.message, 'error');
+      }
+      setIsRequesting(false);
     }
   };
 
@@ -144,9 +176,25 @@ const ProfileInfo = ({ profile }) => {
         <Typography variant="body1" color="textSecondary">
           Email
         </Typography>
-        <Typography variant="body1" gutterBottom>
-          {profile?.email}
-        </Typography>
+        <Box display="flex">
+          <Typography variant="body1" gutterBottom style={{ marginRight: 8 }}>
+            {profile?.email}{' '}
+          </Typography>
+          {!profile?.verified_at ? (
+            <Button
+              size="small"
+              variant="outlined"
+              color="secondary"
+              disabled={isRequesting || isRequested}
+              onClick={handleRequestEmailVerification}
+            >
+              {isRequesting && <CircularProgress size={15} color="inherit" />}
+              Verifikasi
+            </Button>
+          ) : (
+            <CheckCircleIcon color="secondary" />
+          )}
+        </Box>
       </Box>
       <Divider variant="middle" />
 
