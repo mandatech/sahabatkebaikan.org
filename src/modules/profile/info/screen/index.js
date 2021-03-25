@@ -148,7 +148,7 @@ const ProfileInfo = ({ profile }) => {
           className={classes.avatarContainer}
         >
           <Avatar
-            alt="Cindy Baker"
+            alt={profile?.full_name}
             src={profile?.profile_photo}
             className={classes.avatar}
           />
