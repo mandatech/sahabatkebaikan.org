@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -53,7 +54,7 @@ const renderAmount = (type, amount) => {
   }
 };
 
-const ZipayHome = () => {
+const ZipayHome = ({ profile }) => {
   const classes = useStyles();
   const { data, error, isFetching } = getTransactionHistory();
 
@@ -71,10 +72,13 @@ const ZipayHome = () => {
         >
           Riwayat Transaksi
         </Typography>
-        {isFetching ? (
+        {!profile ? (
+          <DataNotFound message="Maaf, Anda belum login" />
+        ) : isFetching ? (
           [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
             <Skeleton
               key={i}
+              animation="wave"
               variant="rect"
               width="100%"
               height={40}
@@ -114,7 +118,7 @@ const ZipayHome = () => {
             </div>
           ))
         ) : error ? (
-          <p style={{ color: 'red' }}>{error.message}</p>
+          <DataNotFound message={error.message} />
         ) : (
           <div style={{ marginTop: 16 }}>
             <DataNotFound message="Belum ada riwayat transaksi" />
@@ -123,6 +127,10 @@ const ZipayHome = () => {
       </Box>
     </Box>
   );
+};
+
+ZipayHome.propTypes = {
+  profile: PropTypes.object,
 };
 
 export default ZipayHome;
