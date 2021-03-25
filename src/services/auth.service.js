@@ -51,6 +51,15 @@ export const registerWithUsernameOrEmailPassword = async (
   return data;
 };
 
+export const getProfile = async (id) => {
+  const { data } = await axiosInstance({
+    url: `/users/${id}`,
+    method: 'GET',
+  });
+
+  return data;
+};
+
 export const updateProfile = async (
   id,
   { full_name, phone, profile_photo }
@@ -151,4 +160,28 @@ export const getFirebaseTokenWithFacebook = async () => {
   const token = await user.getIdToken(true);
 
   return token;
+};
+
+export const requestEmailVerificationToken = async (email) => {
+  const { data } = await axiosInstance({
+    url: `/users/request-email-verification-token`,
+    method: 'POST',
+    data: {
+      email,
+    },
+  });
+
+  return data;
+};
+
+export const verifyEmail = async (token) => {
+  const { data } = await axiosInstance({
+    url: `/users/verify-email`,
+    method: 'POST',
+    data: {
+      token,
+    },
+  });
+
+  return data;
 };
