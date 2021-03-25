@@ -185,7 +185,7 @@ const PaymentRecap = ({ handleClose = () => {}, handleNext = () => {} }) => {
                 </Typography>
               </>
             ) : (
-              <Typography>{errorMessage}</Typography>
+              <Typography color="error">{errorMessage}</Typography>
             )}
           </Box>
 
@@ -243,7 +243,58 @@ const PaymentRecap = ({ handleClose = () => {}, handleNext = () => {} }) => {
           <Divider />
 
           <Box className={classes.actionButton} px={2}>
-            {balance >=
+            {errorMessage ? (
+              <Button
+                disabled={isLoading}
+                variant="contained"
+                color="secondary"
+                fullWidth
+                style={{ height: 50 }}
+                onClick={() => handleClose()}
+              >
+                Ganti Metode Pembayaran
+              </Button>
+            ) : balance <
+              donationValue.donation_amount + donationValue.infaq_amount ? (
+              <Grid container spacing={2}>
+                <Grid item xs>
+                  <Button
+                    disabled={isLoading}
+                    variant="contained"
+                    color="secondary"
+                    fullWidth
+                    style={{ height: 50 }}
+                    onClick={() => handleClose()}
+                  >
+                    Ganti Metode Pembayaran
+                  </Button>
+                </Grid>
+                <Grid item xs>
+                  <Button
+                    disabled={isLoading}
+                    variant="contained"
+                    color="secondary"
+                    fullWidth
+                    style={{ height: 50 }}
+                    onClick={() => router.replace('/zipay')}
+                  >
+                    Topup
+                  </Button>
+                </Grid>
+              </Grid>
+            ) : (
+              <Button
+                disabled={isLoading}
+                variant="contained"
+                color="secondary"
+                fullWidth
+                style={{ height: 50 }}
+                onClick={() => handleNext()}
+              >
+                Lanjut
+              </Button>
+            )}
+            {/* {balance >=
             donationValue.donation_amount + donationValue.infaq_amount ? (
               <Button
                 disabled={isLoading}
@@ -282,7 +333,7 @@ const PaymentRecap = ({ handleClose = () => {}, handleNext = () => {} }) => {
                   </Button>
                 </Grid>
               </Grid>
-            )}
+            )} */}
           </Box>
         </>
       )}
