@@ -62,16 +62,16 @@ const ProfilePage = () => {
   // };
 
   const getProfileData = async () => {
+    setIsLoading(true);
     if (localStorage.getItem('token') && localStorage.getItem('data_login')) {
-      setIsLoading(true);
       // handleValidateToken();
       const dataLogin = JSON.parse(localStorage.getItem('data_login'));
 
       const data = await getProfile(dataLogin.user.id);
 
       setProfile(data);
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
