@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import formatCurrency from 'utils/formatCurrency';
+import PayWithZipayWallet from '../pay-with-zipay-wallet';
+import { useDonation } from 'context/donation.context';
 
 moment.locale('id');
 
@@ -68,6 +70,22 @@ const openInNewTab = (url) => {
 const DonationSummaryScreen = ({ donation }) => {
   const classes = useStyles();
   const router = useRouter();
+  const { donationValue, setDonationValue } = useDonation();
+  const [openPayWithZipayWallet, setOpenPayWithZipayWallet] = useState(false);
+
+  useEffect(() => {
+    setDonationValue({
+      ...donationValue,
+      campaign: donation.campaign,
+      donation_created: donation,
+      payment_method: donation.donation_payment?.payment_method,
+      donation_amount: donation.donation_amount,
+      infaq_amount: donation.infaq_amount,
+      is_anonymous: donation.is_anonymous,
+      note: donation.note,
+      payment_method_id: donation.donation_payment?.payment_method?.id,
+    });
+  }, []);
 
   return (
     <Box className={classes.root}>
@@ -105,24 +123,41 @@ const DonationSummaryScreen = ({ donation }) => {
           </Typography>
           <Box className={classes.accounNumber}>
             {donation.status === 'pending' ? (
-              <>
-                <Typography variant="body2" align="center" gutterBottom>
-                  Silahkan klik link berikut untuk pembayaran:
-                </Typography>
-                <Typography
-                  className={classes.paymentLink}
-                  variant="body1"
-                  align="center"
+              donation.donation_payment.payment_method.code ===
+              'zipay-wallet' ? (
+                <Button
+                  variant="outlined"
                   color="primary"
-                  onClick={() =>
-                    openInNewTab(donation.donation_payment.redirect_url)
-                  }
+                  onClick={() => setOpenPayWithZipayWallet(true)}
                 >
-                  {donation.donation_payment.redirect_url}
-                </Typography>
-              </>
+                  Bayar dengan Zipay Wallet
+                </Button>
+              ) : (
+                <>
+                  <Typography variant="body2" align="center" gutterBottom>
+                    Silahkan klik link berikut untuk pembayaran:
+                  </Typography>
+                  <Typography
+                    className={classes.paymentLink}
+                    variant="body1"
+                    align="center"
+                    color="primary"
+                    onClick={() =>
+                      openInNewTab(donation.donation_payment.redirect_url)
+                    }
+                  >
+                    {donation.donation_payment.redirect_url}
+                  </Typography>
+                </>
+              )
             ) : donation.status === 'paid' ? (
-              <Typography>Donasi telah dibayar</Typography>
+              <Typography align="center">
+                Donasi telah dibayar menggunakan{' '}
+                {donation?.donation_payment?.payment_method?.name} pada{' '}
+                {moment(donation.payment_confirmed_time).format('LL')}
+                {' pukul '}
+                {moment(donation.payment_confirmed_time).format('LT')}
+              </Typography>
             ) : donation.status === 'expired' ? (
               <Typography>Donasi telah expired</Typography>
             ) : donation.status === 'cancelled' ? (
@@ -138,7 +173,7 @@ const DonationSummaryScreen = ({ donation }) => {
                 align="center"
                 style={{ fontSize: 12 }}
               >
-                Transfer sebelum{' '}
+                Bayar sebelum{' '}
                 <span style={{ fontWeight: 600 }}>
                   {/* {new Date(donation.expiration).toLocaleString()} */}
                   {moment(donation.expiration).format('LL')}{' '}
@@ -153,33 +188,105 @@ const DonationSummaryScreen = ({ donation }) => {
 
       <Box className={classes.totalDonation}>
         <Typography variant="body2" align="center" gutterBottom>
-          Total Donasi yang diberikan
+          Donasi yang diberikan
         </Typography>
         {donation.status === 'expired' || donation.status === 'cancelled' ? (
-          <Typography
-            variant="body1"
-            align="center"
-            color="primary"
-            style={{
-              fontSize: 24,
-              fontWeight: 600,
-              textDecoration: 'line-through',
-            }}
-          >
-            Rp {formatCurrency.format(donation.donation_amount)}
-          </Typography>
+          <>
+            <Typography
+              variant="body1"
+              align="center"
+              color="primary"
+              style={{
+                fontSize: 18,
+                fontWeight: 600,
+                textDecoration: 'line-through',
+              }}
+              gutterBottom
+            >
+              Rp {formatCurrency.format(donation.donation_amount)}
+            </Typography>
+            <Typography variant="body2" align="center">
+              Infaq
+            </Typography>
+            <Typography
+              variant="body1"
+              align="center"
+              color="primary"
+              style={{
+                fontSize: 18,
+                fontWeight: 600,
+                textDecoration: 'line-through',
+              }}
+              gutterBottom
+            >
+              Rp {formatCurrency.format(donation.infaq_amount)}
+            </Typography>
+            <Typography variant="body2" align="center">
+              Total yang dibayar
+            </Typography>
+            <Typography
+              variant="body1"
+              align="center"
+              color="primary"
+              style={{
+                fontSize: 24,
+                fontWeight: 600,
+                textDecoration: 'line-through',
+              }}
+            >
+              Rp{' '}
+              {formatCurrency.format(
+                donation.donation_amount + donation.infaq_amount
+              )}
+            </Typography>
+          </>
         ) : (
-          <Typography
-            variant="body1"
-            align="center"
-            color="primary"
-            style={{
-              fontSize: 24,
-              fontWeight: 600,
-            }}
-          >
-            Rp {formatCurrency.format(donation.donation_amount)}
-          </Typography>
+          <>
+            <Typography
+              variant="body1"
+              align="center"
+              color="primary"
+              style={{
+                fontSize: 18,
+                fontWeight: 600,
+              }}
+              gutterBottom
+            >
+              Rp {formatCurrency.format(donation.donation_amount)}
+            </Typography>
+            <Typography variant="body2" align="center">
+              Infaq
+            </Typography>
+            <Typography
+              variant="body1"
+              align="center"
+              color="primary"
+              style={{
+                fontSize: 18,
+                fontWeight: 600,
+              }}
+              gutterBottom
+            >
+              Rp {formatCurrency.format(donation.infaq_amount)}
+            </Typography>
+            <Typography variant="body2" align="center">
+              Total yang dibayar
+            </Typography>
+            <Typography
+              variant="body1"
+              align="center"
+              color="primary"
+              style={{
+                fontSize: 24,
+                fontWeight: 600,
+              }}
+            >
+              Rp{' '}
+              {formatCurrency.format(
+                donation.donation_amount + donation.infaq_amount
+              )}
+            </Typography>
+          </>
         )}
       </Box>
 
@@ -205,6 +312,11 @@ const DonationSummaryScreen = ({ donation }) => {
           Kembali ke Halaman Utama
         </Button>
       </Box>
+
+      <PayWithZipayWallet
+        open={openPayWithZipayWallet}
+        onClose={() => setOpenPayWithZipayWallet(false)}
+      />
     </Box>
   );
 };

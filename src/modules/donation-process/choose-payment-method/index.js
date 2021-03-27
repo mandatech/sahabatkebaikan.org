@@ -20,6 +20,7 @@ import { useDonation } from 'context/donation.context';
 import { createDonation } from 'services/donation.service';
 import { useToast } from 'libs/toast';
 import Loading from 'components/Loading';
+import PayWithZipayWallet from '../pay-with-zipay-wallet';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,19 +30,30 @@ const useStyles = makeStyles((theme) => ({
       margin: '8px 0',
     },
   },
+  bankIcon: {
+    width: 48,
+    height: 32,
+    objectFit: 'contain',
+    borderRadius: 8,
+  },
 }));
 
 const PaymentMethod = () => {
   const classes = useStyles();
   const router = useRouter();
   const { donationValue, setDonationValue } = useDonation();
-  const [open, setOpen] = useState(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [openPayWithZipayWallet, setOpenPayWithZipayWallet] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseConfirmDialog = () => {
+    setOpenConfirmDialog(false);
+  };
+
+  const handleClosePayWithZipayWallet = () => {
+    setOpenPayWithZipayWallet(false);
   };
 
   const { slug } = router.query;
@@ -56,13 +68,20 @@ const PaymentMethod = () => {
 
   // console.log('paymentMethod', data);
   const handleSelectPaymentMethod = (paymentMethod) => {
-    console.log('paymentMethod', paymentMethod);
     setSelectedPaymentMethod(paymentMethod);
-    setOpen(true);
+    setDonationValue({
+      ...donationValue,
+      payment_method: paymentMethod,
+    });
+    if (paymentMethod.code === 'zipay-wallet') {
+      setOpenPayWithZipayWallet(true);
+    } else {
+      setOpenConfirmDialog(true);
+    }
   };
 
   const handleCreateDonation = async () => {
-    handleClose();
+    handleCloseConfirmDialog();
     setDonationValue({
       ...donationValue,
       payment_method_id: selectedPaymentMethod.id,
@@ -72,6 +91,9 @@ const PaymentMethod = () => {
       setIsLoading(true);
 
       const data = await createDonation(
+        donationValue.full_name,
+        donationValue.email,
+        donationValue.phone,
         donationValue.campaign_id,
         donationValue.donation_amount,
         donationValue.infaq_amount,
@@ -89,7 +111,7 @@ const PaymentMethod = () => {
       console.log('error', error);
       if (error.response) {
         console.log(error.response.data);
-        toast.showMessage(error.response.data, 'error');
+        toast.showMessage(error.response.data.message, 'error');
       } else if (error.request) {
         console.log(error.request);
         toast.showMessage('Network Error', 'error');
@@ -114,10 +136,6 @@ const PaymentMethod = () => {
     }
   }, [slug]);
 
-  useEffect(() => {
-    console.log('donationValue', donationValue);
-  }, [donationValue]);
-
   return (
     <Box className={classes.root}>
       <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}>
@@ -137,12 +155,17 @@ const PaymentMethod = () => {
                   onClick={() => handleSelectPaymentMethod(paymentMethod)}
                 >
                   <ListItemIcon>
-                    <img alt="bank=icon" src={paymentMethod.image} />
+                    <img
+                      className={classes.bankIcon}
+                      alt="bank-icon"
+                      src={paymentMethod.image}
+                    />
                   </ListItemIcon>
                   <Box ml={1}>
                     <Typography variant="body2">
-                      {paymentMethod.name} via{' '}
-                      {paymentMethod.payment_gateway.name}
+                      {paymentMethod.name}
+                      {/* via{' '}
+                      {paymentMethod.payment_gateway.name} */}
                     </Typography>
                     {/* <Typography variant="caption" color="textSecondary">
                   Bayar dengan saldo Dompet Kebaikan Anda
@@ -159,16 +182,13 @@ const PaymentMethod = () => {
       </List>
 
       <Dialog
-        open={open}
-        onClose={handleClose}
-        // style={{ maxWidth: 400 }}
+        open={openConfirmDialog}
+        onClose={handleCloseConfirmDialog}
         maxWidth="xs"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle
-        // disableTypography={true}
-        >{`Anda yakin membayar dengan ${selectedPaymentMethod?.name} via ${selectedPaymentMethod?.payment_gateway?.name}?`}</DialogTitle>
+        <DialogTitle>{`Anda yakin membayar dengan ${selectedPaymentMethod?.name} via ${selectedPaymentMethod?.payment_gateway?.name}?`}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Anda tidak dapat mengubah cara pembayaran setelah memilihnya.
@@ -176,7 +196,7 @@ const PaymentMethod = () => {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleClose}>Ganti</Button>
+          <Button onClick={handleCloseConfirmDialog}>Ganti</Button>
           <Button
             onClick={handleCreateDonation}
             variant="contained"
@@ -186,6 +206,11 @@ const PaymentMethod = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <PayWithZipayWallet
+        open={openPayWithZipayWallet}
+        onClose={handleClosePayWithZipayWallet}
+      />
 
       <Loading open={isLoading} hideBackdrop />
     </Box>
