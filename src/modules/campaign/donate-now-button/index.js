@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
 const DonateNowButton = ({ campaign }) => {
   const classes = useStyles();
   const router = useRouter();
-  const { slug } = router.query;
   const [copied, setCopied] = useState(false);
 
   const [content] = useState({
@@ -57,10 +56,7 @@ const DonateNowButton = ({ campaign }) => {
 
   const handleDonateBtn = () => {
     // if (localStorage.getItem('token')) {
-    router.push({
-      pathname: '/campaign/[slug]/donation-amount',
-      query: { slug },
-    });
+    router.push(`/campaign/${campaign.slug}/donation-amount`);
     // } else {
     //   router.push(`/login?redirect=/campaign/${slug}`);
     // }
