@@ -16,6 +16,7 @@ import id from 'react-timeago/lib/language-strings/id';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 // import { useInfiniteScroll } from 'libs/hooks/useInfiniteScroll';
 import { useInfiniteScroller } from 'libs/hooks/useInfiniteScroller';
+import DataNotFound from 'components/DataNotFound';
 
 const formatter = buildFormatter(id);
 
@@ -123,7 +124,7 @@ const DonorList = ({ campaign }) => {
       ) : error ? (
         <p style={{ color: 'red' }}>{error.message}</p>
       ) : (
-        <p>Belum ada donasi untuk campaign ini.</p>
+        <DataNotFound message="Belum ada donasi untuk campaign ini." />
       )}
 
       {isFetching && (
