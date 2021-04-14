@@ -12,6 +12,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
 import React, { useState } from 'react';
 
 import TimeAgo from 'react-timeago';
@@ -33,7 +39,7 @@ const useStyles = makeStyles(() => ({
   latestNews: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     overflow: 'hidden',
     position: 'relative',
     maxHeight: 200,
@@ -44,8 +50,12 @@ const useStyles = makeStyles(() => ({
   uncropped: {},
   readAll: {},
   item: {
-    margin: '8px 0',
+    // margin: '8px 0',
+    marginBottom: 16,
     padding: 16,
+    width: '100%',
+    // position: 'relative',
+    // top: -16,
   },
   buttonReadAllContainer: {
     marginTop: 8,
@@ -67,6 +77,11 @@ const useStyles = makeStyles(() => ({
     borderRadius: 20,
     fontSize: 12,
     height: 24,
+  },
+  missingOppositeContent: {
+    '&:before': {
+      display: 'none',
+    },
   },
 }));
 
@@ -104,50 +119,69 @@ const DonorList = ({ campaign }) => {
         <Box
           className={clsx(classes.latestNews, { [classes.uncropped]: readAll })}
         >
-          {data.map((latestNews, i) => (
-            <Paper
-              key={latestNews.id + i}
-              className={classes.item}
-              variant="outlined"
-            >
-              <Grid container>
-                <Grid item>
-                  <Avatar
-                    style={{ width: 50, height: 50 }}
-                    src={campaign.campaigner.profile_photo}
-                  />
-                </Grid>
-                <Grid item xs style={{ marginLeft: 16 }}>
-                  <Typography variant="body1" style={{ fontWeight: 500 }}>
-                    {latestNews.campaign.campaigner.full_name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    gutterBottom
-                    style={{ fontSize: 12 }}
-                  >
-                    <TimeAgo
-                      date={latestNews.created_at}
-                      formatter={formatter}
-                    />
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Typography
-                variant="body1"
-                style={{ fontWeight: 500, marginTop: 16 }}
-              >
-                {latestNews.title}
-              </Typography>
-              <div
-                style={{ marginTop: 8 }}
-                dangerouslySetInnerHTML={{
-                  __html: latestNews.content,
+          <Timeline align="left" style={{ padding: 0 }}>
+            {data.map((latestNews, i) => (
+              <TimelineItem
+                key={i}
+                classes={{
+                  missingOppositeContent: classes.missingOppositeContent,
                 }}
-              />
-            </Paper>
-          ))}
+              >
+                <TimelineSeparator>
+                  <TimelineConnector
+                    style={{ flexGrow: 0, height: 24, width: 1 }}
+                  />
+                  <TimelineDot color="secondary" />
+                  <TimelineConnector style={{ width: 1 }} />
+                </TimelineSeparator>
+                <TimelineContent style={{ padding: '0 0 0 8px' }}>
+                  <Paper
+                    // key={latestNews.id + i}
+                    className={classes.item}
+                    variant="outlined"
+                  >
+                    <Grid container>
+                      <Grid item>
+                        <Avatar
+                          style={{ width: 50, height: 50 }}
+                          src={campaign.campaigner.profile_photo}
+                        />
+                      </Grid>
+                      <Grid item xs style={{ marginLeft: 16 }}>
+                        <Typography variant="body1" style={{ fontWeight: 500 }}>
+                          {latestNews.campaign.campaigner.full_name}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          gutterBottom
+                          style={{ fontSize: 12 }}
+                        >
+                          <TimeAgo
+                            date={latestNews.created_at}
+                            formatter={formatter}
+                          />
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Typography
+                      variant="body1"
+                      style={{ fontWeight: 500, marginTop: 16 }}
+                    >
+                      {latestNews.title}
+                    </Typography>
+                    <div
+                      className="ck-content"
+                      style={{ marginTop: 8 }}
+                      dangerouslySetInnerHTML={{
+                        __html: latestNews.content,
+                      }}
+                    />
+                  </Paper>
+                </TimelineContent>
+              </TimelineItem>
+            ))}
+          </Timeline>
           {isFetching && (
             <Box
               width="100%"
