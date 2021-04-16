@@ -60,10 +60,7 @@ const CampaignBox = ({ campaign }) => {
 
   const handleDonateBtn = () => {
     // if (localStorage.getItem('token')) {
-    router.push({
-      pathname: '/campaign/[slug]/donation-amount',
-      query: { slug: campaign.slug },
-    });
+    router.push(`/campaign/${campaign.slug}/donation-amount`);
     // } else {
     //   router.push(`/login`);
     // }
@@ -73,14 +70,7 @@ const CampaignBox = ({ campaign }) => {
     <>
       <Grid container className={classes.root}>
         <Grid item>
-          <ButtonBase
-            onClick={() =>
-              router.push({
-                pathname: '/campaign/[slug]',
-                query: { slug: campaign.slug },
-              })
-            }
-          >
+          <ButtonBase onClick={() => router.push(`/campaign/${campaign.slug}`)}>
             <img
               src={
                 campaign.images[0]?.url ||
@@ -99,12 +89,7 @@ const CampaignBox = ({ campaign }) => {
                 variant="body2"
                 gutterBottom
                 className={classes.campaignTitle}
-                onClick={() =>
-                  router.push({
-                    pathname: '/campaign/[slug]',
-                    query: { slug: campaign.slug },
-                  })
-                }
+                onClick={() => router.push(`/campaign/${campaign.slug}`)}
               >
                 {campaign.title}
               </Typography>
@@ -114,12 +99,6 @@ const CampaignBox = ({ campaign }) => {
                 color="secondary"
                 variant="contained"
                 className={classes.buttonDonasi}
-                // onClick={() =>
-                //   router.push({
-                //     pathname: '/campaign/[slug]/donation-amount',
-                //     query: { slug: campaign.slug },
-                //   })
-                // }
                 onClick={handleDonateBtn}
               >
                 Donasi
