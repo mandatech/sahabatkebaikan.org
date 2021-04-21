@@ -163,7 +163,9 @@ const PaymentMethod = () => {
                   </ListItemIcon>
                   <Box ml={1}>
                     <Typography variant="body2">
-                      {paymentMethod.name}
+                      {paymentMethod.name === 'QRIS'
+                        ? 'QRIS (bisa digunakan di semua e-wallet)'
+                        : paymentMethod.name}
                       {/* via{' '}
                       {paymentMethod.payment_gateway.name} */}
                     </Typography>
