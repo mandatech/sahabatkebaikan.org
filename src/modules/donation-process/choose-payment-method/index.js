@@ -164,7 +164,7 @@ const PaymentMethod = () => {
                   <Box ml={1}>
                     <Typography variant="body2">
                       {paymentMethod.name === 'QRIS'
-                        ? 'QRIS (bisa digunakan di semua e-wallet)'
+                        ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
                         : paymentMethod.name}
                       {/* via{' '}
                       {paymentMethod.payment_gateway.name} */}
