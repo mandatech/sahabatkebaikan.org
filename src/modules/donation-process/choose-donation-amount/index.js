@@ -19,6 +19,7 @@ import formatCurrency from 'utils/formatCurrency';
 // import { createDonation } from 'services/donation.service';
 import { useDonation } from 'context/donation.context';
 import { useFormik } from 'formik';
+import * as fbq from 'libs/fbpixel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,7 +60,7 @@ const DonationAmountScreen = ({ campaign }) => {
       full_name: '',
       email: '',
       phone: '',
-      amount: 0,
+      amount: 100000,
       is_anonymous: false,
       infaq: false,
       infaqPercent: 5,
@@ -108,7 +109,7 @@ const DonationAmountScreen = ({ campaign }) => {
   const [predefinedAmounts, setPredefinedAmounts] = useState([
     {
       value: 100000,
-      selected: false,
+      selected: true,
     },
     {
       value: 200000,
@@ -167,6 +168,22 @@ const DonationAmountScreen = ({ campaign }) => {
       note: formik.values.note,
     });
 
+    if (campaign?.campaigner?.pixel_id) {
+      fbq.event('InitiateCheckout', campaign.campaigner.pixel_id, {
+        content_name: campaign.title,
+        value: getTotal(),
+        donation_value: Number(formik.values.amount),
+        infaq_value: formik.values.infaq
+          ? (Number(formik.values.amount) *
+              Number(formik.values.infaqPercent)) /
+            100
+          : 0,
+        currency: 'IDR',
+        campaign_url: `${window.location.origin}/campaign/${campaign.slug}`,
+        source: window.location.hostname,
+      });
+    }
+
     router.push(`/campaign/${slug}/donation-payment`);
   };
 
@@ -181,7 +198,7 @@ const DonationAmountScreen = ({ campaign }) => {
           full_name: dataLogin.user.full_name,
           email: dataLogin.user.email,
           phone: dataLogin.user.phone,
-          amount: 0,
+          amount: 100000,
           is_anonymous: false,
           infaq: false,
           infaqPercent: 5,

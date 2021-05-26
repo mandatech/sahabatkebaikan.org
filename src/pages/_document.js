@@ -48,8 +48,8 @@ export default class MyDocument extends Document {
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
+              fbq.disablePushState = true;
               fbq('init', ${FB_PIXEL_ID});
-              fbq('track', 'PageView');
               `,
             }}
           />

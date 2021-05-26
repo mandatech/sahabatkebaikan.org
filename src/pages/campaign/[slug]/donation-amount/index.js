@@ -7,6 +7,7 @@ import Layout from 'components/Layout';
 import Loading from 'components/Loading';
 import DonationAmountScreen from 'modules/donation-process/choose-donation-amount';
 import { getCampaignDetail } from 'services/campaign.service';
+import * as fbq from 'libs/fbpixel';
 
 const useStyles = makeStyles(() => ({
   headerRoot: {
@@ -19,15 +20,28 @@ const useStyles = makeStyles(() => ({
 const DonationAmount = ({ slug }) => {
   const classes = useStyles();
   const { data, isFetching, error } = getCampaignDetail(slug);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
+
+    if (data?.campaigner?.pixel_id) {
+      fbq.init(data.campaigner.pixel_id);
+      fbq.pageview(data.campaigner.pixel_id);
+      fbq.event('AddToCart', data.campaigner.pixel_id, {
+        content_name: data.title,
+        value: 100000,
+        currency: 'IDR',
+        campaign_url: `${window.location.origin}/campaign/${slug}`,
+        source: window.location.hostname,
+      });
+    }
     // if (!localStorage.getItem('token')) {
     //   router.push(`/login?redirect=/campaign/${slug}`);
     // }
-  }, []);
+  }, [data]);
 
   return (
     <Layout>
