@@ -1,6 +1,6 @@
 {
   "name": "sahabatkebaikan-new",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-alignment": "^22.0.0",

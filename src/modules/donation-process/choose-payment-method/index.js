@@ -21,6 +21,8 @@ import { createDonation } from 'services/donation.service';
 import { useToast } from 'libs/toast';
 import Loading from 'components/Loading';
 import PayWithZipayWallet from '../pay-with-zipay-wallet';
+import DataNotFound from 'components/DataNotFound';
+import * as fbq from 'libs/fbpixel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -106,6 +108,20 @@ const PaymentMethod = () => {
       if (data.donation_payment.redirect_url) {
         openInNewTab(data.donation_payment.redirect_url);
       }
+
+      if (donationValue.campaign?.campaigner?.pixel_id) {
+        fbq.init(donationValue.campaign.campaigner.pixel_id);
+        fbq.event('Purchase', donationValue.campaign.campaigner.pixel_id, {
+          content_name: donationValue.campaign.title,
+          value: donationValue.donation_amount + donationValue.infaq_amount,
+          donation_value: donationValue.donation_amount,
+          infaq_value: donationValue.infaq_amount,
+          currency: 'IDR',
+          campaign_url: `${window.location.origin}/campaign/${slug}`,
+          source: window.location.hostname,
+        });
+      }
+
       router.push(`/campaign/${slug}/summary/${data.id}`);
     } catch (error) {
       console.log('error', error);
@@ -139,47 +155,143 @@ const PaymentMethod = () => {
   return (
     <Box className={classes.root}>
       <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}>
-        <Typography variant="body2">Pilih Metode Pembayaran</Typography>
+        <Typography variant="body2">Pembayaran Instan</Typography>
       </Grid>
       <List component="nav" aria-label="transfer-payment">
         {isFetching ? (
           <Loading open hideBackdrop />
         ) : data?.length ? (
-          data.map(
-            (paymentMethod) =>
-              paymentMethod.is_enabled && (
-                <ListItem
-                  key={paymentMethod.id}
-                  button
-                  style={{ paddingLeft: 24 }}
-                  onClick={() => handleSelectPaymentMethod(paymentMethod)}
-                >
-                  <ListItemIcon>
-                    <img
-                      className={classes.bankIcon}
-                      alt="bank-icon"
-                      src={paymentMethod.image}
-                    />
-                  </ListItemIcon>
-                  <Box ml={1}>
-                    <Typography variant="body2">
-                      {paymentMethod.name === 'QRIS'
-                        ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
-                        : paymentMethod.name}
-                      {/* via{' '}
-                      {paymentMethod.payment_gateway.name} */}
-                    </Typography>
-                    {/* <Typography variant="caption" color="textSecondary">
-                  Bayar dengan saldo Dompet Kebaikan Anda
-                </Typography> */}
-                  </Box>
-                </ListItem>
-              )
-          )
+          data
+            .filter(
+              (paymentMethod) =>
+                paymentMethod.is_enabled &&
+                (paymentMethod.payment_gateway.code === 'zipay' ||
+                  paymentMethod.name === 'QRIS')
+            )
+            .map((paymentMethod) => (
+              <ListItem
+                key={paymentMethod.id}
+                button
+                style={{ paddingLeft: 24 }}
+                onClick={() => handleSelectPaymentMethod(paymentMethod)}
+              >
+                <ListItemIcon>
+                  <img
+                    className={classes.bankIcon}
+                    alt="bank-icon"
+                    src={paymentMethod.image}
+                  />
+                </ListItemIcon>
+                <Box ml={1}>
+                  <Typography variant="body2">
+                    {paymentMethod.name === 'QRIS'
+                      ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
+                      : paymentMethod.name}
+                  </Typography>
+                </Box>
+              </ListItem>
+            ))
         ) : error ? (
           <p style={{ color: 'red' }}>{error.message}</p>
         ) : (
-          <p>Maaf, belum ada campaign tersedia.</p>
+          <DataNotFound />
+        )}
+      </List>
+
+      <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}>
+        <Typography variant="body2">
+          Transfer Bank (diverifikasi otomatis)
+        </Typography>
+      </Grid>
+
+      <List component="nav" aria-label="transfer-payment">
+        {isFetching ? (
+          <Loading open hideBackdrop />
+        ) : data?.length ? (
+          data
+            .filter(
+              (paymentMethod) =>
+                paymentMethod.is_enabled &&
+                paymentMethod.payment_gateway.code === 'moota'
+            )
+            .map((paymentMethod) => (
+              <ListItem
+                key={paymentMethod.id}
+                button
+                style={{ paddingLeft: 24 }}
+                onClick={() => handleSelectPaymentMethod(paymentMethod)}
+              >
+                <ListItemIcon>
+                  <img
+                    className={classes.bankIcon}
+                    alt="bank-icon"
+                    src={paymentMethod.image}
+                  />
+                </ListItemIcon>
+                <Box ml={1}>
+                  <Typography variant="body2">
+                    {paymentMethod.name === 'QRIS'
+                      ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
+                      : paymentMethod.name}
+                  </Typography>
+                </Box>
+              </ListItem>
+            ))
+        ) : error ? (
+          <p style={{ color: 'red' }}>{error.message}</p>
+        ) : (
+          <DataNotFound />
+        )}
+      </List>
+
+      <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}>
+        <Typography variant="body2">
+          Virtual Account (diverifikasi otomatis)
+        </Typography>
+      </Grid>
+      <List component="nav" aria-label="transfer-payment">
+        {isFetching ? (
+          <Loading open hideBackdrop />
+        ) : data?.length ? (
+          data
+            .filter(
+              (paymentMethod) =>
+                paymentMethod.is_enabled &&
+                paymentMethod.payment_gateway.code === 'oy' &&
+                paymentMethod.name !== 'QRIS'
+            )
+            .map((paymentMethod) => (
+              <ListItem
+                key={paymentMethod.id}
+                button
+                style={{ paddingLeft: 24 }}
+                onClick={() => handleSelectPaymentMethod(paymentMethod)}
+              >
+                <ListItemIcon>
+                  <img
+                    className={classes.bankIcon}
+                    alt="bank-icon"
+                    src={paymentMethod.image}
+                  />
+                </ListItemIcon>
+                <Box ml={1}>
+                  <Typography variant="body2">
+                    {paymentMethod.name === 'QRIS'
+                      ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
+                      : paymentMethod.name}
+                    {/* via{' '}
+                      {paymentMethod.payment_gateway.name} */}
+                  </Typography>
+                  {/* <Typography variant="caption" color="textSecondary">
+                  Bayar dengan saldo Dompet Kebaikan Anda
+                </Typography> */}
+                </Box>
+              </ListItem>
+            ))
+        ) : error ? (
+          <p style={{ color: 'red' }}>{error.message}</p>
+        ) : (
+          <DataNotFound />
         )}
       </List>
 

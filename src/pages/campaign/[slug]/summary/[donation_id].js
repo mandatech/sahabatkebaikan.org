@@ -9,6 +9,7 @@ import DonationSummaryScreen from 'modules/donation-process/donation-summary';
 import { getDonationDetail } from 'services/donation.service';
 import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan.svg';
 import { makeStyles } from '@material-ui/core/styles';
+import * as fbq from 'libs/fbpixel';
 
 const useStyles = makeStyles(() => ({
   logoContainer: {
@@ -31,10 +32,23 @@ const DonationSummary = ({ donation_id }) => {
       top: 0,
       behavior: 'smooth',
     });
+
+    if (data?.campaign?.campaigner?.pixel_id) {
+      fbq.init(data.campaign.campaigner.pixel_id);
+      fbq.eventCustom('Summary', data.campaign.campaigner.pixel_id, {
+        content_name: data.campaign.title,
+        value: data.donation_amount + data.infaq_amount,
+        donation_value: data.donation_amount,
+        infaq_value: data.infaq_amount,
+        currency: 'IDR',
+        campaign_url: `${window.location.origin}/campaign/${data.campaign.slug}`,
+        source: window.location.hostname,
+      });
+    }
     // if (!localStorage.getItem('token')) {
     //   router.push(`/login`);
     // }
-  }, []);
+  }, [data]);
 
   return (
     <Layout>
