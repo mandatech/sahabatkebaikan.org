@@ -22,6 +22,7 @@ import { useToast } from 'libs/toast';
 import Loading from 'components/Loading';
 import PayWithZipayWallet from '../pay-with-zipay-wallet';
 import DataNotFound from 'components/DataNotFound';
+import * as fbq from 'libs/fbpixel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -107,6 +108,20 @@ const PaymentMethod = () => {
       if (data.donation_payment.redirect_url) {
         openInNewTab(data.donation_payment.redirect_url);
       }
+
+      if (donationValue.campaign?.campaigner?.pixel_id) {
+        fbq.init(donationValue.campaign.campaigner.pixel_id);
+        fbq.event('Purchase', donationValue.campaign.campaigner.pixel_id, {
+          content_name: donationValue.campaign.title,
+          value: donationValue.donation_amount + donationValue.infaq_amount,
+          donation_value: donationValue.donation_amount,
+          infaq_value: donationValue.infaq_amount,
+          currency: 'IDR',
+          campaign_url: `${window.location.origin}/campaign/${slug}`,
+          source: window.location.hostname,
+        });
+      }
+
       router.push(`/campaign/${slug}/summary/${data.id}`);
     } catch (error) {
       console.log('error', error);

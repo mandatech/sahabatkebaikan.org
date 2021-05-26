@@ -14,6 +14,8 @@ import DataNotFound from 'components/DataNotFound';
 import { Paper } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { useEffect } from 'react';
+import * as fbq from 'libs/fbpixel';
 
 const useStyles = makeStyles(() => ({
   headerRoot: {
@@ -23,14 +25,24 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DetailCampaign = ({ campaign }) => {
+const DetailCampaign = ({ campaign, campaigner }) => {
   const classes = useStyles();
   const router = useRouter();
   // const { data, error, isFetching } = getCampaignDetail(slug);
   // const [isFetching] = useState(true);
 
+  useEffect(() => {
+    fbq.event('ViewContent');
+
+    if (campaigner?.pixel_id) {
+      fbq.init(campaigner.pixel_id);
+      fbq.pageview(campaigner.pixel_id);
+      fbq.event('ViewContent', campaigner.pixel_id);
+    }
+  }, []);
+
   return (
-    <Layout>
+    <Layout title={campaign.title}>
       <Header
         title="Detail Campaign"
         icon={<BackIcon />}
@@ -45,7 +57,7 @@ const DetailCampaign = ({ campaign }) => {
         }}
       />
       <Head>
-        <title>{campaign.title}</title>
+        {/* <title>{campaign.title}</title> */}
         <meta
           property="og:url"
           content={`${process.env.NEXT_PUBLIC_WEB_URL}/campaign/${campaign.slug}`}
@@ -97,19 +109,53 @@ const DetailCampaign = ({ campaign }) => {
           </Paper>
         )
       )} */}
+      {/* <footer>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', ${campaigner.pixel_id});
+              fbq('track', 'PageView');
+              `,
+          }}
+        />
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            alt=""
+            src={`https://www.facebook.com/tr?id=${campaigner.pixel_id}&ev=PageView&noscript=1`}
+          />
+        </noscript>
+      </footer> */}
     </Layout>
   );
 };
 
 export async function getServerSideProps({ params }) {
-  const res = await fetch(
+  const campaignRes = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/v1/campaigns/${params.slug}`
   );
-  const campaign = await res.json();
+  const campaign = await campaignRes.json();
+
+  const campaignerRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/users/${campaign.campaigner.username}`
+  );
+
+  const campaigner = await campaignerRes.json();
 
   return {
     props: {
       campaign,
+      campaigner,
     },
   };
 }
@@ -117,6 +163,7 @@ export async function getServerSideProps({ params }) {
 DetailCampaign.propTypes = {
   slug: PropTypes.string,
   campaign: PropTypes.object,
+  campaigner: PropTypes.object,
 };
 
 export default DetailCampaign;
