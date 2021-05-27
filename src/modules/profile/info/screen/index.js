@@ -213,7 +213,9 @@ const ProfileInfo = ({ profile }) => {
           <ListItemText
             primary="Zipay Wallet"
             secondary={
-              errorMessage && errorMessage !== 'Zipay Account is not activated'
+              errorMessage &&
+              errorMessage !== 'Zipay Account is not activated' &&
+              errorMessage !== 'User not exist'
                 ? 'Error'
                 : null
             }
@@ -221,7 +223,8 @@ const ProfileInfo = ({ profile }) => {
           <ListItemText style={{ textAlign: 'right', overflow: 'auto' }}>
             {isLoading ? (
               <CircularProgress size={20} />
-            ) : errorMessage === 'Zipay Account is not activated' ? (
+            ) : errorMessage === 'Zipay Account is not activated' ||
+              errorMessage === 'User not exist' ? (
               <Button
                 variant="outlined"
                 color="primary"
