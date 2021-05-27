@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Router from 'next/router';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -65,11 +66,17 @@ const ProfilePage = () => {
     setIsLoading(true);
     if (localStorage.getItem('token') && localStorage.getItem('data_login')) {
       // handleValidateToken();
-      const dataLogin = JSON.parse(localStorage.getItem('data_login'));
+      try {
+        const dataLogin = JSON.parse(localStorage.getItem('data_login'));
 
-      const data = await getProfile(dataLogin.user.id);
+        const data = await getProfile(dataLogin.user.id);
 
-      setProfile(data);
+        setProfile(data);
+      } catch (_) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('data_login');
+        Router.push('/login?redirect=profil');
+      }
     }
     setIsLoading(false);
   };
