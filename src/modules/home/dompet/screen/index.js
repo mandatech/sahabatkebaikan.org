@@ -85,7 +85,8 @@ const Dompet = () => {
           <span style={{ fontWeight: 600 }}>Rp -</span>
         ) : isLoading ? (
           <CircularProgress size={15} />
-        ) : errorMessage === 'Zipay Account is not activated' ? (
+        ) : errorMessage === 'Zipay Account is not activated' ||
+          errorMessage === 'User not exist' ? (
           <span style={{ fontWeight: 600 }}>Rp -</span>
         ) : balance >= 0 ? (
           <span style={{ fontWeight: 600 }}>
@@ -111,7 +112,8 @@ const Dompet = () => {
         </Button>
       ) : isLoading ? (
         <CircularProgress style={{ marginLeft: 'auto' }} size={20} />
-      ) : errorMessage === 'Zipay Account is not activated' ? (
+      ) : errorMessage === 'Zipay Account is not activated' ||
+        errorMessage === 'User not exist' ? (
         <Button
           className={classes.isiSaldo}
           variant="outlined"
