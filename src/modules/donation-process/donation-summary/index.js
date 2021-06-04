@@ -233,7 +233,7 @@ const DonationSummaryScreen = ({ donation }) => {
                     Rp {formatCurrency.format(donation.total)}
                   </Typography>
                   <CopyToClipboard
-                    text={paymentMethod.bank_detail?.account_number}
+                    text={donation.total}
                     onCopy={() =>
                       toast.showMessage('Nominal donasi berhasil disalin')
                     }
