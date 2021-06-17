@@ -1,8 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import Head from 'next/head';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Head from 'next/head';
-import PropTypes from 'prop-types';
-import React from 'react';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -13,6 +13,7 @@ import theme from '../components/theme';
 import { ToastProvider } from 'libs/toast';
 import FacebookPixel from 'components/FacebookPixel';
 import GoogleAnalitycs from 'components/GoogleAnalitycs';
+import AffiliateComponent from 'components/AffiliateComponent';
 import { DonationProvider } from 'context/donation.context';
 import '../styles/editor.css';
 export default function MyApp(props) {
@@ -62,15 +63,17 @@ export default function MyApp(props) {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <GoogleAnalitycs>
-            <FacebookPixel>
-              <ToastProvider>
-                <DonationProvider>
-                  <Component {...pageProps} />
-                </DonationProvider>
-              </ToastProvider>
-            </FacebookPixel>
-          </GoogleAnalitycs>
+          <AffiliateComponent>
+            <GoogleAnalitycs>
+              <FacebookPixel>
+                <ToastProvider>
+                  <DonationProvider>
+                    <Component {...pageProps} />
+                  </DonationProvider>
+                </ToastProvider>
+              </FacebookPixel>
+            </GoogleAnalitycs>
+          </AffiliateComponent>
         </MuiPickersUtilsProvider>
       </ThemeProvider>
     </React.Fragment>
