@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import querystring from 'querystring';
 import Cookies from 'js-cookie';
-import { createAffiliateHit } from 'services/affilaite.service';
+import { createAffiliateHit } from 'services/affiliate.service';
 
 const AffiliateComponent = ({ children }) => {
   const router = useRouter();
