@@ -14,6 +14,8 @@ import { useDonation } from 'context/donation.context';
 import { createDonation } from 'services/donation.service';
 import { confirmPayment } from 'services/zipay.service';
 import { useToast } from 'libs/toast';
+import Cookies from 'js-cookie';
+import { createAffiliateConversion } from 'services/affiliate.service';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -63,6 +65,16 @@ const ConfirmPin = ({ handleNext = () => {} }) => {
           ...donationValue,
           donation_created: donationCreated,
         });
+
+        // create affiliate conversion
+        try {
+          const affiliateId = Cookies.get('affiliateId');
+          if (affiliateId) {
+            await createAffiliateConversion(affiliateId, donationCreated.id);
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
 
       await confirmPayment(

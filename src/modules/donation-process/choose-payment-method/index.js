@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -23,6 +24,7 @@ import Loading from 'components/Loading';
 import PayWithZipayWallet from '../pay-with-zipay-wallet';
 import DataNotFound from 'components/DataNotFound';
 import * as fbq from 'libs/fbpixel';
+import { createAffiliateConversion } from 'services/affiliate.service';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -120,6 +122,16 @@ const PaymentMethod = () => {
           campaign_url: `${window.location.origin}/campaign/${slug}`,
           source: window.location.hostname,
         });
+      }
+
+      // create affiliate conversion
+      try {
+        const affiliateId = Cookies.get('affiliateId');
+        if (affiliateId) {
+          await createAffiliateConversion(affiliateId, data.id);
+        }
+      } catch (error) {
+        console.log(error);
       }
 
       router.push(`/campaign/${slug}/summary/${data.id}`);
