@@ -39,6 +39,7 @@
     "formik-material-ui": "^3.0.0",
     "formik-material-ui-pickers": "^0.0.12",
     "git-cz": "^4.7.6",
+    "js-cookie": "^2.2.1",
     "lodash": "^4.17.20",
     "material-ui-image": "^3.3.0",
     "moment": "^2.29.1",
