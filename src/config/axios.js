@@ -19,6 +19,7 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   function (error) {
+    console.log('error di axios', error);
     return Promise.reject(error);
   }
 );
@@ -31,6 +32,7 @@ axiosInstance.interceptors.response.use(
     const originalRequest = { ...error.config };
 
     if (
+      error.response &&
       error.response.status === 400 &&
       originalRequest.url === `/oauth/login`
     ) {
@@ -40,7 +42,11 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
       const refreshToken = JSON.parse(localStorage.getItem('data_login'))
         .refresh_token;
