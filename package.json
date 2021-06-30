@@ -1,6 +1,6 @@
 {
   "name": "sahabatkebaikan-new",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-alignment": "^22.0.0",
@@ -30,6 +30,7 @@
     "@material-ui/pickers": "^3.2.10",
     "@svgr/webpack": "^5.4.0",
     "@zeit/next-css": "^1.0.1",
+    "add": "^2.0.6",
     "axios": "^0.21.0",
     "browser-image-compression": "^1.0.14",
     "clsx": "^1.1.1",
@@ -39,9 +40,11 @@
     "formik-material-ui": "^3.0.0",
     "formik-material-ui-pickers": "^0.0.12",
     "git-cz": "^4.7.6",
+    "js-cookie": "^2.2.1",
     "lodash": "^4.17.20",
     "material-ui-image": "^3.3.0",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "next": "^10.0.2",
     "next-images": "^1.7.0",
     "next-sitemap": "^1.5.16",
@@ -57,7 +60,8 @@
     "react-responsive-carousel": "^3.2.11",
     "react-slideshow-image": "^3.3.0",
     "react-timeago": "^5.2.0",
-    "slugify": "^1.4.7"
+    "slugify": "^1.4.7",
+    "yarn": "^1.22.10"
   },
   "scripts": {
     "dev": "next -p 8001",
