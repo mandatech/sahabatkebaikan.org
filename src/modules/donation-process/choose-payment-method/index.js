@@ -197,7 +197,7 @@ const PaymentMethod = () => {
                 <Box ml={1}>
                   <Typography variant="body2">
                     {paymentMethod.name === 'QRIS'
-                      ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
+                      ? 'QRIS (dapat digunakan di m-banking semua bank, ShopeePay, OVO, Gopay, DANA, dll)'
                       : paymentMethod.name}
                   </Typography>
                 </Box>
