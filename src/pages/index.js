@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box';
 import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan_icon_white.svg';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
+import ActionButton from 'modules/home/action-button';
 import CampaignList from 'modules/home/campaign-list/screen';
 import CategoryList from 'modules/home/category/screen';
 import Dompet from 'modules/home/dompet/screen';
@@ -32,6 +33,7 @@ export default function Index() {
         />
         <Slideshow />
         <CategoryList />
+        <ActionButton />
         <CampaignList />
       </Layout>
     </>
