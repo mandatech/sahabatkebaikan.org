@@ -177,7 +177,9 @@ const DonationList = ({ status }) => {
           </div>
         ))
       ) : error ? (
-        <DataNotFound message={error.message} />
+        <div style={{ marginTop: 50 }}>
+          <DataNotFound message={error.message} />
+        </div>
       ) : (
         <div style={{ marginTop: 50 }}>
           <DataNotFound message={message} />
