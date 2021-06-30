@@ -23,6 +23,8 @@ variables:
   NEXT_PUBLIC_MESSAGING_SENDER_ID: '416643031057'
   NEXT_PUBLIC_APP_ID: '1:416643031057:web:f07302f48fb44db261d1b0'
   NEXT_PUBLIC_MEASUREMENT_ID: 'G-M0N2RFV6VN'
+  NEXT_PUBLIC_CAMPAIGNER_SITE_URL: 'https://campaigner.sahabatkebaikan.org'
+  NEXT_PUBLIC_AFFILIATE_SITE_URL: 'https://relawan.sahabatkebaikan.org'
 
 build_production:
   stage: build
