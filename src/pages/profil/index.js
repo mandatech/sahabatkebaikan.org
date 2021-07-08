@@ -97,8 +97,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Layout menu={2} withBottomNav>
-        <Header title="Profil Saya" />
+      <Layout menu={2} withBottomNav header={<Header title="Profil Saya" />}>
         {isLoading ? (
           <ProfileSkeleton />
         ) : !profile ? (

@@ -11,7 +11,10 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 const DompetContainer = () => (
-  <Box px={2} style={{ position: 'absolute', bottom: -28, width: '100%' }}>
+  <Box
+    px={2}
+    style={{ position: 'absolute', bottom: -28, width: '100%', maxWidth: 446 }}
+  >
     <Dompet />
   </Box>
 );
@@ -21,16 +24,21 @@ export default function Index() {
 
   return (
     <>
-      <Layout menu={1} withBottomNav>
-        <Header
-          icon={<SahabatkebaikanIcon />}
-          title="Cari yang ingin kamu bantu"
-          dompet={<DompetContainer />}
-          searchbox
-          SearchBoxProps={{
-            onClick: () => router.push('/cari'),
-          }}
-        />
+      <Layout
+        menu={1}
+        withBottomNav
+        header={
+          <Header
+            icon={<SahabatkebaikanIcon />}
+            title="Cari yang ingin kamu bantu"
+            dompet={<DompetContainer />}
+            searchbox
+            SearchBoxProps={{
+              onClick: () => router.push('/cari'),
+            }}
+          />
+        }
+      >
         <Slideshow />
         <CategoryList />
         <ActionButton />

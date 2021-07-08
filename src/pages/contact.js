@@ -14,18 +14,21 @@ const ContactPage = () => {
   const classes = useStyles();
 
   return (
-    <Layout>
-      <Header
-        title="Kontak Kami"
-        icon={<BackIcon />}
-        backButton={true}
-        TitleProps={{ align: 'left' }}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      header={
+        <Header
+          title="Kontak Kami"
+          icon={<BackIcon />}
+          backButton={true}
+          TitleProps={{ align: 'left' }}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <ContactUsScreen />
     </Layout>
   );

@@ -111,18 +111,22 @@ const ZakahCalculator = () => {
   }, [values]);
 
   return (
-    <Layout container="paper">
-      <Header
-        title="Kalkulator Zakat"
-        icon={<BackIcon />}
-        backButton={true}
-        TitleProps={{ align: 'left' }}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      container="paper"
+      header={
+        <Header
+          title="Kalkulator Zakat"
+          icon={<BackIcon />}
+          backButton={true}
+          TitleProps={{ align: 'left' }}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <Box className={classes.root}>
         <FormControl margin="normal">
           <InputLabel htmlFor="savings" style={{ fontSize: 18 }}>

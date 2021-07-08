@@ -29,6 +29,7 @@ import { useToast } from 'libs/toast';
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.background.paper,
+    flexGrow: 1,
   },
   avatarBackground: {
     background: 'linear-gradient(270deg, #1BBCC2 0%, #4156A5 100%)',

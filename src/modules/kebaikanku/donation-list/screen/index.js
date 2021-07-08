@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.background.paper,
-    paddingBottom: 100,
+    paddingBottom: 32,
   },
   tabStyle: {
     fontSize: 12,

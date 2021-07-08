@@ -65,18 +65,21 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <Layout>
-      <Header
-        title="Lupa Password"
-        icon={<BackIcon />}
-        backButton={true}
-        // TitleProps={{ align: 'left' }}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      header={
+        <Header
+          title="Lupa Password"
+          icon={<BackIcon />}
+          backButton={true}
+          // TitleProps={{ align: 'left' }}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <Box className={classes.root}>
         {successMessage ? (
           <div>

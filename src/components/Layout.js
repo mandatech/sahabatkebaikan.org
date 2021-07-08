@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    flexGrow: 1,
   },
   container: {
     maxWidth: 446,
@@ -22,12 +23,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Layout = ({ menu = 1, withBottomNav = false, title, ...props }) => {
+const Layout = ({
+  menu = 1,
+  withBottomNav = false,
+  title,
+  header,
+  ...props
+}) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.root}>
       <Head>{title && <title>{title}</title>}</Head>
+      {header && header}
       <Box className={classes.container}>{props.children}</Box>
       {withBottomNav && <BottomNavigation value={menu} />}
     </Box>
@@ -39,6 +47,7 @@ Layout.propTypes = {
   menu: PropTypes.number,
   withBottomNav: PropTypes.bool,
   title: PropTypes.string,
+  header: PropTypes.any,
 };
 
 export default Layout;
