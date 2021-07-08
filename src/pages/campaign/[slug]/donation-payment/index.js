@@ -14,18 +14,21 @@ const DonationPayment = () => {
   const classes = useStyles();
 
   return (
-    <Layout>
-      <Header
-        title="Metode Pembayaran Donasi"
-        color="inherit"
-        elevation={0}
-        TitleProps={{ variant: 'body1', align: 'center' }}
-        classes={{
-          root: classes.headerRoot,
-        }}
-        icon={<BackIcon />}
-        backButton={true}
-      />
+    <Layout
+      header={
+        <Header
+          title="Metode Pembayaran Donasi"
+          color="inherit"
+          elevation={0}
+          TitleProps={{ variant: 'body1', align: 'center' }}
+          classes={{
+            root: classes.headerRoot,
+          }}
+          icon={<BackIcon />}
+          backButton={true}
+        />
+      }
+    >
       <DonationPaymentScreen />
     </Layout>
   );

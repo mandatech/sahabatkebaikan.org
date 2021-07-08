@@ -37,18 +37,21 @@ const CreateCampaign = () => {
   }, []);
 
   return (
-    <Layout>
-      <Header
-        title="Buat Campagin Baru"
-        icon={<BackIcon />}
-        backButton={true}
-        TitleProps={{ align: 'left' }}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      header={
+        <Header
+          title="Buat Campagin Baru"
+          icon={<BackIcon />}
+          backButton={true}
+          TitleProps={{ align: 'left' }}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <CreateNewCampaign />
       <Loading open={isLoading} />
     </Layout>

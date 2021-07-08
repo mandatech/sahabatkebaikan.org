@@ -42,20 +42,24 @@ const DetailCampaign = ({ campaign, campaigner }) => {
   }, []);
 
   return (
-    <Layout title={campaign.title}>
-      <Header
-        title="Detail Campaign"
-        icon={<BackIcon />}
-        IconButtonProps={{
-          onClick: () => router.push('/'),
-        }}
-        TitleProps={{ align: 'left' }}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      title={campaign.title}
+      header={
+        <Header
+          title="Detail Campaign"
+          icon={<BackIcon />}
+          IconButtonProps={{
+            onClick: () => router.push('/'),
+          }}
+          TitleProps={{ align: 'left' }}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <Head>
         {/* <title>{campaign.title}</title> */}
         <meta

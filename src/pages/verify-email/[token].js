@@ -82,16 +82,19 @@ const VerifyEmailPage = () => {
   }, [token]);
 
   return (
-    <Layout>
-      <Header
-        title="Verifikasi Email"
-        backButton={true}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      header={
+        <Header
+          title="Verifikasi Email"
+          backButton={true}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <Box className={classes.root}>
         {loading ? (
           <Loading open={loading} hideBackdrop />

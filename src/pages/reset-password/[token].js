@@ -115,18 +115,21 @@ const ResetPasswordPage = () => {
   }, [token]);
 
   return (
-    <Layout>
-      <Header
-        title="Reset Password"
-        // icon={<BackIcon />}
-        backButton={true}
-        // TitleProps={{ align: 'left' }}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      header={
+        <Header
+          title="Reset Password"
+          // icon={<BackIcon />}
+          backButton={true}
+          // TitleProps={{ align: 'left' }}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <Box className={classes.root}>
         {loading ? (
           <Loading open={loading} hideBackdrop />

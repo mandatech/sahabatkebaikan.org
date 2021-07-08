@@ -29,24 +29,27 @@ const Search = ({ q }) => {
   };
 
   return (
-    <Layout>
-      <Header
-        title="Cari campaign"
-        icon={<BackIcon />}
-        backButton={true}
-        TitleProps={{ align: 'left' }}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-        searchbox
-        SearchBoxProps={{
-          autoFocus: true,
-          value: query,
-          onChange: handleSearchBoxChange,
-        }}
-      />
+    <Layout
+      header={
+        <Header
+          title="Cari campaign"
+          icon={<BackIcon />}
+          backButton={true}
+          TitleProps={{ align: 'left' }}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+          searchbox
+          SearchBoxProps={{
+            autoFocus: true,
+            value: query,
+            onChange: handleSearchBoxChange,
+          }}
+        />
+      }
+    >
       <Box p={2} style={{ background: '#DEDEDE' }}>
         <Typography>Hasil Pencarian</Typography>
       </Box>

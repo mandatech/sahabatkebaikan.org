@@ -1,4 +1,5 @@
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, withStyles } from '@material-ui/core/styles';
@@ -11,10 +12,17 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 
 const styles = (theme) => ({
-  root: {},
+  root: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  headerContent: {
+    width: '100%',
+    maxWidth: 446,
+  },
   title: {
     flexGrow: 1,
-    // textAlign: 'center',
   },
   search: {
     display: 'flex',
@@ -103,52 +111,54 @@ const CustomHeader = (props) => {
       className={clsx(classes.root, className)}
       {...other}
     >
-      <Toolbar
-        className={clsx({
-          [classes.toolbarLarge]: size === 'large' || dompet,
-        })}
-      >
-        {icon && (
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => backButton && router.back()}
-            {...IconButtonProps}
-          >
-            {icon}
-          </IconButton>
-        )}
+      <Box className={classes.headerContent}>
+        <Toolbar
+          className={clsx({
+            [classes.toolbarLarge]: size === 'large' || dompet,
+          })}
+        >
+          {icon && (
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() => backButton && router.back()}
+              {...IconButtonProps}
+            >
+              {icon}
+            </IconButton>
+          )}
 
-        {searchbox && (
-          <div className={classes.search}>
-            <InputBase
-              placeholder={title}
-              fullWidth
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              ref={inputElement}
-              {...SearchBoxProps}
-            />
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+          {searchbox && (
+            <div className={classes.search}>
+              <InputBase
+                placeholder={title}
+                fullWidth
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                ref={inputElement}
+                {...SearchBoxProps}
+              />
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {!searchbox && title && (
-          <Typography className={classes.title} noWrap {...TitleProps}>
-            {title}
-          </Typography>
-        )}
+          {!searchbox && title && (
+            <Typography className={classes.title} noWrap {...TitleProps}>
+              {title}
+            </Typography>
+          )}
 
-        {/* <div className={classes.grow} /> */}
-      </Toolbar>
-      {dompet}
+          {/* <div className={classes.grow} /> */}
+        </Toolbar>
+        {dompet}
+      </Box>
     </AppBar>
   );
 };
