@@ -13,18 +13,21 @@ const AboutPage = () => {
   const classes = useStyles();
 
   return (
-    <Layout>
-      <Header
-        title="Tentang Sahabatkebaikan"
-        // icon={<BackIcon />}
-        // backButton={true}
-        // TitleProps={{ align: 'left' }}
-        // color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      header={
+        <Header
+          title="Tentang Sahabatkebaikan"
+          // icon={<BackIcon />}
+          // backButton={true}
+          // TitleProps={{ align: 'left' }}
+          // color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <AboutScreen />
     </Layout>
   );

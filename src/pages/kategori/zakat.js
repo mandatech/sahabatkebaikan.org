@@ -18,18 +18,21 @@ const ZakatPage = ({ category }) => {
   const classes = useStyles();
 
   return (
-    <Layout>
-      <Header
-        title="Zakat"
-        icon={<BackIcon />}
-        backButton={true}
-        TitleProps={{ align: 'left' }}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      header={
+        <Header
+          title="Zakat"
+          icon={<BackIcon />}
+          backButton={true}
+          TitleProps={{ align: 'left' }}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <ZakatMenu />
       <ZakatCampaignList category={category} />
     </Layout>

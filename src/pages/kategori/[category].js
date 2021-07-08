@@ -18,18 +18,21 @@ const CategoryPage = ({ category }) => {
   const classes = useStyles();
 
   return (
-    <Layout>
-      <Header
-        title={category.name}
-        icon={<BackIcon />}
-        backButton={true}
-        TitleProps={{ align: 'left' }}
-        color="inherit"
-        elevation={0}
-        classes={{
-          root: classes.headerRoot,
-        }}
-      />
+    <Layout
+      header={
+        <Header
+          title={category.name}
+          icon={<BackIcon />}
+          backButton={true}
+          TitleProps={{ align: 'left' }}
+          color="inherit"
+          elevation={0}
+          classes={{
+            root: classes.headerRoot,
+          }}
+        />
+      }
+    >
       <CategoryCampaignList category={category} />
     </Layout>
   );
