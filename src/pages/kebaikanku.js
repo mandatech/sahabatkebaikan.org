@@ -45,8 +45,7 @@ const KebaikankuPage = () => {
 
   return (
     <>
-      <Layout menu={0} withBottomNav>
-        <Header title="Kebaikanku" />
+      <Layout menu={0} withBottomNav header={<Header title="Kebaikanku" />}>
         <DonationList user={user} />
       </Layout>
     </>

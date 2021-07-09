@@ -1,3 +1,4 @@
+import { makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import SahabatkebaikanIcon from 'assets/icons/sahabatkebaikan_icon_white.svg';
 import Header from 'components/Header';
@@ -10,27 +11,46 @@ import Slideshow from 'modules/home/slideshow/screen';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const DompetContainer = () => (
-  <Box px={2} style={{ position: 'absolute', bottom: -28, width: '100%' }}>
-    <Dompet />
-  </Box>
-);
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    maxWidth: 446,
+    background: theme.palette.background.paper,
+    paddingTop: 8,
+    paddingBottom: 8,
+  },
+}));
+
+const DompetContainer = () => {
+  const classes = useStyles();
+
+  return (
+    <Box px={2} className={classes.root}>
+      <Dompet />
+    </Box>
+  );
+};
 
 export default function Index() {
   const router = useRouter();
 
   return (
     <>
-      <Layout menu={1} withBottomNav>
-        <Header
-          icon={<SahabatkebaikanIcon />}
-          title="Cari yang ingin kamu bantu"
-          dompet={<DompetContainer />}
-          searchbox
-          SearchBoxProps={{
-            onClick: () => router.push('/cari'),
-          }}
-        />
+      <Layout
+        menu={1}
+        withBottomNav
+        header={
+          <Header
+            icon={<SahabatkebaikanIcon />}
+            title="Cari yang ingin kamu bantu"
+            searchbox
+            SearchBoxProps={{
+              onClick: () => router.push('/cari'),
+            }}
+          />
+        }
+      >
+        <DompetContainer />
         <Slideshow />
         <CategoryList />
         <ActionButton />

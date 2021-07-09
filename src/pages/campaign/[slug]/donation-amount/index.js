@@ -44,19 +44,21 @@ const DonationAmount = ({ slug }) => {
   }, [data]);
 
   return (
-    <Layout>
-      <Header
-        title="Tentukan Nominal Donasi"
-        color="inherit"
-        elevation={0}
-        TitleProps={{ variant: 'body1', align: 'center' }}
-        classes={{
-          root: classes.headerRoot,
-        }}
-        icon={<BackIcon />}
-        backButton={true}
-      />
-
+    <Layout
+      header={
+        <Header
+          title="Tentukan Nominal Donasi"
+          color="inherit"
+          elevation={0}
+          TitleProps={{ variant: 'body1', align: 'center' }}
+          classes={{
+            root: classes.headerRoot,
+          }}
+          icon={<BackIcon />}
+          backButton={true}
+        />
+      }
+    >
       {data ? (
         <DonationAmountScreen campaign={data} />
       ) : (

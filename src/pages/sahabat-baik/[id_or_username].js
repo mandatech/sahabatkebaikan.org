@@ -39,18 +39,23 @@ const ProfilePage = ({ user }) => {
 
   return (
     <>
-      <Layout menu={2} withBottomNav>
-        <Header
-          title="Profil Penggalang Dana"
-          icon={<BackIcon />}
-          backButton={true}
-          TitleProps={{ align: 'left' }}
-          // color="inherit"
-          elevation={0}
-          classes={{
-            root: classes.headerRoot,
-          }}
-        />
+      <Layout
+        menu={2}
+        withBottomNav
+        header={
+          <Header
+            title="Profil Penggalang Dana"
+            icon={<BackIcon />}
+            backButton={true}
+            TitleProps={{ align: 'left' }}
+            // color="inherit"
+            elevation={0}
+            classes={{
+              root: classes.headerRoot,
+            }}
+          />
+        }
+      >
         {!profile ? (
           <Box className={classes.root}>
             <DataNotFound />
