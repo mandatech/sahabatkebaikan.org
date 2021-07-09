@@ -9,7 +9,7 @@ import { useGetList } from 'libs/hooks/useGetList';
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.background.paper,
-    padding: '48px 16px 0 16px',
+    padding: '8px 16px 0 16px',
   },
 }));
 
