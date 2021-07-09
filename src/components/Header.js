@@ -54,11 +54,11 @@ const styles = (theme) => ({
     fontSize: 14,
   },
   toolbarLarge: {
-    height: 90,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(3),
+    // height: 90,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // // paddingTop: theme.spacing(1),
+    // paddingBottom: theme.spacing(3),
   },
   dompet: {
     // flexGrow: 1,
@@ -157,7 +157,7 @@ const CustomHeader = (props) => {
 
           {/* <div className={classes.grow} /> */}
         </Toolbar>
-        {dompet}
+        {/* {dompet} */}
       </Box>
     </AppBar>
   );
