@@ -2,6 +2,7 @@ import 'react-slideshow-image/dist/styles.css';
 import Box from '@material-ui/core/Box';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { makeStyles } from '@material-ui/core/styles';
 import { Zoom } from 'react-slideshow-image';
 import { useGetList } from 'libs/hooks/useGetList';
@@ -11,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.paper,
     padding: '8px 16px 0 16px',
   },
+  bannerImage: { width: '100%', borderRadius: 6 },
 }));
 
 const Slideshow = () => {
@@ -55,13 +57,20 @@ const Slideshow = () => {
           {data.map((each, index) => (
             <Box
               key={index}
-              style={{ width: '100%', cursor: 'pointer', minHeight: 245 }}
+              style={{ width: '100%', cursor: 'pointer', minHeight: 225 }}
               onClick={() => router.push(each.link)}
             >
-              <img
+              {/* <img
                 style={{ objectFit: 'cover', width: '100%', borderRadius: 6 }}
                 src={each.banner_image}
                 alt=""
+              /> */}
+              <Image
+                alt={each.name}
+                src={each.banner_image}
+                layout="fill"
+                quality={60}
+                className={classes.bannerImage}
               />
             </Box>
           ))}
