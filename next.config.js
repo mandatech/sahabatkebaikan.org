@@ -56,6 +56,13 @@ module.exports = withCSS({
 
     return config;
   },
+  images: {
+    domains: [
+      'res.cloudinary.com',
+      'api-staging.sahabatkebaikan.org',
+      'api.sahabatkebaikan.org',
+    ],
+  },
 });
 
 // module.exports = {
