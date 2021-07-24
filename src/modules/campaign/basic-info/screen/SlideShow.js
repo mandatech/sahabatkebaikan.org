@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Carousel } from 'react-responsive-carousel';
 import ReactPlayer from 'react-player';
 import { bool } from 'prop-types';
+import Image from 'next/image';
 
 // eslint-disable-next-line no-unused-vars
 const VideoSlide = ({ url, isSelected }) => (
@@ -10,12 +11,14 @@ const VideoSlide = ({ url, isSelected }) => (
 );
 
 const ImageSlide = ({ url }) => (
-  <div style={{ height: 250, width: '100%' }}>
-    <img
+  <div style={{ minHeight: 225, width: '100%' }}>
+    {/* <img
       style={{ objectFit: 'fill', height: '100%', width: '100%' }}
       src={url}
       alt=""
-    />
+    /> */}
+
+    <Image alt="" src={url} layout="fill" quality={60} />
   </div>
 );
 
