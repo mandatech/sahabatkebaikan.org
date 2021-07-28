@@ -41,8 +41,12 @@ const AffiliateComponent = ({ children }) => {
         new Date()
       );
     } catch (error) {
-      // if affilaite id is not valid then remove cookie and ref query from the url
-      if (error.status >= 400) {
+      // if affiliate id is not valid and error is not caused by invalid url link
+      // then remove cookie and ref query from the url
+      if (
+        error.status >= 400 &&
+        error.data.message !== 'URL link is not found'
+      ) {
         Cookies.remove('affiliateId');
 
         let url = urlWithoutParams;

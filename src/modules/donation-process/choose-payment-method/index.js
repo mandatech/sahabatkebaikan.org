@@ -25,6 +25,7 @@ import PayWithZipayWallet from '../pay-with-zipay-wallet';
 import DataNotFound from 'components/DataNotFound';
 import * as fbq from 'libs/fbpixel';
 import { createAffiliateConversion } from 'services/affiliate.service';
+import Image from 'next/image';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,9 +36,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   bankIcon: {
-    width: 48,
-    height: 32,
-    objectFit: 'contain',
+    // width: 48,
+    // height: 32,
+    // objectFit: 'contain',
     borderRadius: 8,
   },
 }));
@@ -188,10 +189,17 @@ const PaymentMethod = () => {
                 onClick={() => handleSelectPaymentMethod(paymentMethod)}
               >
                 <ListItemIcon>
-                  <img
+                  {/* <img
                     className={classes.bankIcon}
                     alt="bank-icon"
+                    src={paymentMethod.image} */}
+                  <Image
+                    alt="bank-icon"
                     src={paymentMethod.image}
+                    width={48}
+                    height={32}
+                    quality={60}
+                    className={classes.bankIcon}
                   />
                 </ListItemIcon>
                 <Box ml={1}>

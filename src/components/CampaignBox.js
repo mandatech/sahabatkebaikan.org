@@ -6,6 +6,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import PropTypes from 'prop-types';
 import formatCurrency from 'utils/formatCurrency';
 import getValue from 'utils/getValueOfLinearProgress';
@@ -16,9 +17,9 @@ const useStyles = makeStyles(() => ({
   },
   campaignImage: {
     borderRadius: 8,
-    objectFit: 'fill',
-    width: '100%',
-    maxWidth: 140,
+    // objectFit: 'fill',
+    // width: '100%',
+    // maxWidth: 140,
     height: 105,
     cursor: 'pointer',
   },
@@ -71,14 +72,19 @@ const CampaignBox = ({ campaign }) => {
       <Grid container className={classes.root}>
         <Grid item>
           <ButtonBase onClick={() => router.push(`/campaign/${campaign.slug}`)}>
-            <img
+            <Image
+              alt={campaign.title}
               src={
                 campaign.images[0]?.url ||
                 'https://via.placeholder.com/600x400?text=No%20Image'
               }
+              // src={`https://res.cloudinary.com/mandatech/image/upload/w_140,q_60/${campaign.images[0].cloudinary_id}`}
               className={classes.campaignImage}
-              alt=""
-              aria-hidden="true"
+              placeholder="blur"
+              width={160}
+              height={90}
+              // layout="fill"
+              // objectFit="cover"
             />
           </ButtonBase>
         </Grid>
