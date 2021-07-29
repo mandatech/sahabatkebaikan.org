@@ -1,15 +1,17 @@
 /* eslint-disable no-unused-vars */
-const withImages = require('next-images');
-const withCSS = require('@zeit/next-css');
+// const withCSS = require('@zeit/next-css');
 const { styles } = require('@ckeditor/ckeditor5-dev-utils');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
-module.exports = withCSS({
+module.exports = withBundleAnalyzer({
   webpack(config, options) {
     config.module.rules.push({
       test: /\.svg$/,
-      issuer: {
-        test: /\.(js|ts)x?$/,
-      },
+      // issuer: {
+      //   test: /\.(js|ts)x?$/,
+      // },
       use: ['@svgr/webpack'],
     });
 
@@ -61,6 +63,7 @@ module.exports = withCSS({
       'res.cloudinary.com',
       'api-staging.sahabatkebaikan.org',
       'api.sahabatkebaikan.org',
+      'via.placeholder.com',
     ],
   },
 });

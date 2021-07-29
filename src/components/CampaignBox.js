@@ -80,7 +80,7 @@ const CampaignBox = ({ campaign }) => {
               }
               // src={`https://res.cloudinary.com/mandatech/image/upload/w_140,q_60/${campaign.images[0].cloudinary_id}`}
               className={classes.campaignImage}
-              placeholder="blur"
+              // placeholder="blur"
               width={160}
               height={90}
               // layout="fill"

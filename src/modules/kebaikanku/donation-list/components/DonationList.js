@@ -150,13 +150,10 @@ const DonationList = ({ status }) => {
                           donation.campaign.images[0]?.url ||
                           'https://via.placeholder.com/600x400?text=No%20Image'
                         }
-                        // src={`https://res.cloudinary.com/mandatech/image/upload/w_140,q_60/${campaign.images[0].cloudinary_id}`}
                         className={classes.img}
-                        placeholder="blur"
+                        // placeholder="blur"
                         width={160}
                         height={90}
-                        // layout="fill"
-                        // objectFit="cover"
                       />
                     </ButtonBase>
                   </Grid>
