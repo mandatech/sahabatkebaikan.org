@@ -13,6 +13,9 @@ module.exports = withBundleAnalyzer({
 
     return config;
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     domains: [
       'res.cloudinary.com',
