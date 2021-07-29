@@ -12,13 +12,14 @@ const VideoSlide = ({ url, isSelected }) => (
 
 const ImageSlide = ({ url }) => (
   <div style={{ minHeight: 225, width: '100%' }}>
-    {/* <img
-      style={{ objectFit: 'fill', height: '100%', width: '100%' }}
-      src={url}
+    <Image
       alt=""
-    /> */}
-
-    <Image alt="" src={url} layout="fill" quality={60} />
+      src={url}
+      layout="fill"
+      quality={60}
+      placeholder="blur"
+      blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
+    />
   </div>
 );
 

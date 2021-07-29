@@ -148,6 +148,12 @@ export async function getServerSideProps({ params }) {
   const campaignRes = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/v1/campaigns/${params.slug}`
   );
+
+  if (campaignRes.status === 404) {
+    return {
+      notFound: true,
+    };
+  }
   const campaign = await campaignRes.json();
 
   const campaignerRes = await fetch(
