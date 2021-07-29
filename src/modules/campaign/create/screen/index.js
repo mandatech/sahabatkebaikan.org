@@ -112,16 +112,12 @@ const CreateNewCampaign = () => {
       setSubmitting(false);
       router.push(`/campaign/${data.slug}`);
     } catch (error) {
-      console.log('error', error);
       setSubmitting(false);
       if (error.response) {
-        console.log(error.response.data);
         toast.showMessage(error.response.data.message, 'error');
       } else if (error.request) {
-        console.log(error.request);
         toast.showMessage('Network Error', 'error');
       } else {
-        console.log('Error', error.message);
         toast.showMessage(error.message, 'error');
       }
     }

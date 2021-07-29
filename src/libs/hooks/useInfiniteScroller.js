@@ -62,13 +62,10 @@ export const useInfiniteScroller = (url, params) => {
       setIsFetching(false);
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data);
         setError(error.response.data);
       } else if (error.request) {
-        console.log(error.request);
         setError(error.request);
       } else {
-        console.log('Error', error.message);
         setError(error.message);
       }
       setError(error);

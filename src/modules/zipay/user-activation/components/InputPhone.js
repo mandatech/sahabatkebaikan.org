@@ -37,15 +37,12 @@ const SetPin = ({ handleNext = () => {}, state }) => {
       handleNext('phone', value.phone);
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data);
         setErrorMessage(error.response.data.message);
         toast.showMessage(error.response.data.message, 'error');
       } else if (error.request) {
-        console.log(error.request);
         setErrorMessage('Network Error');
         toast.showMessage('Network Error', 'error');
       } else {
-        console.log('Error', error.message);
         setErrorMessage(error.message);
         toast.showMessage(error.message, 'error');
       }

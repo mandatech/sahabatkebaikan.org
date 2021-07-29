@@ -88,13 +88,10 @@ const PaymentRecap = ({ handleClose = () => {}, handleNext = () => {} }) => {
       setIsloading(false);
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data);
         setErrorMessage(error.response.data.message);
       } else if (error.request) {
-        console.log(error.request);
         setErrorMessage('Network error');
       } else {
-        console.log('Error', error.message);
         setErrorMessage(error.message);
       }
       setIsloading(false);

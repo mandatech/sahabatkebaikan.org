@@ -68,17 +68,13 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
         _page: queryParams._page + 1,
       });
     } catch (error) {
-      console.log('errorrr', error);
-      console.log('error', JSON.stringify(error, null, 2));
       if (error.response) {
-        // console.log(error.response.data);
         setDataState({
           ...dataState,
           isFetching: false,
           error: error.response.data,
         });
       } else if (error.request) {
-        // console.log(error.request);
         setDataState({
           ...dataState,
           isFetching: false,
@@ -93,7 +89,6 @@ export const useInfiniteLoad = (url, params = defaultParams) => {
           error,
         });
       }
-      // setDataState({ ...dataState, isFetching: false, error });
     }
   };
 

@@ -53,16 +53,6 @@ const DonorList = ({ campaign }) => {
     params
   );
 
-  // const handleChangeOrder = (e) => {
-  //   console.log(e.target.value);
-  //   const newParams = {
-  //     ...params,
-  //     _order: e.target.value,
-  //   };
-  //   console.log('newParams', newParams);
-  //   fetchDataAgain(newParams);
-  // };
-
   return (
     <Paper className={classes.root} elevation={0} ref={ref}>
       <Box display="flex" justifyContent="space-between">

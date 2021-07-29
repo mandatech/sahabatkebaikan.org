@@ -136,14 +136,6 @@ const DonationList = ({ status }) => {
                 >
                   <Grid item xs={4}>
                     <ButtonBase className={classes.image}>
-                      {/* <img
-                        className={classes.img}
-                        alt=""
-                        src={
-                          donation.campaign.images[0]?.url ||
-                          'https://via.placeholder.com/600x400?text=No%20Image'
-                        }
-                      /> */}
                       <Image
                         alt={donation.campaign.title}
                         src={
@@ -151,7 +143,8 @@ const DonationList = ({ status }) => {
                           'https://via.placeholder.com/600x400?text=No%20Image'
                         }
                         className={classes.img}
-                        // placeholder="blur"
+                        placeholder="blur"
+                        blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
                         width={160}
                         height={90}
                       />

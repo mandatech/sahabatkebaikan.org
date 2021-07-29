@@ -17,9 +17,6 @@ const useStyles = makeStyles(() => ({
   },
   campaignImage: {
     borderRadius: 8,
-    // objectFit: 'fill',
-    // width: '100%',
-    // maxWidth: 140,
     height: 105,
     cursor: 'pointer',
   },
@@ -60,11 +57,7 @@ const CampaignBox = ({ campaign }) => {
   const router = useRouter();
 
   const handleDonateBtn = () => {
-    // if (localStorage.getItem('token')) {
     router.push(`/campaign/${campaign.slug}/donation-amount`);
-    // } else {
-    //   router.push(`/login`);
-    // }
   };
 
   return (
@@ -78,13 +71,11 @@ const CampaignBox = ({ campaign }) => {
                 campaign.images[0]?.url ||
                 'https://via.placeholder.com/600x400?text=No%20Image'
               }
-              // src={`https://res.cloudinary.com/mandatech/image/upload/w_140,q_60/${campaign.images[0].cloudinary_id}`}
               className={classes.campaignImage}
-              // placeholder="blur"
+              placeholder="blur"
+              blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
               width={160}
               height={90}
-              // layout="fill"
-              // objectFit="cover"
             />
           </ButtonBase>
         </Grid>
