@@ -24,21 +24,18 @@ export const useGetOne = (url) => {
         });
       } catch (error) {
         if (error.response) {
-          console.log(error.response.data);
           setDataState({
             ...dataState,
             isFetching: false,
             error: error.response.data,
           });
         } else if (error.request) {
-          console.log(error.request);
           setDataState({
             ...dataState,
             isFetching: false,
             error: error.request,
           });
         } else {
-          console.log('Error', error.message);
           setDataState({
             ...dataState,
             isFetching: false,

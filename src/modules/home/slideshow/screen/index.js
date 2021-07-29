@@ -57,20 +57,17 @@ const Slideshow = () => {
           {data.map((each, index) => (
             <Box
               key={index}
-              style={{ width: '100%', cursor: 'pointer', minHeight: 225 }}
+              style={{ width: '100%', cursor: 'pointer', minHeight: 230.4 }}
               onClick={() => router.push(each.link)}
             >
-              {/* <img
-                style={{ objectFit: 'cover', width: '100%', borderRadius: 6 }}
-                src={each.banner_image}
-                alt=""
-              /> */}
               <Image
                 alt={each.name}
                 src={each.banner_image}
                 layout="fill"
                 quality={60}
                 className={classes.bannerImage}
+                placeholder="blur"
+                blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
               />
             </Box>
           ))}

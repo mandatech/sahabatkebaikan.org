@@ -59,17 +59,13 @@ const ResetPasswordPage = () => {
       setSuccessMessage(data.message);
       setSubmitting(false);
     } catch (error) {
-      console.log('error', error);
       if (error.response) {
-        console.log(error.response.data);
         setErrorMessage(error.response.data.message);
         toast.showMessage(error.response.data.message, 'error');
       } else if (error.request) {
-        console.log(error.request);
         setErrorMessage('Network Error');
         toast.showMessage('Network Error', 'error');
       } else {
-        console.log('Error', error.message);
         setErrorMessage(error.message);
         toast.showMessage(error.message, 'error');
       }
@@ -82,25 +78,19 @@ const ResetPasswordPage = () => {
       setLoading(true);
       const data = await validatePasswordResetToken(token);
 
-      console.log('data', data);
-
       setUser(data.user);
 
       setTimeout(() => {
         setLoading(false);
       }, [300]);
     } catch (error) {
-      console.log('error', error);
       if (error.response) {
-        console.log(error.response.data);
         setErrorMessage(error.response.data.message);
         toast.showMessage(error.response.data.message, 'error');
       } else if (error.request) {
-        console.log(error.request);
         setErrorMessage('Network Error');
         toast.showMessage('Network Error', 'error');
       } else {
-        console.log('Error', error.message);
         setErrorMessage(error.message);
         toast.showMessage(error.message, 'error');
       }

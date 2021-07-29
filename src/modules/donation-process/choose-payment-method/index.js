@@ -132,20 +132,16 @@ const PaymentMethod = () => {
           await createAffiliateConversion(affiliateId, data.id);
         }
       } catch (error) {
-        console.log(error);
+        toast.showMessage(error.message, 'error');
       }
 
       router.push(`/campaign/${slug}/summary/${data.id}`);
     } catch (error) {
-      console.log('error', error);
       if (error.response) {
-        console.log(error.response.data);
         toast.showMessage(error.response.data.message, 'error');
       } else if (error.request) {
-        console.log(error.request);
         toast.showMessage('Network Error', 'error');
       } else {
-        console.log('Error', error.message);
         toast.showMessage(error.message, 'error');
       }
       setIsLoading(false);
@@ -200,6 +196,8 @@ const PaymentMethod = () => {
                     height={32}
                     quality={60}
                     className={classes.bankIcon}
+                    placeholder="blur"
+                    blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
                   />
                 </ListItemIcon>
                 <Box ml={1}>

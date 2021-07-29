@@ -46,7 +46,7 @@ export const createAffiliateConversion = async (affiliateId, donationId) => {
     return Promise.resolve(data);
   } catch (error) {
     if (error.response) {
-      return Promise.reject(error.response);
+      return Promise.reject(error.response.data);
     } else if (error.request) {
       return Promise.reject('Network Error', 'error');
     } else {

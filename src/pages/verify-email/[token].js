@@ -50,10 +50,7 @@ const VerifyEmailPage = () => {
         setLoading(false);
       }, [300]);
     } catch (error) {
-      console.log('error', error);
       if (error.response) {
-        console.log(error.response.data);
-
         if (error.response.status === 400) {
           setMessage(
             'Oh, link sudah tidak valid. Silakan lakukan permintaan verifikasi ulang di halaman profil'
@@ -63,11 +60,9 @@ const VerifyEmailPage = () => {
           toast.showMessage(error.response.data.message, 'error');
         }
       } else if (error.request) {
-        console.log(error.request);
         setMessage('Network Error');
         toast.showMessage('Network Error', 'error');
       } else {
-        console.log('Error', error.message);
         setMessage(error.message);
         toast.showMessage(error.message, 'error');
       }

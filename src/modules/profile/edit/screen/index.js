@@ -118,19 +118,15 @@ const EditProfile = () => {
       }, [1200]);
     } catch (error) {
       setOpenAlert(true);
-      console.log('error', error);
       setIsLoading(false);
       setSubmitting(false);
       setOpenAlert(true);
       setAlertSeverity('error');
       if (error.response) {
-        console.log(error.response.data);
         setAlertMessage(error.response.data.message);
       } else if (error.request) {
-        console.log(error.request);
         setAlertMessage('Network Error');
       } else {
-        console.log('Error', error.message);
         setAlertMessage(error.message);
       }
     }
