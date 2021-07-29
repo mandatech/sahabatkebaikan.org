@@ -32,6 +32,7 @@ const ActionButton = () => {
         color="primary"
         href={campaignerSiteUrl}
         target="_blank"
+        rel="noreferrer"
       >
         Ingin menggalang dana?
       </Button>
@@ -40,6 +41,7 @@ const ActionButton = () => {
         color="primary"
         href={affiliateSiteUrl}
         target="_blank"
+        rel="noreferrer"
       >
         Ingin menyebarkan kebaikan?
       </Button>

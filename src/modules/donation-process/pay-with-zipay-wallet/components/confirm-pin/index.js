@@ -73,7 +73,7 @@ const ConfirmPin = ({ handleNext = () => {} }) => {
             await createAffiliateConversion(affiliateId, donationCreated.id);
           }
         } catch (error) {
-          console.log(error);
+          toast.showMessage(error.message);
         }
       }
 
@@ -101,15 +101,11 @@ const ConfirmPin = ({ handleNext = () => {} }) => {
       //   `/campaign/${donationValue.campaign.slug}/summary/${donationCreated.id}`
       // );
     } catch (error) {
-      console.log('error', error);
       if (error.response) {
-        console.log(error.response.data);
         toast.showMessage(error.response.data.message, 'error');
       } else if (error.request) {
-        console.log(error.request);
         toast.showMessage('Network Error', 'error');
       } else {
-        console.log('Error', error.message);
         toast.showMessage(error.message, 'error');
       }
       setIsLoading(false);

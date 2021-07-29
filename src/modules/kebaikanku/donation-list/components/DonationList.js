@@ -136,27 +136,17 @@ const DonationList = ({ status }) => {
                 >
                   <Grid item xs={4}>
                     <ButtonBase className={classes.image}>
-                      {/* <img
-                        className={classes.img}
-                        alt=""
-                        src={
-                          donation.campaign.images[0]?.url ||
-                          'https://via.placeholder.com/600x400?text=No%20Image'
-                        }
-                      /> */}
                       <Image
                         alt={donation.campaign.title}
                         src={
                           donation.campaign.images[0]?.url ||
                           'https://via.placeholder.com/600x400?text=No%20Image'
                         }
-                        // src={`https://res.cloudinary.com/mandatech/image/upload/w_140,q_60/${campaign.images[0].cloudinary_id}`}
                         className={classes.img}
                         placeholder="blur"
+                        blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
                         width={160}
                         height={90}
-                        // layout="fill"
-                        // objectFit="cover"
                       />
                     </ButtonBase>
                   </Grid>
