@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import Link from 'components/Link';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -10,6 +11,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import RedeemIcon from '@material-ui/icons/Redeem';
+import { Grid } from '@material-ui/core';
+import LogoBaitulmaalku from '../../../../public/images/logo-baitulmaalku.png';
+import LogoMandatech from '../../../../public/images/logo-mandatech.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -215,6 +219,31 @@ const AboutScreen = () => {
             />
           </ListItem>
         </List>
+      </Box>
+      <Box>
+        <Typography variant="h6" color="primary" gutterBottom>
+          SahabatKebaikan.org merupakan hasil kerjasama antara:
+        </Typography>
+        <Grid container justify="center" spacing={4}>
+          <Grid item>
+            <Image
+              src={LogoBaitulmaalku}
+              alt="Yayasan BaitulMaalKu"
+              width={100}
+              height={100}
+              placeholder="blur"
+            />
+          </Grid>
+          <Grid item>
+            <Image
+              src={LogoMandatech}
+              alt="PT Mandatech Mataram Mukti"
+              width={100}
+              height={100}
+              placeholder="blur"
+            />
+          </Grid>
+        </Grid>
       </Box>
       <Box display="flex" justifyContent="center" mt={4}>
         <Button
