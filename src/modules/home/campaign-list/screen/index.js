@@ -3,10 +3,11 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Loading from '@material-ui/core/CircularProgress';
+import Paper from '@material-ui/core/Paper';
 import CampaignBox from 'components/CampaignBox';
-import { Button } from '@material-ui/core';
-import { useInfiniteLoad } from 'libs/hooks/useInfiniteLoad';
 import CampaignBoxSkeleton from 'components/CampaignBoxSkeleton';
+import useInfiniteScroller from 'libs/hooks/useInfiniteScroller';
+import DataNotFound from 'components/DataNotFound';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,16 +69,15 @@ const CampaignList = () => {
   });
 
   const {
+    ref,
     data,
     isFetching,
     error,
     isLoadingInitialData,
-    isReachingEnd,
-    loadMore,
-  } = useInfiniteLoad('/campaigns', params);
+  } = useInfiniteScroller('/campaigns', params);
 
   return (
-    <Box className={classes.root}>
+    <Paper className={classes.root} elevation={0} ref={ref}>
       <Typography variant="subtitle2" style={{ marginBottom: 16 }}>
         Ayo lakukan kebaikan sekarang juga!
       </Typography>
@@ -89,9 +89,9 @@ const CampaignList = () => {
           <CampaignBox key={campaign.id} campaign={campaign} />
         ))
       ) : error ? (
-        <p style={{ color: 'red' }}>{error.message}</p>
+        <DataNotFound message={error.message} />
       ) : (
-        <p>Maaf, belum ada campaign tersedia.</p>
+        <DataNotFound message="Maaf, belum ada campaign tersedia." />
       )}
 
       {isFetching && !isLoadingInitialData && (
@@ -106,7 +106,7 @@ const CampaignList = () => {
         </Box>
       )}
 
-      {!isReachingEnd && (
+      {/* {!isReachingEnd && (
         <Box
           width="100%"
           mt={2}
@@ -118,8 +118,8 @@ const CampaignList = () => {
             Muat lagi
           </Button>
         </Box>
-      )}
-    </Box>
+      )} */}
+    </Paper>
   );
 };
 
