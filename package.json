@@ -1,6 +1,6 @@
 {
   "name": "sahabatkebaikan-new",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "1.x",
@@ -27,6 +27,7 @@
     "moment-timezone": "^0.5.33",
     "next": "^11.0.1",
     "next-sitemap": "^1.5.16",
+    "nprogress": "^0.2.0",
     "pm2": "^4.5.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
