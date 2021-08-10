@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -20,11 +21,16 @@ import formatCurrency from 'utils/formatCurrency';
 import { useDonation } from 'context/donation.context';
 import { useFormik } from 'formik';
 import * as fbq from 'libs/fbpixel';
+import LogoOy from '../../../../public/images/logo-oy.png';
+import LogoMoota from '../../../../public/images/logo-moota.png';
+import LogoBI from '../../../../public/images/logo-bi.png';
+import LogoSahabatkebaikan from '../../../../public/images/logo-sahabatkebaikan.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: '8px 16px 8px 16px',
+    paddingBottom: 24,
     marginBottom: 56,
     background: theme.palette.background.paper,
     '& > *': {
@@ -456,6 +462,62 @@ const DonationAmountScreen = ({ campaign }) => {
             </Grid>
           </Grid>
         </Grid>
+
+        <Grid
+          item
+          justify="space-between"
+          alignItems="center"
+          style={{ marginTop: 16 }}
+        >
+          <Typography variant="body2">
+            Pembayaran donasi didukung oleh:
+          </Typography>
+        </Grid>
+
+        <Grid item container spacing={2} justify="flex-start">
+          <Grid item>
+            <Image
+              alt=""
+              src={LogoSahabatkebaikan}
+              placeholder="blur"
+              blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
+              width={110}
+              height={40}
+            />
+          </Grid>
+          <Grid item>
+            <Image
+              alt=""
+              src={LogoOy}
+              placeholder="blur"
+              blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
+              width={60}
+              height={40}
+            />
+          </Grid>
+          <Grid item>
+            <Image
+              alt=""
+              src={LogoMoota}
+              placeholder="blur"
+              blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
+              width={120}
+              height={40}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid item>
+          <Image
+            alt=""
+            src={LogoBI}
+            placeholder="blur"
+            blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
+            width={120}
+            height={40}
+          />
+          <Typography variant="body2">*Oy diawasi Bank Indonesia</Typography>
+        </Grid>
       </Box>
       <Box className={classes.acionButton}>
         <Button
@@ -464,7 +526,6 @@ const DonationAmountScreen = ({ campaign }) => {
           disabled={isLoading}
           fullWidth
           style={{ height: 50 }}
-          // onClick={handleSetDonationValue}
           onClick={formik.submitForm}
         >
           {isLoading && (
