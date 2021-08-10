@@ -24,7 +24,6 @@ import * as fbq from 'libs/fbpixel';
 import LogoOy from '../../../../public/images/logo-oy.png';
 import LogoMoota from '../../../../public/images/logo-moota.png';
 import LogoBI from '../../../../public/images/logo-bi.png';
-import LogoSahabatkebaikan from '../../../../public/images/logo-sahabatkebaikan.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -474,17 +473,7 @@ const DonationAmountScreen = ({ campaign }) => {
           </Typography>
         </Grid>
 
-        <Grid item container spacing={2} justify="flex-start">
-          <Grid item>
-            <Image
-              alt=""
-              src={LogoSahabatkebaikan}
-              placeholder="blur"
-              blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
-              width={110}
-              height={40}
-            />
-          </Grid>
+        <Grid item container justify="space-evenly">
           <Grid item>
             <Image
               alt=""
@@ -507,16 +496,18 @@ const DonationAmountScreen = ({ campaign }) => {
           </Grid>
         </Grid>
 
-        <Grid item>
+        <Grid item style={{ marginTop: 16 }}>
           <Image
             alt=""
             src={LogoBI}
             placeholder="blur"
             blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
-            width={120}
-            height={40}
+            width={90}
+            height={30}
           />
-          <Typography variant="body2">*Oy diawasi Bank Indonesia</Typography>
+          <Typography variant="body2">
+            *Oy! Diawasi oleh Bank Indonesia
+          </Typography>
         </Grid>
       </Box>
       <Box className={classes.acionButton}>
