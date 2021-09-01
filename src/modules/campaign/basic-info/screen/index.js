@@ -6,6 +6,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import formatCurrency from 'utils/formatCurrency';
 import getValueOfLinearProgress from 'utils/getValueOfLinearProgress';
 import Link from 'components/Link';
@@ -96,12 +97,22 @@ const CampaignBasicInfo = ({ campaign }) => {
           src={campaign.campaigner.profile_photo}
         />
         <Box ml={2}>
-          <Link
-            href={`/sahabat-baik/${campaign.campaigner.username}`}
-            style={{ textDecoration: 'none' }}
-          >
-            <Typography>{campaign.campaigner.full_name}</Typography>
-          </Link>
+          <Box display="flex" alignItems="center">
+            <Link
+              href={`/sahabat-baik/${campaign.campaigner.username}`}
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              <Typography>{campaign.campaigner.full_name} </Typography>
+            </Link>
+            <CheckCircleIcon
+              fontSize="small"
+              color="primary"
+              style={{ marginLeft: 4 }}
+            />
+          </Box>
+
           <Typography variant="body2" color="textSecondary">
             {campaign.campaigner.description}
           </Typography>
