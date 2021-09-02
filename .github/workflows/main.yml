@@ -35,8 +35,8 @@ jobs:
           NEXT_PUBLIC_AFFILIATE_SITE_URL: ${{ secrets.PROJECT_DIR }}
 
         run: |
-          cp -r -u . $PROJECT_DIR
-          cd $PROJECT_DIR
+          cp -r -u . ${PROJECT_DIR}
+          cd ${PROJECT_DIR}
           yarn install
           yarn run build
 
@@ -68,7 +68,7 @@ jobs:
           NEXT_PUBLIC_AFFILIATE_SITE_URL: ${{ secrets.PROJECT_DIR }}
 
         run: |
-          cd $PROJECT_DIR
+          cd ${PROJECT_DIR}
           #pm2 delete ecosystem.config.js --only sahabatkebaikan-production
           #pm2 restart ecosystem.config.js --only sahabatkebaikan-production
           echo Happy coding :)
