@@ -239,6 +239,9 @@ const DonationAmountScreen = ({ campaign }) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <Box className={classes.root}>
+        <Typography variant="caption">
+          Pilih nominal donasi atau nominal lannya dengan memasukan pada kolom
+        </Typography>
         <Grid container style={{}}>
           {predefinedAmounts.map((amount, i) => (
             <Grid item xs style={{ padding: 4 }} key={i}>
@@ -274,10 +277,6 @@ const DonationAmountScreen = ({ campaign }) => {
           error={formik.touched.amount && Boolean(formik.errors.amount)}
           helperText={formik.touched.amount && formik.errors.amount}
         />
-
-        <Typography variant="caption">
-          Pilih nominal donasi atau nominal lannya dengan memasukan pada kolom
-        </Typography>
 
         <Divider />
 
