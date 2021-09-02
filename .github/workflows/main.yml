@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build_prod:
+    if: contains( github.ref, 'master')
+    runs-on: self-hosted
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Run a multi-line script
+        env:
+          NODE_ENV: ${{ secrets.PROJECT_DIR }}
+          PROJECT_DIR: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_WEB_URL: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_FACEBOOK_PIXEL_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_GA_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_HOTJAR_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_TIKTOK_PIXEL_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_DATABASE_URL: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_PROJECT_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_APP_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_MEASUREMENT_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_CAMPAIGNER_SITE_URL: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_AFFILIATE_SITE_URL: ${{ secrets.PROJECT_DIR }}
+
+        run: |
+          cp -r -u . $PROJECT_DIR
+          cd $PROJECT_DIR
+          yarn install
+          yarn run build
+
+  deploy_prod:
+    if: contains( github.ref, 'master')
+    runs-on: self-hosted
+    needs: [build_prod]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run a multi-line script
+        env:
+          NODE_ENV: ${{ secrets.PROJECT_DIR }}
+          PROJECT_DIR: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_WEB_URL: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_FACEBOOK_PIXEL_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_GA_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_HOTJAR_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_TIKTOK_PIXEL_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_DATABASE_URL: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_PROJECT_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_APP_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_MEASUREMENT_ID: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_CAMPAIGNER_SITE_URL: ${{ secrets.PROJECT_DIR }}
+          NEXT_PUBLIC_AFFILIATE_SITE_URL: ${{ secrets.PROJECT_DIR }}
+
+        run: |
+          cd $PROJECT_DIR
+          #pm2 delete ecosystem.config.js --only sahabatkebaikan-production
+          #pm2 restart ecosystem.config.js --only sahabatkebaikan-production
+          echo Happy coding :)
