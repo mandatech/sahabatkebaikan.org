@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
@@ -61,9 +62,15 @@ const ProfileInfo = ({ profile }) => {
         <Typography variant="body1" color="textSecondary">
           Nama Lengkap
         </Typography>
-        <Typography variant="body1" gutterBottom>
-          {profile?.full_name}
-        </Typography>
+
+        <Box display="flex" flexDirection="rows" alignItems="center" mb={1}>
+          <Typography variant="body1">{profile?.full_name}</Typography>
+          <CheckCircleIcon
+            fontSize="small"
+            color="primary"
+            style={{ marginLeft: 4 }}
+          />
+        </Box>
         <Typography variant="body1" color="textSecondary">
           Deskripsi Penggalang
         </Typography>

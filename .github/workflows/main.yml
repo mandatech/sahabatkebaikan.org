@@ -16,7 +16,7 @@ jobs:
       - name: Run a multi-line script
         env:
           NODE_ENV: ${{ secrets.PROJECT_DIR }}
-          PROJECT_DIR: ${{ secrets.PROJECT_DIR }}
+          PROJECT_DIR: '/home/actions-runner/sahabatkebaikan-frontend-production-github'
           NEXT_PUBLIC_BASE_URL: ${{ secrets.PROJECT_DIR }}
           NEXT_PUBLIC_WEB_URL: ${{ secrets.PROJECT_DIR }}
           NEXT_PUBLIC_FACEBOOK_PIXEL_ID: ${{ secrets.PROJECT_DIR }}
@@ -68,7 +68,7 @@ jobs:
           NEXT_PUBLIC_AFFILIATE_SITE_URL: ${{ secrets.PROJECT_DIR }}
 
         run: |
-          cd $PROJECT_DIR
+          cd ${PROJECT_DIR}
           #pm2 delete ecosystem.config.js --only sahabatkebaikan-production
           #pm2 restart ecosystem.config.js --only sahabatkebaikan-production
           echo Happy coding :)
