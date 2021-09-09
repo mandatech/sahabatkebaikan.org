@@ -5,11 +5,13 @@ import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 import formatCurrency from 'utils/formatCurrency';
 import getValue from 'utils/getValueOfLinearProgress';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -102,15 +104,21 @@ const CampaignBox = ({ campaign }) => {
               </Button>
             </Grid>
           </Grid>
-          <Typography className={classes.author} gutterBottom>
-            {campaign.campaigner.full_name}
-          </Typography>
+          <Box display="flex" flexDirection="rows" alignItems="center">
+            <Typography className={classes.author} gutterBottom>
+              {campaign.campaigner.full_name}
+            </Typography>
+            <CheckCircleIcon
+              fontSize="small"
+              color="primary"
+              style={{ marginLeft: 4, fontSize: 16 }}
+            />
+          </Box>
           <LinearProgress
             value={getValue(campaign.donation_funded, campaign.donation_target)}
             variant="determinate"
             style={{ margin: '4px 0' }}
           />
-
           <Grid item container>
             <Grid item xs container direction="column">
               <Typography className={classes.fundedDaysLeftTitle} gutterBottom>
