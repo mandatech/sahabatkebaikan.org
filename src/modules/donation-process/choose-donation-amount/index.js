@@ -22,6 +22,7 @@ import { useDonation } from 'context/donation.context';
 import { useFormik } from 'formik';
 import * as fbq from 'libs/fbpixel';
 import LogoOy from '../../../../public/images/logo-oy.png';
+import LogoFlip from '../../../../public/images/logo-flip.png';
 import LogoMoota from '../../../../public/images/logo-moota.png';
 import LogoBI from '../../../../public/images/logo-bi.png';
 
@@ -480,6 +481,16 @@ const DonationAmountScreen = ({ campaign }) => {
               placeholder="blur"
               blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
               width={60}
+              height={40}
+            />
+          </Grid>
+          <Grid item>
+            <Image
+              alt=""
+              src={LogoFlip}
+              placeholder="blur"
+              blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAABCAYAAAAb4BS0AAAAD0lEQVR42mMM9Q6tZ4ACAA8YAXYxKl3dAAAAAElFTkSuQmCC`}
+              width={40}
               height={40}
             />
           </Grid>

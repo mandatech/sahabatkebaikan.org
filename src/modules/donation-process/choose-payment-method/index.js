@@ -264,6 +264,58 @@ const PaymentMethod = () => {
 
       <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}>
         <Typography variant="body2">
+          Bayar dengan Flip (diverifikasi otomatis)
+        </Typography>
+      </Grid>
+      <List component="nav" aria-label="transfer-payment">
+        {isFetching ? (
+          <Loading open hideBackdrop />
+        ) : data?.length ? (
+          data
+            .filter(
+              (paymentMethod) =>
+                paymentMethod.is_enabled &&
+                paymentMethod.payment_gateway.code === 'flip'
+            )
+            .map((paymentMethod) => (
+              <ListItem
+                key={paymentMethod.id}
+                button
+                style={{ paddingLeft: 24 }}
+                onClick={() => handleSelectPaymentMethod(paymentMethod)}
+              >
+                <ListItemIcon>
+                  <img
+                    className={classes.bankIcon}
+                    alt="bank-icon"
+                    src={paymentMethod.image}
+                    width={40}
+                    height={40}
+                  />
+                </ListItemIcon>
+                <Box ml={1}>
+                  <Typography variant="body2">
+                    {paymentMethod.name === 'QRIS'
+                      ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
+                      : paymentMethod.name}
+                    {/* via{' '}
+                      {paymentMethod.payment_gateway.name} */}
+                  </Typography>
+                  {/* <Typography variant="caption" color="textSecondary">
+                  Bayar dengan saldo Dompet Kebaikan Anda
+                </Typography> */}
+                </Box>
+              </ListItem>
+            ))
+        ) : error ? (
+          <p style={{ color: 'red' }}>{error.message}</p>
+        ) : (
+          <DataNotFound />
+        )}
+      </List>
+
+      <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}>
+        <Typography variant="body2">
           Virtual Account (diverifikasi otomatis)
         </Typography>
       </Grid>
