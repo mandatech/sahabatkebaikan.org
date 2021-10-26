@@ -23,8 +23,8 @@ Programmers used to read documentation in English. Programmers used to ask/answe
 [Clone the repo](https://gitlab.com/mandatech/sahabatkebaikan-new):
 
 ```sh
-git clone https://gitlab.com/mandatech/sahabatkebaikan-new.git
-cd sahabatkebaikan-new
+git clone git@github.com:mandatech-mataram/sahabatkebaikan.org.git
+cd sahabatkebaikan.org
 ```
 
 Install it and run:

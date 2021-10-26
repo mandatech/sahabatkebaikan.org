@@ -22,6 +22,7 @@ module.exports = withBundleAnalyzer({
       'api-staging.sahabatkebaikan.org',
       'api.sahabatkebaikan.org',
       'via.placeholder.com',
+      'localhost',
     ],
   },
 });
