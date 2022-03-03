@@ -14,6 +14,7 @@ import AffiliateComponent from 'components/AffiliateComponent';
 import { DonationProvider } from 'context/donation.context';
 import '../styles/editor.css';
 import '../styles/nprogress.css';
+import TiktokPixel from 'components/TiktokPixel';
 export default function MyApp(props) {
   const { Component, pageProps, router } = props;
 
@@ -67,11 +68,13 @@ export default function MyApp(props) {
           <AffiliateComponent>
             <GoogleAnalitycs>
               <FacebookPixel>
-                <ToastProvider>
-                  <DonationProvider>
-                    <Component {...pageProps} />
-                  </DonationProvider>
-                </ToastProvider>
+                <TiktokPixel>
+                  <ToastProvider>
+                    <DonationProvider>
+                      <Component {...pageProps} />
+                    </DonationProvider>
+                  </ToastProvider>
+                </TiktokPixel>
               </FacebookPixel>
             </GoogleAnalitycs>
           </AffiliateComponent>
