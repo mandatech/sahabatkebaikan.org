@@ -262,12 +262,16 @@ const PaymentMethod = () => {
         )}
       </List>
 
-      <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}>
-        <Typography variant="body2">
-          Bayar dengan Flip (diverifikasi otomatis)
-        </Typography>
-      </Grid>
-      <List component="nav" aria-label="transfer-payment">
+      {/* <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}> */}
+      {/*   <Typography variant="body2"> */}
+      {/*     Bayar dengan Flip (diverifikasi otomatis) */}
+      {/*   </Typography> */}
+      {/* </Grid> */}
+      <List
+        component="nav"
+        aria-label="transfer-payment"
+        style={{ marginTop: -20 }}
+      >
         {isFetching ? (
           <Loading open hideBackdrop />
         ) : data?.length ? (
