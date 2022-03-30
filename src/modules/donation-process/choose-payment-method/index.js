@@ -299,11 +299,16 @@ const PaymentMethod = () => {
                 </ListItemIcon>
                 <Box ml={1}>
                   <Typography variant="body2">
-                    {paymentMethod.name === 'QRIS'
-                      ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
-                      : paymentMethod.name}
+                    {/* {paymentMethod.name === 'QRIS' */}
+                    {/*   ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)' */}
+                    {/*   : paymentMethod.name} */}
                     {/* via{' '}
                       {paymentMethod.payment_gateway.name} */}
+                    {paymentMethod.name === 'QRIS'
+                      ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
+                      : paymentMethod.payment_gateway.code === 'flip'
+                      ? 'Transfer dari berbagai bank melalui Flip'
+                      : paymentMethod.payment_gateway.name}
                   </Typography>
                   {/* <Typography variant="caption" color="textSecondary">
                   Bayar dengan saldo Dompet Kebaikan Anda
