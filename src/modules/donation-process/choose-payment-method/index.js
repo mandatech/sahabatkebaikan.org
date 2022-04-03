@@ -262,12 +262,16 @@ const PaymentMethod = () => {
         )}
       </List>
 
-      <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}>
-        <Typography variant="body2">
-          Bayar dengan Flip (diverifikasi otomatis)
-        </Typography>
-      </Grid>
-      <List component="nav" aria-label="transfer-payment">
+      {/* <Grid container style={{ background: '#DEDEDE', padding: 14, margin: 0 }}> */}
+      {/*   <Typography variant="body2"> */}
+      {/*     Bayar dengan Flip (diverifikasi otomatis) */}
+      {/*   </Typography> */}
+      {/* </Grid> */}
+      <List
+        component="nav"
+        aria-label="transfer-payment"
+        style={{ marginTop: -20 }}
+      >
         {isFetching ? (
           <Loading open hideBackdrop />
         ) : data?.length ? (
@@ -295,11 +299,16 @@ const PaymentMethod = () => {
                 </ListItemIcon>
                 <Box ml={1}>
                   <Typography variant="body2">
-                    {paymentMethod.name === 'QRIS'
-                      ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
-                      : paymentMethod.name}
+                    {/* {paymentMethod.name === 'QRIS' */}
+                    {/*   ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)' */}
+                    {/*   : paymentMethod.name} */}
                     {/* via{' '}
                       {paymentMethod.payment_gateway.name} */}
+                    {paymentMethod.name === 'QRIS'
+                      ? 'QRIS (dapat digunakan di ShopeePay, OVO, Gopay, DANA, dll)'
+                      : paymentMethod.payment_gateway.code === 'flip'
+                      ? 'Transfer dari berbagai bank melalui Flip'
+                      : paymentMethod.payment_gateway.name}
                   </Typography>
                   {/* <Typography variant="caption" color="textSecondary">
                   Bayar dengan saldo Dompet Kebaikan Anda
