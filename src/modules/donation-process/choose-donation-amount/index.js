@@ -114,19 +114,19 @@ const DonationAmountScreen = ({ campaign }) => {
 
   const [predefinedAmounts, setPredefinedAmounts] = useState([
     {
-      value: 100000,
+      value: 25000,
       selected: true,
     },
     {
+      value: 50000,
+      selected: false,
+    },
+    {
+      value: 100000,
+      selected: false,
+    },
+    {
       value: 200000,
-      selected: false,
-    },
-    {
-      value: 500000,
-      selected: false,
-    },
-    {
-      value: 1000000,
       selected: false,
     },
   ]);
