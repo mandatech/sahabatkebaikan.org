@@ -61,12 +61,31 @@ const DonationAmountScreen = ({ campaign }) => {
   const { donationValue, setDonationValue } = useDonation();
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [predefinedAmounts, setPredefinedAmounts] = useState([
+    {
+      value: 25000,
+      selected: true,
+    },
+    {
+      value: 50000,
+      selected: false,
+    },
+    {
+      value: 100000,
+      selected: false,
+    },
+    {
+      value: 200000,
+      selected: false,
+    },
+  ]);
+
   const formik = useFormik({
     initialValues: {
       full_name: '',
       email: '',
       phone: '',
-      amount: 100000,
+      amount: predefinedAmounts[0].value,
       is_anonymous: false,
       infaq: false,
       infaqPercent: 5,
@@ -111,25 +130,6 @@ const DonationAmountScreen = ({ campaign }) => {
       handleSetDonationValue();
     },
   });
-
-  const [predefinedAmounts, setPredefinedAmounts] = useState([
-    {
-      value: 25000,
-      selected: true,
-    },
-    {
-      value: 50000,
-      selected: false,
-    },
-    {
-      value: 100000,
-      selected: false,
-    },
-    {
-      value: 200000,
-      selected: false,
-    },
-  ]);
 
   const { slug } = router.query;
 
