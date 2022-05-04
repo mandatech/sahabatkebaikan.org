@@ -204,7 +204,7 @@ const DonationAmountScreen = ({ campaign }) => {
           full_name: dataLogin.user.full_name,
           email: dataLogin.user.email,
           phone: dataLogin.user.phone,
-          amount: 100000,
+          amount: predefinedAmounts[0].value,
           is_anonymous: false,
           infaq: false,
           infaqPercent: 5,
