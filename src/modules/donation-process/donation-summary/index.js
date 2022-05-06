@@ -88,28 +88,29 @@ const DonationSummaryScreen = ({ donation }) => {
   const { donationValue, setDonationValue } = useDonation();
   const [openPayWithZipayWallet, setOpenPayWithZipayWallet] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState({
-    id: '865af5af-47b6-47b4-a69c-8b3a97bcbbc9',
-    payment_gateway_id: 'f355ac95-f2d4-4759-a9bb-88ceac0fe018',
-    code: '0807051551',
-    name: 'BNI Syariah',
+    id: '48175eaf-a493-456c-bf4b-7a38c38cd626',
+    payment_gateway_id: 'dda4a236-878a-47cc-803c-d85c1698b60b',
+    code: '7154488949',
+    name: 'Bank Syariah Indonesia (BSI)',
     is_enabled: true,
-    image: 'https://api-staging.sahabatkebaikan.org/static/bank_logo/BNI.svg',
+    image:
+      'https://i.ibb.co/GncZngP/bank-syariah-indonesia-logo-8-DFA668-CD8-seeklogo-com.png',
     created_at: '2021-04-27 23:09:49',
     payment_gateway: {
-      id: 'f355ac95-f2d4-4759-a9bb-88ceac0fe018',
+      id: 'dda4a236-878a-47cc-803c-d85c1698b60b',
       code: 'moota',
       name: 'Moota',
       is_enabled: true,
       created_at: '2021-01-26 13:35:18',
     },
     bank_detail: {
-      username: 'guntoroyk369',
-      name_holder: 'Guntoro Yudhy Kusuma',
-      account_number: '0807051551',
-      bank_type: 'bniSyariah',
-      is_active: false,
+      username: 'sahabatkebaikan',
+      name_holder: 'SAHABAT KEBAIKAN',
+      account_number: '7154488949',
+      bank_type: 'bsi',
+      is_active: true,
       created_at: '2021-04-27 23:09:48',
-      bank_id: 'E32zpYQPjA1',
+      bank_id: '',
     },
   });
 
