@@ -98,14 +98,8 @@ const DonorList = ({ campaign }) => {
     // _status: 'paid',
   });
 
-  const {
-    ref,
-    data,
-    error,
-    isFetching,
-    isReachingEnd,
-    loadMore,
-  } = useInfiniteLoad(`/campaigns/${campaign.slug}/latest-news`, params);
+  const { ref, data, error, isFetching, isReachingEnd, loadMore } =
+    useInfiniteLoad(`/campaigns/${campaign.slug}/latest-news`, params);
 
   return (
     <Paper className={classes.root} elevation={0} ref={ref}>

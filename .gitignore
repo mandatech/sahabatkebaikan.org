@@ -17,3 +17,7 @@ yarn-error.log*
 
 # Next.js
 /.next
+
+# Generated files
+public/sitemap*.xml
+robots.txt

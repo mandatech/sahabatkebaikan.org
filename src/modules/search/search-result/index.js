@@ -30,13 +30,8 @@ const SearchResult = ({ query }) => {
     _q: query,
   });
 
-  const {
-    ref,
-    data,
-    isFetching,
-    error,
-    isLoadingInitialData,
-  } = useInfiniteScroller('/campaigns', params);
+  const { ref, data, isFetching, error, isLoadingInitialData } =
+    useInfiniteScroller('/campaigns', params);
 
   const updateParams = () => {
     // A search query api call.

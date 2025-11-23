@@ -31,13 +31,8 @@ const CategoryCampaignList = ({ category }) => {
     _is_active: true,
   });
 
-  const {
-    ref,
-    data,
-    isLoadingInitialData,
-    isFetching,
-    error,
-  } = useInfiniteScroller('/campaigns', params);
+  const { ref, data, isLoadingInitialData, isFetching, error } =
+    useInfiniteScroller('/campaigns', params);
 
   // fix Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function
   const [didMount, setDidMount] = useState(false);
