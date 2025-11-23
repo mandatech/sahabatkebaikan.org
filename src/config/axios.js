@@ -47,8 +47,9 @@ axiosInstance.interceptors.response.use(
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
-      const refreshToken = JSON.parse(localStorage.getItem('data_login'))
-        .refresh_token;
+      const refreshToken = JSON.parse(
+        localStorage.getItem('data_login')
+      ).refresh_token;
 
       const bodyRequest = qs.stringify({
         grant_type: 'refresh_token',

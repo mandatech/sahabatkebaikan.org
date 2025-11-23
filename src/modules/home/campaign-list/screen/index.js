@@ -68,13 +68,8 @@ const CampaignList = () => {
     _is_active: true,
   });
 
-  const {
-    ref,
-    data,
-    isFetching,
-    error,
-    isLoadingInitialData,
-  } = useInfiniteScroller('/campaigns', params);
+  const { ref, data, isFetching, error, isLoadingInitialData } =
+    useInfiniteScroller('/campaigns', params);
 
   return (
     <Paper className={classes.root} elevation={0} ref={ref}>
