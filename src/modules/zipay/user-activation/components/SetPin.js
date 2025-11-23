@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { Field, Form, Formik } from 'formik';
 import { TextField as FormikTextField } from 'formik-material-ui';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -124,6 +125,10 @@ const SetPin = ({ handleNext = () => {} }) => {
       </Formik>
     </DialogContent>
   );
+};
+
+SetPin.propTypes = {
+  handleNext: PropTypes.func,
 };
 
 export default SetPin;

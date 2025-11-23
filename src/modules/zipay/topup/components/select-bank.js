@@ -11,6 +11,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { TextField as FormikTextField } from 'formik-material-ui';
 import { useGetList } from 'libs/hooks/useGetList';
 import Loading from 'components/Loading';
+import PropTypes from 'prop-types';
 
 const SelectBank = ({ handleNext = () => {}, setState = () => {} }) => {
   const [params] = useState({
@@ -69,6 +70,11 @@ const SelectBank = ({ handleNext = () => {}, setState = () => {} }) => {
       </List>
     </DialogContent>
   );
+};
+
+SelectBank.propTypes = {
+  handleNext: PropTypes.func,
+  setState: PropTypes.func,
 };
 
 export default SelectBank;

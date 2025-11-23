@@ -16,6 +16,7 @@ import { confirmPayment } from 'services/zipay.service';
 import { useToast } from 'libs/toast';
 import Cookies from 'js-cookie';
 import { createAffiliateConversion } from 'services/affiliate.service';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -190,6 +191,10 @@ const ConfirmPin = ({ handleNext = () => {} }) => {
       </Formik>
     </DialogContent>
   );
+};
+
+ConfirmPin.propTypes = {
+  handleNext: PropTypes.func,
 };
 
 export default ConfirmPin;

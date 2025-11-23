@@ -16,6 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import DompetIcon from 'assets/icons/dompet_without_circle.svg';
 import SelectBank from './components/select-bank';
 import VAInfo from './components/va-info';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -153,3 +154,8 @@ export function ZipayTopupBalance({ open = false, onClose = () => {} }) {
     </Dialog>
   );
 }
+
+ZipayTopupBalance.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+};
