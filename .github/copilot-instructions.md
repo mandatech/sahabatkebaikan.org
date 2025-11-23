@@ -23,7 +23,7 @@ SahabatKebaikan.org is an open-source live crowdfunding platform. The name "Saha
 ### ESLint Configuration
 - Follow the project's ESLint rules defined in `.eslintrc.js`
 - Use ESLint recommended rules with React, JSX a11y, and Prettier plugins
-- React imports are not required in JSX files (Next.js auto-imports React)
+- React imports are not required in JSX files (Next.js 11+ with React 17+ uses the new JSX transform)
 - Run `yarn lint` to check and auto-fix linting issues
 
 ### Prettier Configuration
@@ -280,6 +280,6 @@ const Component = () => {
 ## Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)
-- [Material-UI v4 Documentation](https://v4.mui.com/)
+- [Material-UI v4 Documentation (Legacy)](https://v4.mui.com/)
 - [Formik Documentation](https://formik.org/docs/overview)
 - [Firebase Documentation](https://firebase.google.com/docs)
