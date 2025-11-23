@@ -11,6 +11,7 @@ import formatCurrency from 'utils/formatCurrency';
 import { useDonation } from 'context/donation.context';
 import { checkBalance } from 'services/zipay.service';
 import Loading from 'components/Loading';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   top: {
@@ -336,6 +337,11 @@ const PaymentRecap = ({ handleClose = () => {}, handleNext = () => {} }) => {
       )}
     </DialogContent>
   );
+};
+
+PaymentRecap.propTypes = {
+  handleClose: PropTypes.func,
+  handleNext: PropTypes.func,
 };
 
 export default PaymentRecap;

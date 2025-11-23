@@ -78,4 +78,19 @@ ImageSlide.propTypes = {
   url: PropTypes.string,
 };
 
+SlideShow.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      url: PropTypes.string,
+    })
+  ),
+  videos: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      url: PropTypes.string,
+    })
+  ),
+};
+
 export default SlideShow;

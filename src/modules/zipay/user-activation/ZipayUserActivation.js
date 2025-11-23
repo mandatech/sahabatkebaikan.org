@@ -17,6 +17,7 @@ import DompetIcon from 'assets/icons/dompet_without_circle.svg';
 import SetPin from './components/SetPin';
 import InputPhone from './components/InputPhone';
 import OtpVerification from './components/OtpVerification';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -156,3 +157,8 @@ export function ZipayUserActivation({ open = false, onClose = () => {} }) {
     </Dialog>
   );
 }
+
+ZipayUserActivation.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+};
